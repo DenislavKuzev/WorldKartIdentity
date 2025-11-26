@@ -1,0 +1,21 @@
+﻿@* @{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p> *@
+
+@model WorldKartIdentity.ViewModel.UserViewModel
+
+@{
+    ViewData["Title"] = "Privacy";
+}
+
+<h2>Здравей, @Model.UserName! </h2>
+
+<p>Dobre doshul, uspeshno se logna!</p>
+
+<ul>
+    <li><strong>Потребителско име:</strong> @Model.UserName</li>
+    <li><strong>Email:</strong> @Model.Email</li>
+</ul>

@@ -1,0 +1,52 @@
+﻿@model WorldKartIdentity.ViewModel.TrackRequestViewModel
+
+@{
+    ViewBag.Title = "Track Request";
+}
+
+@{
+    ViewData["Title"] = "TrackRequest";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/loginregistration.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <script src="~/js/maps.js"></script>
+}
+
+<div class="register-container">
+    <h2>Заявка за писта</h2>
+    <form asp-action="TrackRequests" asp-controller="Track" method="post">
+        <div class="form-group">
+            <label>Име на писта </label>
+            <input asp-for="Name" type="text" name="Name" required />
+            <span class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Имейл на писта</label>
+            <input asp-for="Email" type="email" name="Email" required />
+            <span class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Държава</label>
+            <input asp-for="Country" type="text" name="Country" required />
+            <span class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Локация</label>
+            <input asp-for="LocationUrl" type="text" name="LocationUrl" required />
+            <span class="text-danger"></span>
+        </div>
+
+        <div id="mapPreviewContainer" style="display:none; margin-top:15px;"></div> @* ново *@
+
+        <button type="submit" class="btn-register">Заяви пистата</button>
+
+    </form>
+</div>

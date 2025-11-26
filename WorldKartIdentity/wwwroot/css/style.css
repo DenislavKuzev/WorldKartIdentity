@@ -1,0 +1,48 @@
+﻿
+.hero-section {
+    background: url('https://www.rotax-racing.com/assets/images/Imagepics/2025-new-pics/_800x418_crop_center-center_82_none/RMCGF_24_Junior-MAX-on-the-starting-grid-at-the-finals_web.jpg?mtime=1737667612') no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 110px;
+    position: relative;
+    color: white;
+    text-align: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.hero-content .lead {
+    color: #ff0000;
+    font-size: 1.55rem;
+    font-weight: 800;
+}
+
+/* Текст в центъра */
+.hero-content {
+    position: relative;
+    z-index: 4;
+}
+
+    .hero-content h1 {
+        font-size: 3rem;
+        font-weight: bold;
+    }
+
+/* Стил за навигацията */
+.navbar-dark .navbar-nav .nav-link {
+    color: white;
+    transition: color 0.3s;
+}
+
+    .navbar-dark .navbar-nav .nav-link:hover {
+        color: #ff0000;
+    }

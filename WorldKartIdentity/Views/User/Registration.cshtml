@@ -1,0 +1,43 @@
+﻿@model WorldKartIdentity.ViewModel.UserViewModel
+
+@{
+    ViewData["Title"] = "Registration";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/loginregistration.css" asp-append-version="true" />
+}
+
+<div class="register-container">
+    <h2>Регистрация</h2>
+
+    <form asp-action="Registration" asp-controller="User" method="post">
+        <div class="form-group">
+            <label>Потребителско име</label>
+            <input asp-for="UserName" type="text" name="UserName" required />
+            <span class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Имейл</label>
+            <input asp-for="Email" type="email" name="Email" required />
+            <span class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Парола</label>
+            <input asp-for="Password" type="password" name="Password" required minlength="6" />
+            <span class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Повтори паролата</label>
+            <input asp-for="RepeatPassword" type="password" name="RepeatPassword" required minlength="6" />
+            <span class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn-register">Регистрирай се</button>
+
+        <div class="form-footer">
+            <p>Вече имате акаунт? <a asp-controller="User" asp-action="Login">Вход</a></p>
+        </div>
+    </form>
+</div>

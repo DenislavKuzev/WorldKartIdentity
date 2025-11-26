@@ -1,0 +1,45 @@
+﻿body {
+    background: linear-gradient(135deg, #0a1d3b, #0f2e5d);
+    min-height: 100vh;
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.sidebar {
+    background: linear-gradient(135deg, #0a1d3b, #0f2e5d); /*прозрачност */
+    height: 50vh;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+    .sidebar h4 {
+        font-weight: 600;
+    }
+
+.nav-link {
+    color: white; /*za bukwite*/
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+    .nav-link:hover, .nav-link.active {
+        color: #ff4444;
+        transform: translateX(5px);
+    }
+
+.card-custom {
+    background-color: #b30000; /* червено */
+    color: white;
+    border: none;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+}
+
+    .card-custom:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.8rem 1.5rem rgba(255, 0, 0, 0.4);
+    }
+
+.shadow {
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.3);
+}
