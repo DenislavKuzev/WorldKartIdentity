@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +11,7 @@ namespace WorldKartMaster
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public async static Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -21,8 +22,13 @@ namespace WorldKartMaster
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddAuthorization();
-            builder.Services.AddAuthentication().AddCookie(IdentityConstants.ApplicationScheme)
-                .AddBearerToken(IdentityConstants.BearerScheme);
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+            })
+            .AddCookie(IdentityConstants.ApplicationScheme)
+            .AddBearerToken(IdentityConstants.BearerScheme);
 
             builder.Services.AddIdentityCore<User>()
             .AddRoles<IdentityRole>()
@@ -34,6 +40,22 @@ namespace WorldKartMaster
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                string[] roleNames = { "Admin", "Users"};
+
+                foreach (var roleName in roleNames)
+                {
+                    var roleExist = await roleManager.RoleExistsAsync(roleName);
+                    if (!roleExist)
+                    {
+                        await roleManager.CreateAsync(new IdentityRole(roleName));
+                    }
+                }
+            }
 
             if (app.Environment.IsDevelopment())
             {
