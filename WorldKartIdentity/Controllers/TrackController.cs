@@ -40,7 +40,7 @@ namespace WorldKartIdentity.Controllers
         }
 
         [HttpGet]
-        public IActionResult TrackRequests()
+        public IActionResult TrackRequest()
         {
             return View();
         }
