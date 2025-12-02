@@ -21,7 +21,7 @@
 }
 
 .hero-content .lead {
-    color: #ff0000;
+    color: red;
     font-size: 1.55rem;
     font-weight: 800;
 }
@@ -39,7 +39,7 @@
 
 /* Стил за навигацията */
 .navbar-dark .navbar-nav .nav-link {
-    color: white;
+    color: darkblue;
     transition: color 0.3s;
 }
 

@@ -43,23 +43,21 @@ namespace WorldKartIdentity.Controllers
             }
 
             User user = UserViewModel.UserVMToUser(userVM);
-            var result = await _users.CreateAsync(user, userVM.Password);
-          
+            var result = await _users.CreateAsync(user, userVM.Password);//за Юсър
+
             if (result.Succeeded)
             {
-                await _users.AddToRoleAsync(user, "Users"); //грешката идва от тук
-                // Влизане веднага след регистрация
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return RedirectToAction("Privacy", "Home", new UserViewModel(user));
+                    await _users.AddToRoleAsync(user, "Users");//даване на роля като Юсър //грешката идва от тук
+                    // Влизане веднага след регистрация
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Privacy", "Home", new UserViewModel(user));
             }
             else
             {
                 return BadRequest(new { errors = result.Errors.Select(e => e.Description) });
             }
-
             foreach (var error in result.Errors)
                 ModelState.AddModelError("", error.Description);
-
             return RedirectToAction("", "");
         }
 

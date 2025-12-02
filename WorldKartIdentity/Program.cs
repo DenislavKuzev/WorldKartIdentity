@@ -30,18 +30,24 @@ namespace WorldKartMaster
             .AddCookie(IdentityConstants.ApplicationScheme)
             .AddBearerToken(IdentityConstants.BearerScheme);
 
-            builder.Services.AddIdentityCore<User>()
+            builder.Services.AddIdentityCore<User>()     //?????
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddSignInManager()
             .AddDefaultTokenProviders();
 
-            // Add services to the container.
+            //builder.Services.AddIdentity<User, IdentityRole>(options =>       //????, ?? ???? ??????
+            //{
+            //    options.SignIn.RequireConfirmedAccount = false;
+            //})
+            //.AddEntityFrameworkStores<ApplicationDbContext>()
+            //.AddDefaultTokenProviders();
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
 
-            using (var scope = app.Services.CreateScope())
+            using (var scope = app.Services.CreateScope()) //????????? ?? ??????
             {
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
@@ -62,22 +68,14 @@ namespace WorldKartMaster
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();          // generates the JSON at /swagger/v1/swagger.json
                 app.UseSwaggerUI();
-
-                //app.ApplyMigrations();
             }
 
-            //if (!app.Environment.IsDevelopment())
-            //{
-            //    app.UseExceptionHandler("/Home/Error");
-            //    app.UseHsts();
-            //}
-
             app.MapGet("users,/me", async (ClaimsPrincipal claims, ApplicationDbContext context) =>
-                {
+            {
                     string UserId = claims.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
 
                     return await context.Users.FindAsync(UserId);
-                })
+            })
                 .RequireAuthorization();
 
             app.UseHttpsRedirection();
