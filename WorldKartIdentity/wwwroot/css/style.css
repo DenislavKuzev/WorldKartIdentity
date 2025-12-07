@@ -39,7 +39,7 @@
 
 /* Стил за навигацията */
 .navbar-dark .navbar-nav .nav-link {
-    color: darkblue;
+    color: white;
     transition: color 0.3s;
 }
 

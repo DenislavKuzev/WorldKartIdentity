@@ -1,5 +1,33 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@* @model List<Firstproject.Model.Book>
+
 @{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+
 }
+
+<h1>Треактории на писти</h1>
+<div class="gallery">
+    @foreach (var book in Model)
+    {
+        <div class="book">
+            <a href="Book1.html">
+                <img src="data:image/jpeg;base64,@book.Picture" />
+                <div class="book-title">@book.Name</div>
+                <div class="book-author">@book.Author</div>
+            </a>
+        </div>
+    }
+</div>
+<script>
+    function markAsRead(bookTitle) {
+      const readBooks = JSON.parse(localStorage.getItem('readBooks')) || [];
+      if (!readBooks.includes(bookTitle)) {
+        readBooks.push(bookTitle);
+        localStorage.setItem('readBooks', JSON.stringify(readBooks));
+        alert(`Добавихме "${bookTitle}" към прочетените книги.`);
+      } else {
+        alert(`Вече си отбелязал "${bookTitle}" като прочетена.`);
+      }
+    }
+</script> *@
