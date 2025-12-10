@@ -16,7 +16,7 @@ namespace WorldKartMaster
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("AzureDatabase")));
 
             builder.Services.AddEndpointsApiExplorer(); // needed for minimal APIs / endpoint discovery
             builder.Services.AddSwaggerGen();
