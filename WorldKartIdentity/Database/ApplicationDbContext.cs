@@ -8,6 +8,9 @@ namespace WorldKartIdentity.Database
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> Options) : base(Options) { }
         public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+
+        public DbSet<Track> Tracks { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
