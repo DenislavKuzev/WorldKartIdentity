@@ -15,7 +15,7 @@ namespace WorldKartIdentity.Controllers
             db = context;
         }
 
-        public IActionResult Library()
+        public IActionResult Admin()
         {
             ViewBag.KartingTracks = 0;
             ViewBag.Trajectories = 0;
