@@ -1,33 +1,63 @@
-﻿@* @model List<Firstproject.Model.Book>
+﻿@model List<WorldKartIdentity.Database.Track>
+
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "TrackGallery";
     Layout = "~/Views/Shared/_NewLayout.cshtml";
-
 }
 
-<h1>Треактории на писти</h1>
-<div class="gallery">
-    @foreach (var book in Model)
-    {
-        <div class="book">
-            <a href="Book1.html">
-                <img src="data:image/jpeg;base64,@book.Picture" />
-                <div class="book-title">@book.Name</div>
-                <div class="book-author">@book.Author</div>
-            </a>
-        </div>
-    }
+
+<div class="text-center mt-4">
+    <h1 class="display-4">Галерия с картинг писти</h1>
 </div>
-<script>
-    function markAsRead(bookTitle) {
-      const readBooks = JSON.parse(localStorage.getItem('readBooks')) || [];
-      if (!readBooks.includes(bookTitle)) {
-        readBooks.push(bookTitle);
-        localStorage.setItem('readBooks', JSON.stringify(readBooks));
-        alert(`Добавихме "${bookTitle}" към прочетените книги.`);
-      } else {
-        alert(`Вече си отбелязал "${bookTitle}" като прочетена.`);
-      }
-    }
-</script> *@
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/trackgallery.css" asp-append-version="true" />
+}
+
+@* Search Bar *@
+<div class="d-flex justify-content-center mt-4 mb-4">
+    <form method="get" asp-action="TrackGallery" class="input-group w-50">
+        <input type="text" name="search" class="form-control" placeholder="Търсене на писта..." />
+        <button type="submit" class="btn btn-primary">Търси</button>
+    </form>
+</div>
+
+
+@* Track Cards *@
+<div class="container">
+    <div class="row justify-content-center">
+        @foreach (var track in Model)
+        {
+            <div class="col-md-3 m-3">
+                <div class="card shadow" style="border-radius: 20px;">
+
+                    <a asp-controller="Track" asp-action="TrackPage" asp-route-id="@track.Id">
+                        <img src="@track.Picture"
+                             class="card-img-top"
+                             style="height:280px; object-fit:cover; border-top-left-radius:20px;" />
+                    </a>
+
+                    <div class="card-body text-center">
+                        <h5 class="card-title">@track.Name</h5>
+                        <p>@track.Length m</p>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@* <form method="post" asp-action="ToggleLike" asp-controller="Track">
+    <button type="submit" style="background: none; border: none; font-size: 28px; cursor: pointer;">
+        @if (track.)
+        {
+            <span style="color: red;">❤</span>
+        }
+        else
+        {
+            <span style="color: gray;">♡</span>
+        }
+    </button>
+</form> *@ 

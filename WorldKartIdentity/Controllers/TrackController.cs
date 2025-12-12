@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WorldKartIdentity.Database;
-using WorldKartIdentity.ViewModel;
+using Microsoft.EntityFrameworkCore;
 using WorldKartIdentity.Database;
 using WorldKartIdentity.ViewModel;
 
@@ -9,10 +8,12 @@ namespace WorldKartIdentity.Controllers
     public class TrackController : Controller
     {
         private readonly ApplicationDbContext db;
+        //private readonly DbSet<Track> track;
 
-        public TrackController(ApplicationDbContext context)
+        public TrackController(ApplicationDbContext context/*, DbSet<Track> tracks*/)
         {
             db = context;
+            //track = tracks;
         }
 
         public IActionResult Admin()
@@ -23,6 +24,30 @@ namespace WorldKartIdentity.Controllers
 
             return View();
         }
+
+        public IActionResult TrackGallery()
+        {
+            var tracks = db.Tracks.ToList();
+            return View(tracks);
+        }
+
+
+        //[HttpPost]
+        //public IActionResult ToggleLike(int id)
+        //{
+        //    var track = db.Tracks.FirstOrDefault(t => t.Id == id);
+
+        //    if (track == null)
+        //        return NotFound();
+
+        //    track.IsLiked = !track.IsLiked;
+        //    db.SaveChanges();
+
+        //    string referer = Request.Headers["Referer"].ToString();
+        //    return Redirect(referer);
+        //}
+
+
 
         [HttpGet]
         public IActionResult CreateTrack()

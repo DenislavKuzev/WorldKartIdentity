@@ -1,0 +1,88 @@
+﻿body {
+    background: url('https://www.rotax-racing.com/assets/images/Imagepics/2025-new-pics/_800x418_crop_center-center_82_none/RMCGF_24_Junior-MAX-on-the-starting-grid-at-the-finals_web.jpg?mtime=1737667612') no-repeat center center/cover;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.55); /* ← регулирай тъмнината */
+        pointer-events: none;
+        z-index: -1;
+    }
+
+h1, h2, h4 {
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(0,0,0,0.6);
+}
+
+/* Search Bar */
+.input-group input {
+    border-radius: 30px 0 0 30px;
+    padding-left: 20px;
+    border: 2px solid #eee;
+}
+
+.input-group button {
+    border-radius: 0 30px 30px 0;
+    padding: 10px 25px;
+}
+
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #DC3545;
+    --bs-btn-border-color: #DC3545;
+    --bs-btn-hover-color: #DC3545;
+    --bs-btn-hover-bg: #0b5ed7;
+    --bs-btn-hover-border-color: #0a58ca;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #DC3545;
+    --bs-btn-active-bg: #0a58ca;
+    --bs-btn-active-border-color: #0a53be;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #DC3545;
+    --bs-btn-disabled-bg: #0d6efd;
+    --bs-btn-disabled-border-color: #0d6efd;
+}
+
+
+/* Cards */
+.card {
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(5px);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+    .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+.card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+/* Like Button */
+.like-btn span {
+    transition: color .2s ease, transform .2s ease;
+}
+
+.like-btn:hover span {
+    transform: scale(1.2);
+}
+
+/* Track Page */
+.track-info p {
+    font-size: 1.1rem;
+}
