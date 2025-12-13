@@ -2,7 +2,7 @@
 
 namespace WorldKartIdentity.Controllers
 {
-    public class BlogsController : Controller
+    public class BlogController : Controller
     {
         public IActionResult Blogs()
         {
