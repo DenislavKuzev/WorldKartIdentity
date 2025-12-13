@@ -8,12 +8,10 @@ namespace WorldKartIdentity.Controllers
     public class TrackController : Controller
     {
         private readonly ApplicationDbContext db;
-        //private readonly DbSet<Track> track;
 
-        public TrackController(ApplicationDbContext context/*, DbSet<Track> tracks*/)
+        public TrackController(ApplicationDbContext context)
         {
             db = context;
-            //track = tracks;
         }
 
         public IActionResult Admin()
@@ -58,10 +56,10 @@ namespace WorldKartIdentity.Controllers
         [HttpPost]
         public IActionResult CreateTrack(TrackViewModel trackVM)
         {
-            Track track = TrackViewModel.TrackVMToTrack(trackVM);
-            //db.Tracks.Add(track);
+            Track tracks = TrackViewModel.TrackVMToTrack(trackVM);
+            db.Tracks.Add(tracks);
             db.SaveChanges();
-            return RedirectToAction("BookList");
+            return RedirectToAction("TrackGallery");
         }
 
         [HttpGet]
