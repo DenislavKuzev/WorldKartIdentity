@@ -30,13 +30,13 @@ namespace WorldKartMaster
             .AddCookie(IdentityConstants.ApplicationScheme)
             .AddBearerToken(IdentityConstants.BearerScheme);
 
-            builder.Services.AddIdentityCore<User>()     //?????
+            builder.Services.AddIdentityCore<User>()     //staro
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddSignInManager()
             .AddDefaultTokenProviders();
 
-            //builder.Services.AddIdentity<User, IdentityRole>(options =>       //????, ?? ???? ??????
+            //builder.Services.AddIdentity<User, IdentityRole>(options =>       //novo, no dava greshka
             //{
             //    options.SignIn.RequireConfirmedAccount = false;
             //})
@@ -47,7 +47,7 @@ namespace WorldKartMaster
 
             var app = builder.Build();
 
-            using (var scope = app.Services.CreateScope()) //????????? ?? ??????
+            using (var scope = app.Services.CreateScope())
             {
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
