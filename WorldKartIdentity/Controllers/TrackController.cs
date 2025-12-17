@@ -23,10 +23,10 @@ namespace WorldKartIdentity.Controllers
             return View();
         }
 
-        public IActionResult TrackGallery()
+        public IActionResult TrackGallery(int id)
         {
-            var tracks = db.Tracks.ToList();
-            return View(tracks);
+            var track = db.Tracks.ToList();
+            return View(track);
         }
 
 

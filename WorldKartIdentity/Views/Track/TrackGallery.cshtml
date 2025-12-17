@@ -23,31 +23,68 @@
     </form>
 </div>
 
+@* Track Cards *@
+<section class="classes-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="class-item">
+                    <a asp-controller="Track" asp-action="TrackPage" asp-route-id="track.Id">
+                        <img src="~/img/kustendiltrack.png"
+                             class="card-img-top"
+                             style="height:280px; object-fit:cover; border-top-left-radius:20px;" />
+                    </a>
+                    <div class="ci-text">
+                        <span></span>
+                        <h5></h5>
+                        <a href="#"><i class="fa fa-angle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="class-item">
+                    <a asp-controller="Track" asp-action="TrackPage" asp-route-id="track.Id">
+                        <img src="~/img/kustendiltrack.png"
+                             class="card-img-top"
+                             style="height:280px; object-fit:cover; border-top-left-radius:20px;" />
+                    </a>
+                    <div class="ci-text">
+                        <span>Кюстендил</span>
+                        <h5>Картинг писта</h5>
+                        <a href="#"><i class="fa fa-angle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
 
 @* Track Cards *@
-<div class="container">
+@* <div class="container">
     <div class="row justify-content-center">
-        @foreach (var track in Model)
-        {
-            <div class="col-md-3 m-3">
+       @*  @foreach (var track in Model)
+        { *@
+            @* <div class="col-md-3 m-3">
                 <div class="card shadow" style="border-radius: 20px;">
 
-                    <a asp-controller="Track" asp-action="TrackPage" asp-route-id="@track.Id">
-                        <img src="@track.Picture"
-                             class="card-img-top"
+                    <a asp-controller="Track" asp-action="TrackPage" asp-route-id="track.Id">
+                    <img src="~/img/kustendiltrack.png"
+                         class="card-img-top"
                              style="height:280px; object-fit:cover; border-top-left-radius:20px;" />
                     </a>
 
                     <div class="card-body text-center">
-                        <h5 class="card-title">@track.Name</h5>
-                        <p>@track.Length m</p>
+                        <h5 class="card-title">track.Name</h5>
+                        <p>track.Length m</p>
                     </div>
-
                 </div>
-            </div>
-        }
-    </div>
-</div>
+            </div> *@
+      @*   } *@
+    @* </div> *@
+@*  </div> *@
 
 @* <form method="post" asp-action="ToggleLike" asp-controller="Track">
     <button type="submit" style="background: none; border: none; font-size: 28px; cursor: pointer;">
