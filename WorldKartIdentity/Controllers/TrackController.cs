@@ -72,7 +72,7 @@ namespace WorldKartIdentity.Controllers
         public IActionResult TrackRequests(TrackRequestViewModel trackrequestVM)
         {
             TrackRequest trackrequest = TrackRequestViewModel.TrackRequestVMToTrackRequest(trackrequestVM);
-            //db.TrackRequests.Add(trackrequest);
+            //db.TrackRequests.Add(trackrequest); //nqmam tablica trackrequest v bazata oshte
             db.SaveChanges();
             return View();
         }

@@ -7,7 +7,7 @@
 }
 
 
-<div class="text-center mt-4">
+<div class="text-center mt-5">
     <h1 class="display-4">Галерия с картинг писти</h1>
 </div>
 
@@ -24,42 +24,29 @@
 </div>
 
 @* Track Cards *@
-<section class="classes-section spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4 col-md-6">
-                <div class="class-item">
-                    <a asp-controller="Track" asp-action="TrackPage" asp-route-id="track.Id">
-                        <img src="~/img/kustendiltrack.png"
-                             class="card-img-top"
-                             style="height:280px; object-fit:cover; border-top-left-radius:20px;" />
-                    </a>
-                    <div class="ci-text">
-                        <span></span>
-                        <h5></h5>
-                        <a href="#"><i class="fa fa-angle-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="class-item">
-                    <a asp-controller="Track" asp-action="TrackPage" asp-route-id="track.Id">
-                        <img src="~/img/kustendiltrack.png"
-                             class="card-img-top"
-                             style="height:280px; object-fit:cover; border-top-left-radius:20px;" />
-                    </a>
-                    <div class="ci-text">
-                        <span>Кюстендил</span>
-                        <h5>Картинг писта</h5>
-                        <a href="#"><i class="fa fa-angle-right"></i></a>
+@foreach(var track in Model)
+{
+    <section class="classes-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="class-item">
+                        <a asp-controller="Track" asp-action="TrackGalley" asp-route-id="track.Id">
+                            <img src="~/img/kustendiltrack.png"
+                            class="card-img-top"
+                            style="height:280px; object-fit:cover; border-top-left-radius:20px;" />
+                        </a>
+                        <div class="ci-text">
+                            <span>@track.Name</span>
+                            <h5>@track.Length метра</h5>
+                            <a href="#"><i class="fa fa-angle-right"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-
+    </section>
+}
 
 
 @* Track Cards *@

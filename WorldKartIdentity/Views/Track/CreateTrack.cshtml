@@ -16,23 +16,25 @@
 <div class="register-container">
     <h2>Регистрация на писта</h2>
 
-    <div class="form-group">
-        <label>Име на писта </label>
-        <input asp-for="Name" type="text" name="TrackName" required />
-        <span class="text-danger"></span>
-    </div>
-
+    <form asp-action="CreateTrack" asp-controller="Track" method="post">
+        <div class="form-group">
+            <label>Име на писта </label>
+            <input asp-for="Name" type="text" name="Name" required />
+            <span class="text-danger"></span>
+        </div>
+        @* 
     <div class="form-group">
         <label>Имейл на писта</label>
         <input type="email" name="Email" required />
         <span class="text-danger"></span>
-    </div>
+    </div> *@
 
-    <div class="form-group">
-        <label>Дължина</label>
-        <input asp-for="Length" type="text" name="Length" required />
-        <span class="text-danger"></span>
-    </div>
+        <div class="form-group">
+            <label>Дължина</label>
+            <input asp-for="Length" type="text" name="Length" required />
+            <span class="text-danger"></span>
+        </div>
 
-    <button type="submit" class="btn-register">Регистрирай пистата</button>
+        <button type="submit" class="btn-register">Регистрирай пистата</button>
+    </form>
 </div>
