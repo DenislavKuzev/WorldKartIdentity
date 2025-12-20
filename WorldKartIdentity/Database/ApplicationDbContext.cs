@@ -11,6 +11,8 @@ namespace WorldKartIdentity.Database
 
         public DbSet<Track> Tracks { get; set; }
 
+        public DbSet<BlogPost> Blogs { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -18,6 +20,7 @@ namespace WorldKartIdentity.Database
             builder.Entity<User>().ToTable("Users");
             builder.Entity<IdentityRole>().ToTable("Roles");
             builder.Entity<Track>().ToTable("Tracks");
+            builder.Entity<BlogPost>().ToTable("BlogPosts");
             builder.Entity<TrackRequest>().ToTable("TrackRequests");
             builder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
             builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
