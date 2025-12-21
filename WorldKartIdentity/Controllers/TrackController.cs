@@ -29,6 +29,13 @@ namespace WorldKartIdentity.Controllers
             return View(track);
         }
 
+        public async Task<IActionResult> TrackDetail(int id)
+        {
+            var track = await db.Tracks.FindAsync(id);
+            TrackViewModel viewModel = new TrackViewModel(track);
+            return View(viewModel);
+        }
+
 
         //[HttpPost]
         //public IActionResult ToggleLike(int id)
@@ -46,7 +53,6 @@ namespace WorldKartIdentity.Controllers
         //}
 
 
-
         [HttpGet]
         public IActionResult CreateTrack()
         {
@@ -56,6 +62,17 @@ namespace WorldKartIdentity.Controllers
         [HttpPost]
         public IActionResult CreateTrack(TrackViewModel trackVM)
         {
+            //if (trackVM.PictureFile != null && trackVM.PictureFile.Length > 0)
+            //{
+            //    using (var memoryStream = new MemoryStream())
+            //    {
+            //        trackVM.PictureFile.CopyToAsync(memoryStream);
+            //        byte[] imageBytes = memoryStream.ToArray();
+
+            //        string base64String = Convert.ToBase64String(imageBytes);
+            //        trackVM.Picture = base64String;
+            //    }
+            //}   //Trqbwa da si suzdam PictureFile vuv TrackViewModel
             Track tracks = TrackViewModel.TrackVMToTrack(trackVM);
             db.Tracks.Add(tracks);
             db.SaveChanges();
@@ -72,7 +89,7 @@ namespace WorldKartIdentity.Controllers
         public IActionResult TrackRequests(TrackRequestViewModel trackrequestVM)
         {
             TrackRequest trackrequest = TrackRequestViewModel.TrackRequestVMToTrackRequest(trackrequestVM);
-            //db.TrackRequests.Add(trackrequest); //nqmam tablica trackrequest v bazata oshte
+            db.TrackRequests.Add(trackrequest);
             db.SaveChanges();
             return View();
         }

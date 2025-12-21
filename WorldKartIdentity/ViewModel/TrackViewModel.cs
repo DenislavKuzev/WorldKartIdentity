@@ -4,7 +4,7 @@ namespace WorldKartIdentity.ViewModel
 {
     public class TrackViewModel
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         public string Picture { get; set; } = string.Empty;
 
@@ -12,7 +12,6 @@ namespace WorldKartIdentity.ViewModel
 
         public TrackViewModel()
         {
-            Name = string.Empty;
             Length = 0;
         }
 
