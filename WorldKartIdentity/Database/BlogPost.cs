@@ -10,7 +10,7 @@ namespace WorldKartIdentity.Database
 
         public string Content { get; set; } = null!;
 
-        public DateTime PublishDate { get; set; } = DateTime.Now;
+        public DateTime PublishedDate { get; set; } = DateTime.Now;
 
         public int Likes { get; set; }
 

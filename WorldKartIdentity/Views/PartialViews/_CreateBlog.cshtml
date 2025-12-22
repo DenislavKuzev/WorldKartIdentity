@@ -1,0 +1,53 @@
+﻿@model WorldKartIdentity.ViewModel.BlogViewModel
+<div class="modal fade" id="threadModal" tabindex="-1" aria-labelledby="threadModalLabel" aria-hidden="true">
+    <form asp-action="CreateBlog" asp-controller="Blog" method="post" enctype="multipart/form-data">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg">
+
+                <div class="modal-header border-0 pb-0">
+                    <button type="button" class="btn-close ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h6 class="modal-title w-100 text-center fw-bold" id="threadModalLabel">Post a blog</h6>
+                    <div style="width: 32px;"></div>
+                </div>
+
+                <div class="modal-body pt-3">
+                    <div class="d-flex gap-3">
+                        <div class="flex-shrink-0">
+                            <div class="thread-line-container">
+                                <img src="https://i.pravatar.cc/150?img=60" class="rounded-circle" width="44" height="44" alt="Avatar">
+                                <div class="thread-line"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex-grow-1">
+                            <div class="user-header-row">
+                                <span class="fw-bold">st_raikin41</span> @* replace with currently logged in user *@
+                                <i class="bi bi-chevron-right text-muted small" style="font-size: 0.7rem;"></i>
+                                <input type="text" class="topic-input" asp-for="Title" placeholder="Add a topic">
+                            </div>
+
+                            <textarea id="post-text" asp-for="Content" class="form-control textarea-plain mb-2" rows="2" placeholder="Напишете нещо..."></textarea>
+
+                            <div id="preview-container"></div>
+
+                            <div class="mt-2 mb-3 ms-n1">
+                                <input type="file" id="file-input" multiple="false" accept="image/*,video/*" name="PictureFile" asp-for="PictureFile" hidden>
+                                <div class="media-plus-btn" onclick="document.getElementById('file-input').click()" title="Add media">
+                                    <i class="bi bi-plus-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-0 pt-0">
+                    <div class="d-flex justify-content-between w-100 align-items-center">
+                        @* <span class="text-muted small ps-5"></span> *@
+                        <button id="post-btn" class="btn btn-post rounded-pill opacity-50" disabled type="submit">Post</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>

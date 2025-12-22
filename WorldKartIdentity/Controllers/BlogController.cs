@@ -19,16 +19,23 @@ namespace WorldKartIdentity.Controllers
         [HttpGet]
         public async Task<IActionResult> Blogs()
         {
+            var viewModel = new List<BlogViewModel>();
             var blogs = await db.Blogs.Take(100).ToListAsync();
-            return View(blogs);
+            blogs.ForEach(b => viewModel.Add(new BlogViewModel(b)));
+
+            return View(viewModel);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> CreateBlog(BlogViewModel blogVM)
-        //{
-        //    var blog = BlogViewModel.BlogVMToTrack(blogVM);
-            
-        //}
+        [HttpPost]
+        public async Task<IActionResult> CreateBlog(BlogViewModel blogVM)
+        {
+            var blog = BlogViewModel.BlogVMToBlog(blogVM);
+            await db.Blogs.AddAsync(blog);
+            await db.SaveChangesAsync();
+
+            return RedirectToAction("Blogs");
+
+        }
 
     }
 }

@@ -8,7 +8,7 @@ namespace WorldKartIdentity.ViewModel
 
         public string Content { get; set; } = null!;
 
-        public DateTime PublishDate { get; set; } = DateTime.Now;
+        public DateTime PublishedDate { get; set; } = DateTime.Now;
 
         public int Likes { get; set; }
 
@@ -16,28 +16,54 @@ namespace WorldKartIdentity.ViewModel
 
         public string? PictureBase64 { get; set; }
 
+        public IFormFile? PictureFile { get; set; }
 
+
+        public BlogViewModel()
+        {
+        }
 
         public BlogViewModel(BlogPost blog)
         {
             Title = blog.Title;
             Content = blog.Content;
-            PublishDate = blog.PublishDate;
+            PublishedDate = blog.PublishedDate;
             Likes = blog.Likes;
             Dislikes = blog.Dislikes;
             PictureBase64 = blog.PictureBase64;
         }
 
-        public static BlogPost BlogVMToTrack(BlogViewModel blogVM)
+        public static BlogPost BlogVMToBlog(BlogViewModel blogVM)
         {
             BlogPost blog = new BlogPost();
             blog.Title = blogVM.Title;
             blog.Content = blogVM.Content;
-            blog.PublishDate = blogVM.PublishDate;
+            blog.PublishedDate = blogVM.PublishedDate;
             blog.Likes = blogVM.Likes;
             blog.Dislikes = blogVM.Dislikes;
-            blog.PictureBase64 = blogVM.PictureBase64;
+
+            if (blogVM.PictureFile != null) 
+            {
+                blog.PictureBase64 = FileToBase64(blogVM.PictureFile);
+            }
+            else
+            {
+                blog.PictureBase64 = string.Empty;
+            }
+                
             return blog;
+        }
+
+        public static string FileToBase64(IFormFile file)
+        {
+            using (var stream = new MemoryStream())
+            {
+                file.CopyTo(stream);
+                byte[] streamBytes = stream.ToArray();
+
+                return Convert.ToBase64String(streamBytes);
+            }
+            
         }
     }
 }

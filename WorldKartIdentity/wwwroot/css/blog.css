@@ -1,12 +1,17 @@
 ﻿body {
-    background-color: #f8f9fa;
+    background-color: #2b2b2b;
 }
 
 /* Custom styles not covered by standard Bootstrap utilities */
-.thread-card {
-    max-width: 600px; /* Slightly wider to accommodate two images comfortably */
+
+.blog-container{
+    margin-top:10%;
+}
+
+.blog-card {
+    /*max-width: 1100px;*/ /* Slightly wider to accommodate two images comfortably */
     background: white;
-    border: 1px solid #dee2e6;
+    border: 1px solid black;
 }
 
 /* Avatar Styling */
@@ -61,3 +66,127 @@
 .rotate-90 {
     transform: rotate(90deg);
 }
+.post-btn {
+    width: fit-content;
+    align-self: end;
+}
+
+/* Modal Customizations */
+.modal-content {
+    border-radius: 16px;
+    border: none;
+}
+
+/* Header & Topic Styling */
+.user-header-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.topic-input {
+    border: none;
+    outline: none;
+    color: #8a8b91;
+    font-size: 0.95rem;
+    width: auto;
+    flex-grow: 1;
+    background: transparent;
+}
+
+/* Textarea Styling */
+.textarea-plain {
+    resize: none;
+    border: none;
+    outline: none;
+    box-shadow: none !important;
+    padding: 0;
+    font-size: 1.1rem;
+    background: transparent;
+}
+
+/* Thread Line */
+.thread-line-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.thread-line {
+    width: 2px;
+    background-color: #cfd9de;
+    flex-grow: 1;
+    margin-top: 8px;
+    min-height: 60px;
+}
+
+/* Image Preview Grid */
+#preview-container {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 12px;
+}
+
+.preview-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+}
+
+.preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #eee;
+}
+
+.remove-img {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Media Plus Button */
+.media-plus-btn {
+    color: #8e8e8e;
+    font-size: 1.4rem;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+    .media-plus-btn:hover {
+        background-color: #f0f0f0;
+        color: #1d9bf0;
+    }
+
+.btn-post {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    padding: 8px 24px;
+}
+
+    .btn-post:hover {
+        background-color: #333;
+    }
