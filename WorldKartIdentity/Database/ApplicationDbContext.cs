@@ -9,6 +9,7 @@ namespace WorldKartIdentity.Database
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> Options) : base(Options) { }
         public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
+        public DbSet<TrackRequest> TrackRequests {  get; set; }
         public DbSet<Track> Tracks { get; set; }
 
         public DbSet<BlogPost> Blogs { get; set; }
