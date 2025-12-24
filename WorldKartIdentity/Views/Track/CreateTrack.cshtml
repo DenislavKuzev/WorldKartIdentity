@@ -16,7 +16,7 @@
 <div class="register-container">
     <h2>Регистрация на писта</h2>
 
-    <form asp-action="CreateTrack" asp-controller="Track" method="post">
+    <form asp-action="CreateTrack" asp-controller="Track" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label>Име на писта </label>
             <input asp-for="Name" type="text" name="Name" required />
@@ -37,7 +37,7 @@
 
         <div class="form-group">
         <label >Изображение на пистата</label>
-        <input asp-for="Picture" type="file" name="Picture" required />
+            <input asp-for="PictureFile" type="file" name="PictureFile" accept="image/*" required />
         </div>
 
         <button type="submit" class="btn-register">Регистрирай пистата</button>

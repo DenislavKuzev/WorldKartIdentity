@@ -25,8 +25,14 @@ namespace WorldKartIdentity.Controllers
 
         public IActionResult TrackGallery(int id)
         {
-            var track = db.Tracks.ToList();
-            return View(track);
+            var tracks = db.Tracks.ToList();
+            var tracksVM = new List<TrackViewModel>();
+            foreach (var track in tracks)
+            {
+                var trackVM = TrackViewModel.TrackToTrackVM(track);
+                tracksVM.Add(trackVM);
+            }
+            return View(tracksVM);
         }
 
         public async Task<IActionResult> TrackDetail(int id)
@@ -62,17 +68,17 @@ namespace WorldKartIdentity.Controllers
         [HttpPost]
         public IActionResult CreateTrack(TrackViewModel trackVM)
         {
-            //if (trackVM.PictureFile != null && trackVM.PictureFile.Length > 0)
-            //{
-            //    using (var memoryStream = new MemoryStream())
-            //    {
-            //        trackVM.PictureFile.CopyToAsync(memoryStream);
-            //        byte[] imageBytes = memoryStream.ToArray();
+            if (trackVM.PictureFile != null && trackVM.PictureFile.Length > 0)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    trackVM.PictureFile.CopyToAsync(memoryStream);
+                    byte[] imageBytes = memoryStream.ToArray();
 
-            //        string base64String = Convert.ToBase64String(imageBytes);
-            //        trackVM.Picture = base64String;
-            //    }
-            //}   //Trqbwa da si suzdam PictureFile vuv TrackViewModel
+                    string base64String = Convert.ToBase64String(imageBytes);
+                    trackVM.PictureBase64 = base64String;
+                }
+            }   //Trqbwa da si suzdam PictureFile vuv TrackViewModel
             Track tracks = TrackViewModel.TrackVMToTrack(trackVM);
             db.Tracks.Add(tracks);
             db.SaveChanges();

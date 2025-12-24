@@ -80,14 +80,14 @@ h1, h2, h4 {
         }
 
         .class-item .ci-text span {
-            color: #f36100;
-            font-size: 12px;
+            color: #DC3545;
+            font-size: 22px;
             text-transform: uppercase;
             font-weight: 700;
         }
 
         .class-item .ci-text h5 {
-            font-size: 20px;
+            font-size: 17px;
             color: #ffffff;
             font-weight: 600;
             text-transform: uppercase;
