@@ -1,133 +1,77 @@
-﻿
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Karting Line - Adrenaline & Speed</title>
-    <style>
-        /* CSS STYLES */
+﻿@model List<WorldKartIdentity.ViewModel.BlogViewModel>
+@{
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
 
-        /* Variables for easy color changes */
-        :root {
-            --dark-blue: #000033; /* Very dark, almost black-blue */
-            --primary-red: #CC0000; /* Bright, racing red */
-            --white: #FFFFFF;
-            --light-blue: #003366;
-            --text-color: #DDDDDD; /* Off-white for body text */
-        }
+@section Styles {
+    <link rel="stylesheet" href="~/css/blog.css" asp-append-version="true" />
+}
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: var(--dark-blue);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
+@section Scripts{
+    <script src="~/js/blog.js"></script>
+}
 
-        .header {
-            background-color: var(--primary-red);
-            color: var(--white);
-            padding: 20px 0;
-            text-align: center;
-            border-bottom: 5px solid var(--light-blue);
-        }
+<div class="d-flex flex-column align-items-end w-fit-content justify-content-end mt-5">
 
-            .header h1 {
-                margin: 0;
-                font-size: 2.5em;
-                letter-spacing: 2px;
-                text-transform: uppercase;
-            }
+    <div class="container d-flex flex-column gap-3 justify-content-center position-relative text-white blog-container">
+        <button type="button" class="post-btn btn btn-dark rounded-pill px-4 py-2 fw-bold" data-bs-toggle="modal" data-bs-target="#threadModal">
+            <i class="bi bi-plus-lg"></i>
+        </button>
+        <div class="blog-card p-3 rounded-4 shadow-sm w-100 bg-dark">
 
-            .header p {
-                margin: 5px 0 0;
-                font-style: italic;
-            }
+            <div class="d-flex">
+                <div class="me-3 flex-shrink-0">
+                    <div class="avatar-container">
+                        <img src="https://i.pravatar.cc/150?img=8" class="rounded-circle img-fluid" alt="User">
+                    </div>
+                </div>
 
-        .container {
-            width: 80%;
-            margin: 20px auto;
-            padding: 0;
-        }
+                <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <div>
+                            <span class="fw-bold me-1">enrouteryan</span>
+                            <span class="text-muted text-small">2d</span>
+                        </div>
+                        <div class="text-muted d-flex gap-3 align-items-center">
+                            <i class="bi bi-three-dots"></i>
+                        </div>
+                    </div>
 
-        .post {
-            background-color: var(--light-blue);
-            border: 1px solid var(--primary-red);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        }
+                    <div class="mb-2 h-auto mw-100">
+                        <p class="mb-0 fs-6 text-wrap">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta accusamus porro numquam? Omnis quibusdam repellendus quos. Quas vero, accusamus dolorum cupiditate impedit, sequi possimus asperiores optio laudantium corrupti minima enim.</p>
+                    </div>
 
-            .post h2 {
-                color: var(--primary-red);
-                border-bottom: 3px solid var(--white);
-                padding-bottom: 10px;
-                margin-top: 0;
-            }
+                    <div class="row g-2 my-3">
 
-        .post-meta {
-            font-size: 0.9em;
-            color: var(--white);
-            margin-bottom: 15px;
-            display: block;
-        }
+                        <div class="col-6">
+                            <img src="https://picsum.photos/id/237/400/300" class="img-fluid rounded-4 thread-image w-100" alt="Image 1 description">
+                        </div>
 
-        .button {
-            display: inline-block;
-            background-color: var(--primary-red);
-            color: var(--white);
-            padding: 10px 15px;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
+                        <div class="col-6">
+                            <img src="https://picsum.photos/id/238/400/300" class="img-fluid rounded-4 thread-image w-100" alt="Image 2 description">
+                        </div>
 
-            .button:hover {
-                background-color: var(--dark-blue);
-                border: 1px solid var(--primary-red);
-            }
+                    </div>
 
-        .footer {
-            background-color: var(--primary-red);
-            color: var(--white);
-            text-align: center;
-            padding: 15px 0;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
+                    <div class="d-flex align-items-center gap-4 mt-2">
+                        <div class="action-icon-wrapper text-small text-white">
+                            <i class="bi bi-heart fs-5 text-white"></i> <span>777</span>
+                        </div>
+                        <div class="action-icon-wrapper text-small text-white">
+                            <i class="bi bi-chat fs-5 rotate-90 text-white"></i> <span>17</span>
+                        </div>
+                        <div class="action-icon-wrapper text-small text-white">
+                            <i class="bi bi-repeat fs-5 text-white"></i> <span>49</span>
+                        </div>
+                        <div class="action-icon-wrapper text-white">
+                            <i class="bi bi-send fs-5 rotate-90 text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <div class="header">
-        <h1>World Karting Master </h1>
-        <p>Your pit stop for adrenaline, speed, and track tips.</p>
+        </div>
     </div>
+</div>
 
-    <div class="container">
-
-        <article class="post">
-            <h2>Mastering the Apex: Cornering Techniques</h2>
-            <span class="post-meta">Posted on December 11, 2025 by Ace Driver</span>
-            <p>Cornering is where you win or lose the race. The key is finding the *apex*—the innermost point of the corner. Brake early and in a straight line, turn in slightly before the corner's start, hit the apex, and then immediately accelerate out, letting the kart naturally drift to the outside edge of the track. This maximizes your exit speed, which is crucial for the following straightaway!</p>
-            <p>Remember: Slow in, fast out!</p>
-            <a href="#" class="button">Read More on Cornering</a>
-        </article>
-
-        <article class="post">
-            <h2>Choosing Your First Kart: A Beginner's Guide</h2>
-            <span class="post-meta">Posted on December 8, 2025 by Pit Crew Pete</span>
-            <p>New to karting? Welcome! For beginners, a **four-stroke (4-stroke)** engine is highly recommended. They are less complex, easier to maintain, and offer a more predictable power delivery compared to the high-revving two-strokes. Focus on learning the driving lines and throttle control before upgrading to a faster class.</p>
-            <p>Prioritize safety gear: a good helmet, driving suit, gloves, and rib protector are essential investments.</p>
-            <a href="#" class="button">See Recommended Karts</a>
-        </article>
-    </div>
-
-    <footer class="footer">
-        &copy; 2025 The Karting Line | Designed for Speed
-    </footer>
-
-</body>
-</html>
+@await Html.PartialAsync("/Views/PartialViews/_CreateBlog.cshtml", new BlogViewModel())
