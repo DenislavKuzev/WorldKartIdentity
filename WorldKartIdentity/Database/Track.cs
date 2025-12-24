@@ -12,4 +12,6 @@ public partial class Track
     public string Picture { get; set; } = null!;
 
     public int Length { get; set; }
+
+    public ICollection<TrackLike> Likes { get; set; } = new List<TrackLike>();
 }
