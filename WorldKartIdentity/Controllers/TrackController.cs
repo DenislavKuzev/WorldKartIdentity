@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WorldKartIdentity.Database;
 using WorldKartIdentity.ViewModel;
@@ -43,19 +44,41 @@ namespace WorldKartIdentity.Controllers
         }
 
 
-        //[HttpPost]
-        //public IActionResult ToggleLike(int id)
+        //public async Task<IActionResult> Like(int trackId)
         //{
-        //    var track = db.Tracks.FirstOrDefault(t => t.Id == id);
+        //    var userId = _userManager.GetUserId(User);
 
-        //    if (track == null)
-        //        return NotFound();
+        //    var exists = await db.TrackLikes
+        //        .AnyAsync(x => x.UserId == userId && x.TrackId == trackId);
 
-        //    track.IsLiked = !track.IsLiked;
-        //    db.SaveChanges();
+        //    if (!exists)
+        //    {
+        //        db.TrackLikes.Add(new TrackLike
+        //        {
+        //            UserId = userId,
+        //            TrackId = trackId
+        //        });
 
-        //    string referer = Request.Headers["Referer"].ToString();
-        //    return Redirect(referer);
+        //        await db.SaveChangesAsync();
+        //    }
+
+        //    return RedirectToAction("TrackGallery");
+        //}
+
+        //public async Task<IActionResult> Unlike(int trackId)
+        //{
+        //    var userId = _userManager.GetUserId(User);
+
+        //    var like = await db.TrackLikes
+        //        .FirstOrDefaultAsync(x => x.UserId == userId && x.TrackId == trackId);
+
+        //    if (like != null)
+        //    {
+        //        db.TrackLikes.Remove(like);
+        //        await db.SaveChangesAsync();
+        //    }
+
+        //    return RedirectToAction("TrackGallery");
         //}
 
 

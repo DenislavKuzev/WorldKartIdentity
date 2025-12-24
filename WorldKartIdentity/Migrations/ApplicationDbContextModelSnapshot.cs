@@ -155,6 +155,39 @@ namespace WorldKartIdentity.Migrations
                     b.ToTable("UserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("WorldKartIdentity.Database.BlogPost", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Dislikes")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Likes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PictureBase64")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PublishedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BlogPosts", (string)null);
+                });
+
             modelBuilder.Entity("WorldKartIdentity.Database.RefreshToken", b =>
                 {
                     b.Property<int>("Id")
@@ -216,6 +249,21 @@ namespace WorldKartIdentity.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tracks", (string)null);
+                });
+
+            modelBuilder.Entity("WorldKartIdentity.Database.TrackLike", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("TrackId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "TrackId");
+
+                    b.HasIndex("TrackId");
+
+                    b.ToTable("TrackLikes");
                 });
 
             modelBuilder.Entity("WorldKartIdentity.Database.TrackRequest", b =>
@@ -363,6 +411,35 @@ namespace WorldKartIdentity.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WorldKartIdentity.Database.TrackLike", b =>
+                {
+                    b.HasOne("WorldKartIdentity.Database.Track", "Track")
+                        .WithMany("Likes")
+                        .HasForeignKey("TrackId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WorldKartIdentity.Database.User", "User")
+                        .WithMany("LikedTracks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Track");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WorldKartIdentity.Database.Track", b =>
+                {
+                    b.Navigation("Likes");
+                });
+
+            modelBuilder.Entity("WorldKartIdentity.Database.User", b =>
+                {
+                    b.Navigation("LikedTracks");
                 });
 #pragma warning restore 612, 618
         }

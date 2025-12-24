@@ -8,11 +8,10 @@ namespace WorldKartIdentity.Database
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> Options) : base(Options) { }
         public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
-
-        public DbSet<TrackRequest> TrackRequests {  get; set; }
+        public DbSet<TrackRequest> TrackRequests { get; set; }
         public DbSet<Track> Tracks { get; set; }
-
         public DbSet<BlogPost> Blogs { get; set; }
+        public DbSet<TrackLike> TrackLikes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -27,6 +26,20 @@ namespace WorldKartIdentity.Database
             builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
             builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
             builder.Entity<RefreshToken>().ToTable("RefreshTokens");
+            builder.Entity<TrackLike>()
+            .HasKey(x => new { x.UserId, x.TrackId });
+
+            builder.Entity<TrackLike>()
+                .HasOne(x => x.User)
+                .WithMany(u => u.LikedTracks)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<TrackLike>()
+                .HasOne(x => x.Track)
+                .WithMany(t => t.Likes)
+                .HasForeignKey(x => x.TrackId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
