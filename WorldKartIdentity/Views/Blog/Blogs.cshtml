@@ -14,63 +14,74 @@
 <div class="d-flex flex-column align-items-end w-fit-content justify-content-end mt-5">
 
     <div class="container d-flex flex-column gap-3 justify-content-center position-relative text-white blog-container">
-        <button type="button" class="post-btn btn btn-dark rounded-pill px-4 py-2 fw-bold" data-bs-toggle="modal" data-bs-target="#threadModal">
-            <i class="bi bi-plus-lg"></i>
-        </button>
-        <div class="blog-card p-3 rounded-4 shadow-sm w-100 bg-dark">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <button type="button" class="post-btn btn btn-dark rounded-pill px-4 py-2 fw-bold" data-bs-toggle="modal" data-bs-target="#threadModal">
+                    <i class="bi bi-plus-lg"></i>
+            </button>
+        }
+        else
+        {
+            <a class="post-btn btn btn-dark rounded-pill px-4 py-2 fw-bold text-decoration-none" asp-controller="User" asp-action="Login">
+                <i class="bi bi-plus-lg"></i>
+            </a>
+        }
+        
+        
+        @foreach (var blog in Model)
+        {
+            <div class="blog-card p-3 rounded-4 shadow-sm w-100 bg-dark">
 
-            <div class="d-flex">
-                <div class="me-3 flex-shrink-0">
-                    <div class="avatar-container">
-                        <img src="https://i.pravatar.cc/150?img=8" class="rounded-circle img-fluid" alt="User">
+                <div class="d-flex">
+                    <div class="me-3 flex-shrink-0">
+                        <div class="avatar-container">
+                            <img src="https://i.pravatar.cc/150?img=8" class="rounded-circle img-fluid" alt="User">
+                        </div>
+                    </div>
+
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <div>
+                                <span class="fw-bold me-1">enrouteryan</span>
+                                <span class="text-muted text-small">2d</span>
+                            </div>
+                            <div class="text-muted d-flex gap-3 align-items-center">
+                                <i class="bi bi-three-dots"></i>
+                            </div>
+                        </div>
+
+                        <div class="mb-2 h-auto mw-100">
+                            <p class="mb-0 fs-6 text-wrap">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta accusamus porro numquam? Omnis quibusdam repellendus quos. Quas vero, accusamus dolorum cupiditate impedit, sequi possimus asperiores optio laudantium corrupti minima enim.</p>
+                        </div>
+
+                        <div class="row g-2 my-3">
+
+                            <div class="col-6">
+                                <img src="data:image/png;base64, @blog.PictureBase64" class="img-fluid rounded-4 thread-image w-100" alt="Image 1 description">
+                            </div>
+
+                        </div>
+
+                        <div class="d-flex align-items-center gap-4 mt-2">
+                            <div class="action-icon-wrapper text-small text-white">
+                                <i class="bi bi-heart fs-5 text-white"></i> <span>777</span>
+                            </div>
+                            <div class="action-icon-wrapper text-small text-white">
+                                <i class="bi bi-chat fs-5 rotate-90 text-white"></i> <span>17</span>
+                            </div>
+                            <div class="action-icon-wrapper text-small text-white">
+                                <i class="bi bi-repeat fs-5 text-white"></i> <span>49</span>
+                            </div>
+                            <div class="action-icon-wrapper text-white">
+                                <i class="bi bi-send fs-5 rotate-90 text-white"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="flex-grow-1">
-                    <div class="d-flex justify-content-between align-items-center mb-1">
-                        <div>
-                            <span class="fw-bold me-1">enrouteryan</span>
-                            <span class="text-muted text-small">2d</span>
-                        </div>
-                        <div class="text-muted d-flex gap-3 align-items-center">
-                            <i class="bi bi-three-dots"></i>
-                        </div>
-                    </div>
-
-                    <div class="mb-2 h-auto mw-100">
-                        <p class="mb-0 fs-6 text-wrap">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta accusamus porro numquam? Omnis quibusdam repellendus quos. Quas vero, accusamus dolorum cupiditate impedit, sequi possimus asperiores optio laudantium corrupti minima enim.</p>
-                    </div>
-
-                    <div class="row g-2 my-3">
-
-                        <div class="col-6">
-                            <img src="https://picsum.photos/id/237/400/300" class="img-fluid rounded-4 thread-image w-100" alt="Image 1 description">
-                        </div>
-
-                        <div class="col-6">
-                            <img src="https://picsum.photos/id/238/400/300" class="img-fluid rounded-4 thread-image w-100" alt="Image 2 description">
-                        </div>
-
-                    </div>
-
-                    <div class="d-flex align-items-center gap-4 mt-2">
-                        <div class="action-icon-wrapper text-small text-white">
-                            <i class="bi bi-heart fs-5 text-white"></i> <span>777</span>
-                        </div>
-                        <div class="action-icon-wrapper text-small text-white">
-                            <i class="bi bi-chat fs-5 rotate-90 text-white"></i> <span>17</span>
-                        </div>
-                        <div class="action-icon-wrapper text-small text-white">
-                            <i class="bi bi-repeat fs-5 text-white"></i> <span>49</span>
-                        </div>
-                        <div class="action-icon-wrapper text-white">
-                            <i class="bi bi-send fs-5 rotate-90 text-white"></i>
-                        </div>
-                    </div>
-                </div>
             </div>
-
-        </div>
+        }
+        
     </div>
 </div>
 

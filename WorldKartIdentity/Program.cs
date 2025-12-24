@@ -27,7 +27,11 @@ namespace WorldKartMaster
                 options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
                 options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
             })
-            .AddCookie(IdentityConstants.ApplicationScheme)
+            .AddCookie(IdentityConstants.ApplicationScheme, options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromHours(5);
+                options.SlidingExpiration = true;
+            })
             .AddBearerToken(IdentityConstants.BearerScheme);
 
             builder.Services.AddIdentityCore<User>()     //staro
