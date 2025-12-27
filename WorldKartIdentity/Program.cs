@@ -57,14 +57,14 @@ namespace WorldKartMaster
 
                 string[] roleNames = { "Admin", "Users"};
 
-                //foreach (var roleName in roleNames)
-                //{
-                //    var roleExist = await roleManager.RoleExistsAsync(roleName);
-                //    if (!roleExist)
-                //    {
-                //        await roleManager.CreateAsync(new IdentityRole(roleName));
-                //    }
-                //}
+                foreach (var roleName in roleNames)
+                {
+                    var roleExist = await roleManager.RoleExistsAsync(roleName);
+                    if (!roleExist)
+                    {
+                        await roleManager.CreateAsync(new IdentityRole(roleName));
+                    }
+                }
             }
 
             if (app.Environment.IsDevelopment())

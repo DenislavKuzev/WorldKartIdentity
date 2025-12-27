@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WorldKartIdentity.Database;
 
-public partial class Track
+public class Track
 {
     public int Id { get; set; }
 

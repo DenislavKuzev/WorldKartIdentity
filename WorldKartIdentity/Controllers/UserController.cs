@@ -50,7 +50,7 @@ namespace WorldKartIdentity.Controllers
                     await _users.AddToRoleAsync(user, "Users");//даване на роля като Юсър //грешката идва от тук
                     // Влизане веднага след регистрация
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Privacy", "Home", new UserViewModel(user));
+                    return RedirectToAction("Index", "Home", new UserViewModel(user));
             }
             else
             {
@@ -93,7 +93,7 @@ namespace WorldKartIdentity.Controllers
             _db.RefreshTokens.Add(refreshToken);
             await _db.SaveChangesAsync();
             //return Ok(new TokenPairResponse { AccessToken = token, RefreshToken = refreshPlain });
-            return RedirectToAction("Privacy", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         private string GenerateJwt(User user, IList<string> roles)

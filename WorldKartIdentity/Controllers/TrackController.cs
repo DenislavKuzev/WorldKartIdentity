@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WorldKartIdentity.Database;
@@ -9,10 +10,12 @@ namespace WorldKartIdentity.Controllers
     public class TrackController : Controller
     {
         private readonly ApplicationDbContext db;
+        private readonly UserManager<User> userManager;
 
-        public TrackController(ApplicationDbContext context)
+        public TrackController(ApplicationDbContext context, UserManager<User> userManager)
         {
             db = context;
+            this.userManager = userManager;
         }
 
         public IActionResult Admin()
@@ -26,15 +29,51 @@ namespace WorldKartIdentity.Controllers
 
         public IActionResult TrackGallery(int id)
         {
-            var tracks = db.Tracks.ToList();
+            var userId = userManager.GetUserId(User);
+
+            var tracks = db.Tracks.Include(t => t.Likes).ToList();
             var tracksVM = new List<TrackViewModel>();
             foreach (var track in tracks)
             {
                 var trackVM = TrackViewModel.TrackToTrackVM(track);
+                trackVM.LikesCount = track.Likes.Count;
+                trackVM.IsLikedByCurrentUser =
+                    track.Likes.Any(x => x.UserId == userId);
                 tracksVM.Add(trackVM);
             }
             return View(tracksVM);
         }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> ToggleLike(int trackId)
+        {
+            var userId = userManager.GetUserId(User);
+
+            if (trackId == 0)
+                return BadRequest("trackId is 0 — not passed from form");
+
+            var like = await db.TrackLikes
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.TrackId == trackId);
+
+            if (like == null)
+            {
+                var track = await db.Tracks.FindAsync(trackId);
+                db.TrackLikes.Add(new TrackLike
+                {
+                    UserId = userId,
+                    TrackId = trackId
+                });
+            }
+            else
+            {
+                db.TrackLikes.Remove(like);
+            }
+
+            await db.SaveChangesAsync();
+            return RedirectToAction("TrackGallery");
+        }
+
 
         public async Task<IActionResult> TrackDetail(int id)
         {
@@ -42,44 +81,6 @@ namespace WorldKartIdentity.Controllers
             TrackViewModel viewModel = new TrackViewModel(track);
             return View(viewModel);
         }
-
-
-        //public async Task<IActionResult> Like(int trackId)
-        //{
-        //    var userId = _userManager.GetUserId(User);
-
-        //    var exists = await db.TrackLikes
-        //        .AnyAsync(x => x.UserId == userId && x.TrackId == trackId);
-
-        //    if (!exists)
-        //    {
-        //        db.TrackLikes.Add(new TrackLike
-        //        {
-        //            UserId = userId,
-        //            TrackId = trackId
-        //        });
-
-        //        await db.SaveChangesAsync();
-        //    }
-
-        //    return RedirectToAction("TrackGallery");
-        //}
-
-        //public async Task<IActionResult> Unlike(int trackId)
-        //{
-        //    var userId = _userManager.GetUserId(User);
-
-        //    var like = await db.TrackLikes
-        //        .FirstOrDefaultAsync(x => x.UserId == userId && x.TrackId == trackId);
-
-        //    if (like != null)
-        //    {
-        //        db.TrackLikes.Remove(like);
-        //        await db.SaveChangesAsync();
-        //    }
-
-        //    return RedirectToAction("TrackGallery");
-        //}
 
 
         [HttpGet]
