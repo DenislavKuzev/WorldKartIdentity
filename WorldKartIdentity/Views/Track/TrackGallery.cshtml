@@ -41,16 +41,16 @@
                             <span>@track.Name</span>
                             <h5>@track.Length метра</h5>
                             <i class="fa fa-angle-right">
-                                <form method="post" asp-action="ToggleLike" asp-controller="Track" asp-route-trackId="@track.Id">
-                                    @* <input type="hidden" name="trackId" value="@track.Id" /> *@  @* koe e po dobre: tova ili asp-route *@
+                                <form method="post" asp-action="ToggleLike" asp-controller="Track" >
+                                    <input type="hidden" name="trackId" value="@track.Id" />  @* koe e po dobre: tova ili asp-route *@
                                     <button type="submit" class="like-btn">
                                         @if (track.IsLikedByCurrentUser)
                                         {
-                                            <span style="color:red;">❤</span>
+                                            <i class="fa fa-heart" aria-hidden="true" style="color:red;" ></i>
                                         }
                                         else
                                         {
-                                            <span style="color:gray;">♡</span>
+                                            <i class="fa fa-heart-o" aria-hidden="true" style="color:red;"></i>
                                         }
                                     </button>
                                 </form>
