@@ -4,9 +4,13 @@ namespace WorldKartIdentity.ViewModel
 {
     public class BlogViewModel
     {
+
+        public int Id { get; set; }
         public string Title { get; set; } = null!;
 
         public string Content { get; set; } = null!;
+
+        public User Author { get; set; } = null!;
 
         public DateTime PublishedDate { get; set; } = DateTime.Now;
 
@@ -18,6 +22,7 @@ namespace WorldKartIdentity.ViewModel
 
         public IFormFile? PictureFile { get; set; }
 
+        
 
         public BlogViewModel()
         {
@@ -25,12 +30,14 @@ namespace WorldKartIdentity.ViewModel
 
         public BlogViewModel(BlogPost blog)
         {
+            Id = blog.Id;
             Title = blog.Title;
             Content = blog.Content;
             PublishedDate = blog.PublishedDate;
             Likes = blog.Likes;
             Dislikes = blog.Dislikes;
             PictureBase64 = blog.PictureBase64;
+            Author = blog.Author;
         }
 
         public static BlogPost BlogVMToBlog(BlogViewModel blogVM)

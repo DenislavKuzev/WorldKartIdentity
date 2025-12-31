@@ -64,3 +64,19 @@ myModalEl.addEventListener('hidden.bs.modal', () => {
     renderPreviews();
     updatePostButton();
 });
+
+
+
+
+
+//like/remove-like functionality
+
+const heartBtn = document.getElementById('heartBtn');
+
+heartBtn.addEventListener('click', async () => {
+    heartBtn.classList.toggle('is-liked');
+    console.log(heartBtn.getAttribute("data-bid"));
+    const res = await fetch(`/Blog/ToggleLike?bid=${Number(heartBtn.getAttribute('data-bid'))}`, { method: 'POST' });
+    const resBody = await res.json();
+    heartBtn.nextElementSibling.textContent = resBody.likes;
+});

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -39,6 +40,12 @@ namespace WorldKartIdentity.Controllers
             if (userVM.Password != userVM.RepeatPassword)
             {
                 ModelState.AddModelError("", "Паролите не съвпадат!");
+                return View();
+            }
+            bool emailExists = await _db.Users.AnyAsync(u => u.Email == userVM.Email);
+            if(emailExists)
+            {
+                ModelState.AddModelError("", "Имейлът вече е регистриран!");
                 return View();
             }
 

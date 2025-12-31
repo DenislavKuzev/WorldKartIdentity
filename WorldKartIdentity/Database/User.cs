@@ -7,5 +7,7 @@ namespace WorldKartIdentity.Database
         public string? Picture { get; set; } = string.Empty;
 
         public ICollection<TrackLike> LikedTracks { get; set; } = new List<TrackLike>();
+
+        public ICollection<BlogLikes> LikedBlogs { get; set; } = new List<BlogLikes>();
     }
 }

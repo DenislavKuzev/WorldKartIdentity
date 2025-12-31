@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorldKartIdentity.Database;
 
@@ -11,9 +12,11 @@ using WorldKartIdentity.Database;
 namespace WorldKartIdentity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251226143424_CreateBlogLikesTable")]
+    partial class CreateBlogLikesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,24 +156,6 @@ namespace WorldKartIdentity.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("UserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("WorldKartIdentity.Database.BlogLikes", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("BlogId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "BlogId");
-
-                    b.HasIndex("BlogId");
-
-                    b.ToTable("BlogLikes");
                 });
 
             modelBuilder.Entity("WorldKartIdentity.Database.BlogPost", b =>
@@ -437,25 +422,6 @@ namespace WorldKartIdentity.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WorldKartIdentity.Database.BlogLikes", b =>
-                {
-                    b.HasOne("WorldKartIdentity.Database.BlogPost", "Blog")
-                        .WithMany("BlogLikes")
-                        .HasForeignKey("BlogId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WorldKartIdentity.Database.User", "User")
-                        .WithMany("LikedBlogs")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Blog");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("WorldKartIdentity.Database.BlogPost", b =>
                 {
                     b.HasOne("WorldKartIdentity.Database.User", "Author")
@@ -486,11 +452,6 @@ namespace WorldKartIdentity.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("WorldKartIdentity.Database.BlogPost", b =>
-                {
-                    b.Navigation("BlogLikes");
-                });
-
             modelBuilder.Entity("WorldKartIdentity.Database.Track", b =>
                 {
                     b.Navigation("Likes");
@@ -498,8 +459,6 @@ namespace WorldKartIdentity.Migrations
 
             modelBuilder.Entity("WorldKartIdentity.Database.User", b =>
                 {
-                    b.Navigation("LikedBlogs");
-
                     b.Navigation("LikedTracks");
                 });
 #pragma warning restore 612, 618

@@ -13,6 +13,8 @@ namespace WorldKartIdentity.Database
         public DbSet<BlogPost> Blogs { get; set; }
         public DbSet<TrackLike> TrackLikes { get; set; }
 
+        public DbSet<BlogLikes> BlogLikes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -28,6 +30,7 @@ namespace WorldKartIdentity.Database
             builder.Entity<RefreshToken>().ToTable("RefreshTokens");
             builder.Entity<TrackLike>()
             .HasKey(x => new { x.UserId, x.TrackId });
+            builder.Entity<BlogLikes>().HasKey(x => new { x.UserId, x.BlogId });
 
             builder.Entity<TrackLike>()
                 .HasOne(x => x.User)
@@ -39,6 +42,18 @@ namespace WorldKartIdentity.Database
                 .HasOne(x => x.Track)
                 .WithMany(t => t.Likes)
                 .HasForeignKey(x => x.TrackId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<BlogLikes>()
+                .HasOne(x => x.User)
+                .WithMany(u => u.LikedBlogs)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<BlogLikes>()
+                .HasOne(x => x.Blog)
+                .WithMany(b => b.BlogLikes)
+                .HasForeignKey(x => x.BlogId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

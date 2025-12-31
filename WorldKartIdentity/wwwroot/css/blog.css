@@ -1,11 +1,15 @@
 ﻿body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     background-color: #2b2b2b;
 }
 
 /* Custom styles not covered by standard Bootstrap utilities */
 
 .blog-container{
-    margin-top:10%;
+    margin-top:-30%;
 }
 
 .blog-card {
@@ -190,3 +194,64 @@
     .btn-post:hover {
         background-color: #333;
     }
+
+
+/*  like/remove-like style   */
+
+:root {
+    --heart-color: #ed4956; /* Instagram Red */
+    --gray-color: #262626;
+}
+
+
+.heart-btn {
+    cursor: pointer;
+    outline: none;
+    background: none;
+    border: none;
+    padding: 0;
+    transition: transform 0.1s ease;
+}
+
+/* The Pop Animation */
+@keyframes heart-pop {
+    0% {
+        transform: scale(1);
+    }
+
+    15% {
+        transform: scale(1.2);
+    }
+
+    30% {
+        transform: scale(0.95);
+    }
+
+    45% {
+        transform: scale(1.1);
+    }
+
+    80% {
+        transform: scale(1);
+    }
+}
+
+.heart-icon {
+    width: 50px;
+    height: 50px;
+    fill: none;
+    stroke: var(--gray-color);
+    stroke-width: 2;
+    transition: fill 0.2s ease, stroke 0.2s ease;
+}
+
+/* State when liked */
+.is-liked .heart-icon {
+    fill: var(--heart-color);
+    stroke: var(--heart-color);
+    animation: heart-pop 0.45s ease-in-out;
+}
+
+.heart-btn:active {
+    transform: scale(0.9);
+}

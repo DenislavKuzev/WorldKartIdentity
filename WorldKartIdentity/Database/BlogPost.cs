@@ -10,6 +10,8 @@ namespace WorldKartIdentity.Database
 
         public string Content { get; set; } = null!;
 
+        public string AuthorId { get; set; } = null!;
+
         public DateTime PublishedDate { get; set; } = DateTime.Now;
 
         public int Likes { get; set; }
@@ -17,6 +19,10 @@ namespace WorldKartIdentity.Database
         public int Dislikes { get; set; } 
 
         public string? PictureBase64 { get; set; }
+
+        public User Author { get; set; } = null!;
+
+        public List<BlogLikes> BlogLikes { get; set; } = new List<BlogLikes>();
 
 
     }

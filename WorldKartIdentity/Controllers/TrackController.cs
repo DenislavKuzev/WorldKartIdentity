@@ -79,7 +79,9 @@ namespace WorldKartIdentity.Controllers
         {
             var track = await db.Tracks.FindAsync(id);
             TrackViewModel viewModel = new TrackViewModel(track);
+            
             return View(viewModel);
+            
         }
 
 
