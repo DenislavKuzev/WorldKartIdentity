@@ -24,7 +24,17 @@ namespace WorldKartIdentity.Controllers
         {
             var viewModel = new List<BlogViewModel>();
             var blogs = await db.Blogs.Take(100).Include(b => b.Author).ToListAsync();
-            blogs.ForEach(b => viewModel.Add(new BlogViewModel(b)));
+            blogs.ForEach(async(b) =>
+            {
+                BlogViewModel bvm = new BlogViewModel(b);
+                if(User.Identity.IsAuthenticated)
+                {
+                    var userId = _userManager.GetUserId(User);
+                    var liked = await db.BlogLikes.AnyAsync(bl => bl.BlogId == b.Id && bl.UserId == userId);
+                    bvm.LikedByCurrentUser = liked;
+                    viewModel.Add(bvm);
+                }
+            });
 
             return View(viewModel);
         }

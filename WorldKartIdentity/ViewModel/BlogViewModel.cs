@@ -22,7 +22,9 @@ namespace WorldKartIdentity.ViewModel
 
         public IFormFile? PictureFile { get; set; }
 
-        
+        public bool LikedByCurrentUser { get; set; }
+
+
 
         public BlogViewModel()
         {

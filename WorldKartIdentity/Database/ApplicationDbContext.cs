@@ -30,7 +30,7 @@ namespace WorldKartIdentity.Database
             builder.Entity<RefreshToken>().ToTable("RefreshTokens");
             builder.Entity<TrackLike>()
             .HasKey(x => new { x.UserId, x.TrackId });
-            builder.Entity<BlogLikes>().HasKey(x => new { x.UserId, x.BlogId });
+            builder.Entity<BlogLikes>().HasKey(x => x.Id);
 
             builder.Entity<TrackLike>()
                 .HasOne(x => x.User)

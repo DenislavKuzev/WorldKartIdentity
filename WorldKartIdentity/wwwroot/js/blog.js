@@ -78,5 +78,5 @@ heartBtn.addEventListener('click', async () => {
     console.log(heartBtn.getAttribute("data-bid"));
     const res = await fetch(`/Blog/ToggleLike?bid=${Number(heartBtn.getAttribute('data-bid'))}`, { method: 'POST' });
     const resBody = await res.json();
-    heartBtn.nextElementSibling.textContent = resBody.likes;
+    heartBtn.querySelector(".likes-count").textContent = resBody.likes;
 });
