@@ -13,6 +13,9 @@ namespace WorldKartIdentity.Controllers
         private readonly ApplicationDbContext db;
         private readonly UserManager<User> _userManager;
 
+
+
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
         public BlogController(ApplicationDbContext context, UserManager<User> userManager)
         {
             db = context;
@@ -24,17 +27,27 @@ namespace WorldKartIdentity.Controllers
         {
             var viewModel = new List<BlogViewModel>();
             var blogs = await db.Blogs.Take(100).Include(b => b.Author).ToListAsync();
-            blogs.ForEach(async(b) =>
+            HashSet<int> likeIds = new HashSet<int>();
+
+            if (User.Identity.IsAuthenticated)
             {
+ 
+                string userId = _userManager.GetUserId(User);
+                likeIds = (await db.BlogLikes
+                    .Where(bl => bl.UserId == userId)
+                    .Select(bl => bl.BlogId)
+                    .ToListAsync())
+                    .ToHashSet();
+            }
+
+            foreach (var b in blogs)
+            {
+
                 BlogViewModel bvm = new BlogViewModel(b);
-                if(User.Identity.IsAuthenticated)
-                {
-                    var userId = _userManager.GetUserId(User);
-                    var liked = await db.BlogLikes.AnyAsync(bl => bl.BlogId == b.Id && bl.UserId == userId);
-                    bvm.LikedByCurrentUser = liked;
-                    viewModel.Add(bvm);
-                }
-            });
+
+                bvm.LikedByCurrentUser = likeIds.Contains(b.Id);
+                viewModel.Add(bvm);
+            }
 
             return View(viewModel);
         }
