@@ -1,0 +1,140 @@
+﻿@model WorldKartIdentity.ViewModel.TrackViewModel
+
+
+@{
+    ViewData["Title"] = "TrackDetails";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/trackdetails.css" asp-append-version="true" />
+}
+
+<section class="breadcrumb-section set-bg" style="background-image:url('/img/trackbackground.png');
+                background-size:cover;
+                background-position:center;
+                background-repeat:no-repeat;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb-text">
+                    <h2>@Model.Name</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="class-details-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="class-details-text">
+                    <div class="cd-text">
+                        <div class="cd-single-item">
+                            <h3>Description</h3>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                                irure Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                tempor incididunt ut labore et dolore magna aliqua accusantium doloremque
+                                laudantium. Excepteur sint occaecat cupidatat non proident sculpa.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="class-details-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <p>Чертаене на пистите. Да не е от същия клас на section.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="team-section team-page spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="team-title">
+                    <div class="section-title">
+                        <span>Траектории</span>
+                        <h2>НАЙ-ХАРЕСВАНИ ТРАЕКТОРИИ</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-sm-6">
+                <div class="ts-item set-bg" style="background-image: url('data:image/webp;base64,UklGRtADAABXRUJQVlA4IMQDAADQJACdASrGAOoAPp1KokylpCOlpZHoqLATiWluz5/SCWoouUVh0z5P5jPvWsrl2uzuUEEc5F6xCef7wD1gZiL85LS5KXV7OJd+0hz5LRXvlmgtXCIkxrHJR1GBbLRUIRDSdzPclODK8DA4jbktWjfZ+hhx1dCZr6f3BkM7oTtl15PMCvxbaYhUzsqUzhSUn5FM7+l4Sa8ljVABrbEhy4F3gLWONiCFhnxY+WDc/oyoVpNjQypg4LlAdrn9AqAPVwPmoVldeyFT/NOKYQpgidkj9IKwxCRqZeEKO4+VXwUvGqXUqz6pEzrPDJ33hggp+nxJLhurdztCrQjHBLdUk3hiDxDlVwBZqDK2usjGGdK2rvRfcXfjmdJyvwmtMj+JY2r1CSeviu7A1yMA+X5yOAAA/vj0bHjbvShxi8Lzj4+WWxhhU8Wc+Rz1rbNjQEiYo9WyKs6oDxF74vh2YEfWa6nBVYY7GWoGUlMIYmN5jA4zaiKYCwLMA5dKZFIa/eb4JZB3/lOAI6xzJof9s2M2gBJwX6+4yT+EcKtJngw/6IP2B40NC631SaeCq9f2+YfQAYO7UuUO/swcEqgVfdwSMkHOFeRU6j/M6mEWLXhUkwak7Z1AD8uk5T9g2XOq1+9pEwgTRVe5wbACdl1leGiE7q0ye6Z6HMLKBGJv81v1+iUhk69tw67eSsp78ddsceQskGIbWrkyovh6U8uBhkHrmlWvWW6Wr+aHQwaZiVN+s1+88i8JohAYxj+fH7Uvb1FBfA18+GCW04tp/TwqUO9KHy1wEz1HvBsrlaWToI73VFJahFUwY8uCAE9KmLEn7HmkZ2kG82rUpNRGopGSOLU54lyVilVUnI1DoWQJJUksFdJYZBQTLMy7KKSwXJU+KOqF74dso0CTiF96zRf76rRC3MvGfwecwStmnIUWk2X/m1gph8VXq3dUbd98N/D0b8Gj/0Wn1gxMYokEcyJgLQZ0ryKVhi0YaIDv3qyQexHMVJ7SvZefIBAp9rlP6Rd0uMjTjCiCKKHlBxNPdlALhJ7+L/OunRy1fPEYW+mlgzSzHK1fps1cqjvk7qnaHufq9Hu9gmyqjVUOQt4+Ndi4N6XiunUpvAxazwbgU1mgzINNKJND5lRC1zd1EfJyPzvMCR1TbR4aFwCsWMIwDkGGrqu5FHquXXhW6o74MJg+Jwr1PYDICiUJ/V57hssRkEnnk4F0eQNbkxGEEJpVL/w6jT8Zir76Btu5S3nlCyZXuDSb6mmS/5VrkytIE1lFl7cEUqumJCa9AAAA');">
+                    <div class="ts_text">
+                        <h4>Added by:</h4>
+                        <span>Number of likes</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="ts-item set-bg" style="background-image: url('data:image/webp;base64,UklGRtADAABXRUJQVlA4IMQDAADQJACdASrGAOoAPp1KokylpCOlpZHoqLATiWluz5/SCWoouUVh0z5P5jPvWsrl2uzuUEEc5F6xCef7wD1gZiL85LS5KXV7OJd+0hz5LRXvlmgtXCIkxrHJR1GBbLRUIRDSdzPclODK8DA4jbktWjfZ+hhx1dCZr6f3BkM7oTtl15PMCvxbaYhUzsqUzhSUn5FM7+l4Sa8ljVABrbEhy4F3gLWONiCFhnxY+WDc/oyoVpNjQypg4LlAdrn9AqAPVwPmoVldeyFT/NOKYQpgidkj9IKwxCRqZeEKO4+VXwUvGqXUqz6pEzrPDJ33hggp+nxJLhurdztCrQjHBLdUk3hiDxDlVwBZqDK2usjGGdK2rvRfcXfjmdJyvwmtMj+JY2r1CSeviu7A1yMA+X5yOAAA/vj0bHjbvShxi8Lzj4+WWxhhU8Wc+Rz1rbNjQEiYo9WyKs6oDxF74vh2YEfWa6nBVYY7GWoGUlMIYmN5jA4zaiKYCwLMA5dKZFIa/eb4JZB3/lOAI6xzJof9s2M2gBJwX6+4yT+EcKtJngw/6IP2B40NC631SaeCq9f2+YfQAYO7UuUO/swcEqgVfdwSMkHOFeRU6j/M6mEWLXhUkwak7Z1AD8uk5T9g2XOq1+9pEwgTRVe5wbACdl1leGiE7q0ye6Z6HMLKBGJv81v1+iUhk69tw67eSsp78ddsceQskGIbWrkyovh6U8uBhkHrmlWvWW6Wr+aHQwaZiVN+s1+88i8JohAYxj+fH7Uvb1FBfA18+GCW04tp/TwqUO9KHy1wEz1HvBsrlaWToI73VFJahFUwY8uCAE9KmLEn7HmkZ2kG82rUpNRGopGSOLU54lyVilVUnI1DoWQJJUksFdJYZBQTLMy7KKSwXJU+KOqF74dso0CTiF96zRf76rRC3MvGfwecwStmnIUWk2X/m1gph8VXq3dUbd98N/D0b8Gj/0Wn1gxMYokEcyJgLQZ0ryKVhi0YaIDv3qyQexHMVJ7SvZefIBAp9rlP6Rd0uMjTjCiCKKHlBxNPdlALhJ7+L/OunRy1fPEYW+mlgzSzHK1fps1cqjvk7qnaHufq9Hu9gmyqjVUOQt4+Ndi4N6XiunUpvAxazwbgU1mgzINNKJND5lRC1zd1EfJyPzvMCR1TbR4aFwCsWMIwDkGGrqu5FHquXXhW6o74MJg+Jwr1PYDICiUJ/V57hssRkEnnk4F0eQNbkxGEEJpVL/w6jT8Zir76Btu5S3nlCyZXuDSb6mmS/5VrkytIE1lFl7cEUqumJCa9AAAA');">
+                    <div class="ts_text">
+                        <h4>Added by:</h4>
+                        <span>Number of likes</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="ts-item set-bg" style="background-image: url('data:image/webp;base64,UklGRtADAABXRUJQVlA4IMQDAADQJACdASrGAOoAPp1KokylpCOlpZHoqLATiWluz5/SCWoouUVh0z5P5jPvWsrl2uzuUEEc5F6xCef7wD1gZiL85LS5KXV7OJd+0hz5LRXvlmgtXCIkxrHJR1GBbLRUIRDSdzPclODK8DA4jbktWjfZ+hhx1dCZr6f3BkM7oTtl15PMCvxbaYhUzsqUzhSUn5FM7+l4Sa8ljVABrbEhy4F3gLWONiCFhnxY+WDc/oyoVpNjQypg4LlAdrn9AqAPVwPmoVldeyFT/NOKYQpgidkj9IKwxCRqZeEKO4+VXwUvGqXUqz6pEzrPDJ33hggp+nxJLhurdztCrQjHBLdUk3hiDxDlVwBZqDK2usjGGdK2rvRfcXfjmdJyvwmtMj+JY2r1CSeviu7A1yMA+X5yOAAA/vj0bHjbvShxi8Lzj4+WWxhhU8Wc+Rz1rbNjQEiYo9WyKs6oDxF74vh2YEfWa6nBVYY7GWoGUlMIYmN5jA4zaiKYCwLMA5dKZFIa/eb4JZB3/lOAI6xzJof9s2M2gBJwX6+4yT+EcKtJngw/6IP2B40NC631SaeCq9f2+YfQAYO7UuUO/swcEqgVfdwSMkHOFeRU6j/M6mEWLXhUkwak7Z1AD8uk5T9g2XOq1+9pEwgTRVe5wbACdl1leGiE7q0ye6Z6HMLKBGJv81v1+iUhk69tw67eSsp78ddsceQskGIbWrkyovh6U8uBhkHrmlWvWW6Wr+aHQwaZiVN+s1+88i8JohAYxj+fH7Uvb1FBfA18+GCW04tp/TwqUO9KHy1wEz1HvBsrlaWToI73VFJahFUwY8uCAE9KmLEn7HmkZ2kG82rUpNRGopGSOLU54lyVilVUnI1DoWQJJUksFdJYZBQTLMy7KKSwXJU+KOqF74dso0CTiF96zRf76rRC3MvGfwecwStmnIUWk2X/m1gph8VXq3dUbd98N/D0b8Gj/0Wn1gxMYokEcyJgLQZ0ryKVhi0YaIDv3qyQexHMVJ7SvZefIBAp9rlP6Rd0uMjTjCiCKKHlBxNPdlALhJ7+L/OunRy1fPEYW+mlgzSzHK1fps1cqjvk7qnaHufq9Hu9gmyqjVUOQt4+Ndi4N6XiunUpvAxazwbgU1mgzINNKJND5lRC1zd1EfJyPzvMCR1TbR4aFwCsWMIwDkGGrqu5FHquXXhW6o74MJg+Jwr1PYDICiUJ/V57hssRkEnnk4F0eQNbkxGEEJpVL/w6jT8Zir76Btu5S3nlCyZXuDSb6mmS/5VrkytIE1lFl7cEUqumJCa9AAAA');">
+                    <div class="ts_text">
+                        <h4>Added by:</h4>
+                        <span>Number of likes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="primary-btn btn-normal appoinment-btn">ВСИЧКИ ТРАЕКТОРИИ</a>
+    </div>
+</section>
+
+<section class="contact-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-sm-6">
+                <div class="section-title contact-title">
+                    <span>Данни на пистата</span>
+                    <h2>СВЪРЗВАНЕ</h2>
+                </div>
+                <div class="contact-widget">
+                    <div class="cw-text">
+                        <i class="fa fa-map-marker"></i>
+                        <p>333 Middle Winchendon Rd, Rindge,<br /> NH 03461</p>
+                    </div>
+                    <div class="cw-text">
+                        <i class="fa fa-mobile"></i>
+                        <ul>
+                            <li>125-711-811</li>
+                            <li>125-668-886</li>
+                        </ul>
+                    </div>
+                    <div class="cw-text email">
+                        <i class="fa fa-envelope"></i>
+                        <p>Support.gymcenter@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-8">
+                <div class="map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12087.069761554938!2d-74.2175599360452!3d40.767139456514954!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c254b5958982c3%3A0xb6ab3931055a2612!2sEast%20Orange%2C%20NJ%2C%20USA!5e0!3m2!1sen!2sbd!4v1581710470843!5m2!1sen!2sbd"
+                            height="450" style="border:0;" allowfullscreen="">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

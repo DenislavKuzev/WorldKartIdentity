@@ -32,28 +32,31 @@
             {
                 <div class="col-lg-4 col-md-6">
                     <div class="class-item">
-                        <a asp-controller="Track" asp-action="TrackDetail" asp-route-id="track.Id">
+                        <a asp-controller="Track" asp-action="TrackDetails" asp-route-id="@track.Id">
                             <img src="data:image/jpeg;base64,@track.PictureBase64"
-                                 class="card-img-top"
-                                 style="height:280px; object-fit:cover; border-top-left-radius:20px;" />
+                            class="card-img-top"
+                            style="height:280px; object-fit:cover; border-top-left-radius:20px;" />
                         </a>
                         <div class="ci-text">
                             <span>@track.Name</span>
                             <h5>@track.Length метра</h5>
                             <i class="fa fa-angle-right">
-                                <form method="post" asp-action="ToggleLike" asp-controller="Track" >
-                                    <input type="hidden" name="trackId" value="@track.Id" />  @* koe e po dobre: tova ili asp-route *@
-                                    <button type="submit" class="like-btn">
-                                        @if (track.IsLikedByCurrentUser)
-                                        {
-                                            <i class="fa fa-heart" aria-hidden="true" style="color:red;" ></i>
-                                        }
-                                        else
-                                        {
-                                            <i class="fa fa-heart-o" aria-hidden="true" style="color:red;"></i>
-                                        }
-                                    </button>
-                                </form>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <form method="post" asp-action="ToggleLike" asp-controller="Track" >
+                                        <input type="hidden" name="trackId" value="@track.Id" />  @* koe e po dobre: tova ili asp-route *@
+                                        <button type="submit" class="like-btn">
+                                            @if (track.IsLikedByCurrentUser)
+                                            {
+                                                <i class="fa fa-heart" aria-hidden="true" style="color:red;" ></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="fa fa-heart-o" aria-hidden="true" style="color:red;"></i>
+                                            }
+                                        </button>
+                                    </form>
+                                }
                             </i>
                         </div>
                     </div>
