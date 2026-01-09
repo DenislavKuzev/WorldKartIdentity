@@ -8,6 +8,18 @@ namespace WorldKartIdentity.ViewModel
         public IFormFile? PictureFile { get; set; }
         public string Name { get; set; } = string.Empty;
 
+        public string Description { get; set; } = null!;
+
+        public string Location { get; set; } = null!;
+
+        public string TelNumber { get; set; } = null!;
+
+        public string Email { get; set; } = null!;
+
+        public string? GoogleMapsLink { get; set; }
+
+        public string Worktime { get; set; } = null!;
+
         public string PictureBase64 { get; set; } = string.Empty;
 
         public int Length { get; set; }

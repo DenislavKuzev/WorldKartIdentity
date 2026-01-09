@@ -1,4 +1,4 @@
-﻿body {
+﻿/*body {
     background: linear-gradient(135deg, #0a1d3b, #0f2e5d);
     font-family: Arial, sans-serif;
 }
@@ -117,10 +117,10 @@
 
     .forgot-link:hover {
         text-decoration: underline;
-    }
+    }*/
 
 /*ново*/
-#mapPreviewContainer {
+/*#mapPreviewContainer {
     display: none;
     height: 0;
     margin: 0;
@@ -132,4 +132,152 @@
         height: 400px;
         border: 0;
         border-radius: 8px;
+    }*/
+
+
+/* General Background and Container */
+body {
+    background: linear-gradient(135deg, #0a1d3b 0%, #050c1a 100%);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+.register-container {
+    max-width: 600px; /* Slightly wider for better readability */
+    margin: 40px auto;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+/* Header Styling */
+.form-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+    .form-header h2 {
+        font-size: 28px;
+        color: #1a1a1a;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
+
+    .form-header p {
+        color: #666;
+        font-size: 14px;
+    }
+
+/* Sectioning */
+.form-section {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+    .form-section legend {
+        font-weight: bold;
+        color: #DC3545;
+        font-size: 16px;
+        margin-bottom: 15px;
+        display: block;
+    }
+
+/* Form Groups and Inputs */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+    .form-row .form-group {
+        flex: 1;
+    }
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    color: #444;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: #DC3545;
+        box-shadow: 0 0 8px rgba(220, 53, 69, 0.2);
+        outline: none;
+    }
+
+/* Specialized Inputs */
+.file-input-wrapper {
+    background: #f8f9fa;
+    padding: 10px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Button Styling */
+.btn-register {
+    width: 100%;
+    padding: 16px;
+    background: #DC3545;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+    margin-top: 10px;
+    letter-spacing: 1px;
+}
+
+    .btn-register:hover {
+        background: #c82333;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+    }
+
+    .btn-register:active {
+        transform: translateY(0);
+    }
+
+/* Validation Text */
+.text-danger {
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+    font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 500px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .register-container {
+        padding: 20px;
+    }
+}

@@ -8,14 +8,16 @@
 
 /* Custom styles not covered by standard Bootstrap utilities */
 
-.blog-container{
-    margin-top:-30%;
+.blog-container {
+    max-height: calc(100vh - 120px);
 }
 
 .blog-card {
     /*max-width: 1100px;*/ /* Slightly wider to accommodate two images comfortably */
     background: white;
     border: 1px solid black;
+    min-height: 200px;
+    height: 1400px;
 }
 
 /* Avatar Styling */
@@ -46,6 +48,8 @@
     object-fit: cover;
     /* Ensures images have a subtle definition against white background */
     border: 1px solid rgba(0, 0, 0, 0.08);
+    height: 120px;
+    width: 180px !important;
 }
 
 /* Icon interactions */

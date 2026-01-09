@@ -1,4 +1,4 @@
-﻿@model WorldKartIdentity.ViewModel.TrackViewModel
+﻿@* @model WorldKartIdentity.ViewModel.TrackViewModel
 
 @{
     ViewData["Title"] = "TrackRegistration";
@@ -22,12 +22,28 @@
             <input asp-for="Name" type="text" name="Name" required />
             <span class="text-danger"></span>
         </div>
-        @* 
-    <div class="form-group">
-        <label>Имейл на писта</label>
-        <input type="email" name="Email" required />
-        <span class="text-danger"></span>
-    </div> *@
+
+        <div class="form-group">
+            <label>Описание на писта </label>
+            <input asp-for="Description" type="text" name="Name" required />
+            <span class="text-danger"></span>
+
+        </div><div class="form-group">
+            <label>Локация </label>
+            <input asp-for="Location" type="text" name="Location" required />
+            <span class="text-danger"></span>
+
+        </div><div class="form-group">
+            <label>Име на писта </label>
+            <input asp-for="TelNumber" type="text" name="Name" required />
+            <span class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+             <label>Име на писта </label>
+             <input asp-for="Location" type="text" name="Name" required />
+             <span class="text-danger"></span>
+        </div>
 
         <div class="form-group">
             <label>Дължина</label>
@@ -41,5 +57,101 @@
         </div>
 
         <button type="submit" class="btn-register">Регистрирай пистата</button>
+    </form>
+</div> *@
+@model WorldKartIdentity.ViewModel.TrackViewModel
+
+@{
+    ViewData["Title"] = "Регистрация на писта";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/loginregistration.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <script src="~/js/maps.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<div class="register-container">
+    <div class="form-header">
+        <h2>🏎️ Регистрация на писта</h2>
+        <p>Въведете детайлите на вашата картинг писта</p>
+    </div>
+
+    <form asp-action="CreateTrack" asp-controller="Track" method="post" enctype="multipart/form-data">
+
+        <div class="form-section">
+            <legend>Основна информация</legend>
+
+            <div class="form-group">
+                <label asp-for="Name">Име на пистата</label>
+                <input asp-for="Name" required />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description">Описание</label>
+                <textarea asp-for="Description" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <legend>Контакти и Локация</legend>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Email">Имейл</label>
+                    <input asp-for="Email" type="email" placeholder="track@example.com" required />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TelNumber">Телефон</label>
+                    <input asp-for="TelNumber" type="tel" placeholder="08XX XXX XXX" required />
+                    <span asp-validation-for="TelNumber" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Location">Адрес (Град, Улица)</label>
+                <input asp-for="Location" placeholder="гр. София, ул..." required />
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="GoogleMapsLink">Google Maps Линк</label>
+                <input asp-for="GoogleMapsLink" placeholder="https://goo.gl/maps/..." />
+                <span asp-validation-for="GoogleMapsLink" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <legend>Технически детайли</legend>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Worktime">Работно време</label>
+                    <input asp-for="Worktime" placeholder="09:00 - 21:00" required />
+                    <span asp-validation-for="Worktime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Length">Дължина (метри)</label>
+                    <input asp-for="Length" type="number" required />
+                    <span asp-validation-for="Length" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PictureFile">Снимка на пистата</label>
+                <div class="file-input-wrapper">
+                    <input asp-for="PictureFile" type="file" accept="image/*" required />
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-register">ДОБАВИ ПИСТА</button>
     </form>
 </div>

@@ -9,9 +9,10 @@
 
 @section Scripts{
     <script src="~/js/blog.js"></script>
+
 }
 
-<div class="d-flex flex-column align-items-end w-100 justify-content-end mt-5">
+<div class="d-flex flex-column align-items-end w-100 justify-content-end m-5 blog-container overflow-auto">
 
     <div class="container d-flex flex-column gap-3 justify-content-center position-relative text-white blog-container">
         @if (User.Identity.IsAuthenticated)
@@ -53,7 +54,7 @@
                             </div>
 
                             <div class="mb-2 h-auto mw-100">
-                                <p class="mb-0 fs-6 text-wrap"></p>
+                                <p class="mb-0 fs-6 text-wrap">@blog.Content</p>
                             </div>
 
                             <div class="row g-2 my-3">
