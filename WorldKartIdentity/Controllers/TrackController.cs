@@ -27,13 +27,23 @@ namespace WorldKartIdentity.Controllers
             return View();
         }
 
-        public IActionResult TrackGallery(int id)
+        public IActionResult TrackGallery(string search)
         {
             var userId = userManager.GetUserId(User);
 
-            var tracks = db.Tracks.Include(t => t.Likes).ToList();
+            var tracks = db.Tracks.Include(t => t.Likes).AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                tracks = tracks.Where(t =>
+                    t.Name.ToLower().Contains(search.ToLower()));
+            }
+
+            var querytracks = tracks.ToList();
+
             var tracksVM = new List<TrackViewModel>();
-            foreach (var track in tracks)
+
+            foreach (var track in querytracks)
             {
                 var trackVM = TrackViewModel.TrackToTrackVM(track);
                 trackVM.LikesCount = track.Likes.Count;
@@ -41,6 +51,7 @@ namespace WorldKartIdentity.Controllers
                     track.Likes.Any(x => x.UserId == userId);
                 tracksVM.Add(trackVM);
             }
+
             return View(tracksVM);
         }
 

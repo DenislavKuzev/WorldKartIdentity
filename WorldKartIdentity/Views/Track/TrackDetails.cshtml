@@ -22,6 +22,7 @@
                 </div>
             </div>
         </div>
+        <a class="primary-btn btn-normal appoinment-btn" asp-action="TrackGallery" asp-controller="Track">НАЗАД</a>
     </div>
 </section>
 
@@ -32,14 +33,9 @@
                 <div class="class-details-text">
                     <div class="cd-text">
                         <div class="cd-single-item">
-                            <h3>Description</h3>
+                            <h3>Описание</h3>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                                irure Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                tempor incididunt ut labore et dolore magna aliqua accusantium doloremque
-                                laudantium. Excepteur sint occaecat cupidatat non proident sculpa.
+                                @Model.Description
                             </p>
                         </div>
                     </div>
@@ -113,18 +109,23 @@
                 <div class="contact-widget">
                     <div class="cw-text">
                         <i class="fa fa-map-marker"></i>
-                        <p>333 Middle Winchendon Rd, Rindge,<br /> NH 03461</p>
+                        <p>@Model.Location,<br /> NH 03461</p>
                     </div>
                     <div class="cw-text">
                         <i class="fa fa-mobile"></i>
                         <ul>
-                            <li>125-711-811</li>
-                            <li>125-668-886</li>
+                            <li>@Model.TelNumber</li>
                         </ul>
                     </div>
                     <div class="cw-text email">
                         <i class="fa fa-envelope"></i>
-                        <p>Support.gymcenter@gmail.com</p>
+                        <p>@Model.Email</p>
+                    </div>
+                    <div class="cw-text">
+                        <i class="fa fa-mobile"></i>
+                        <ul>
+                            <li>@Model.Worktime</li>
+                        </ul>
                     </div>
                 </div>
             </div>

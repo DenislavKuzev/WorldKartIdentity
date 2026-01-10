@@ -24,7 +24,10 @@
                     <li class="nav-item"><a class="nav-link" asp-action="Index" asp-controller="Home">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">About</a></li>
                     <li class="nav-item"><a class="nav-link" asp-action="Privacy" asp-controller="Home">Test</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-action="TrackRequest" asp-controller="Track">TrackRequest</a></li>
+                    @if (User.IsInRole("Users"))
+                    {
+                        <li class="nav-item"><a class="nav-link" asp-action="TrackRequest" asp-controller="Track">TrackRequest</a></li>
+                    }
                     <li class="nav-item"><a class="nav-link" asp-action="Admin" asp-controller="Track">Admin Library</a></li>
                     <li class="nav-item"><a class="nav-link" asp-action="TrackGallery" asp-controller="Track">Karting Gallery</a></li>
                     <li class="nav-item"><a class="nav-link" asp-action="Blogs" asp-controller="Blog">Blog</a></li>
