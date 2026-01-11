@@ -48,7 +48,7 @@
 
         .form-footer a:hover {
             text-decoration: underline;
-        }
+        }*/
 
 
 
@@ -117,7 +117,7 @@
 
     .forgot-link:hover {
         text-decoration: underline;
-    }*/
+    }
 
 /*ново*/
 /*#mapPreviewContainer {
@@ -264,8 +264,8 @@ body {
 
 /* Validation Text */
 .text-danger {
-    font-size: 12px;
-    margin-top: 5px;
+    font-size: 16px;
+    margin-top: 1px;
     display: block;
     font-weight: bold;
 }

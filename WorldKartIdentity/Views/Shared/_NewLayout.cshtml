@@ -13,9 +13,8 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-transparent fixed-top">
-
         <div class="container">
-            <a class="navbar-brand text-danger fw-bold text-uppercase" href="#">WORLD KART MASTER</a>
+            <a class="navbar-brand text-danger fw-bold text-uppercase" href="#">WORLD KART MASTER </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -24,11 +23,14 @@
                     <li class="nav-item"><a class="nav-link" asp-action="Index" asp-controller="Home">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">About</a></li>
                     <li class="nav-item"><a class="nav-link" asp-action="Privacy" asp-controller="Home">Test</a></li>
-                    @if (User.IsInRole("Users"))
-                    {
+                    @* @if (User.IsInRole("Users"))
+                    { *@
                         <li class="nav-item"><a class="nav-link" asp-action="TrackRequest" asp-controller="Track">TrackRequest</a></li>
-                    }
-                    <li class="nav-item"><a class="nav-link" asp-action="Admin" asp-controller="Track">Admin Library</a></li>
+                 @* }
+                    @if (User.IsInRole("Admin"))
+                    { *@
+                        <li class="nav-item"><a class="nav-link" asp-action="Admin" asp-controller="Track">Admin Library</a></li>
+                    @* } *@
                     <li class="nav-item"><a class="nav-link" asp-action="TrackGallery" asp-controller="Track">Karting Gallery</a></li>
                     <li class="nav-item"><a class="nav-link" asp-action="Blogs" asp-controller="Blog">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>

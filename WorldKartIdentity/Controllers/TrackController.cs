@@ -86,23 +86,15 @@ namespace WorldKartIdentity.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> TrackDetails(int id)
+        public IActionResult TrackDetails(int id)
         {
-            var track = await db.Tracks
-         .Where(t => t.Id == id)
-         .Select(t => new TrackViewModel
-         {
-             Id = t.Id,
-             Name = t.Name,
-             PictureBase64 = t.Picture,
-             Length = t.Length
-         })
-         .FirstOrDefaultAsync();
-
+            var track = db.Tracks.FirstOrDefault(t => t.Id == id);
             if (track == null)
                 return NotFound();
 
-            return View(track);
+            TrackViewModel trackViewModel = TrackViewModel.TrackToTrackVM(track);
+
+            return View(trackViewModel);
         }
 
 
