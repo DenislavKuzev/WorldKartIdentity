@@ -8,6 +8,7 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/css/trackdetails.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/pintura/pintura.css" />
 }
 
 <section class="breadcrumb-section set-bg" style="background-image:url('/img/trackbackground.png');
@@ -48,8 +49,8 @@
 <section class="class-details-section spad">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8">
-                <p>Чертаене на пистите. Да не е от същия клас на section.</p>
+            <div class="col-lg-8 pnt-editor">
+                
             </div>
         </div>
     </div>
@@ -138,3 +139,8 @@
         </div>
     </div>
 </section>
+
+@section Scripts{
+    <script type="module" src="~/lib/pintura/pintura.js"></script>
+    <script type="module" src="~/js/trackdetails.js"></script>
+}

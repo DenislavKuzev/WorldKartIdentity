@@ -16,8 +16,8 @@
     /*max-width: 1100px;*/ /* Slightly wider to accommodate two images comfortably */
     background: white;
     border: 1px solid black;
-    min-height: 200px;
-    height: 1400px;
+    min-height: 100px;
+    height: fit-content;
 }
 
 /* Avatar Styling */

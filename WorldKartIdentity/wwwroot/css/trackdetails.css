@@ -43,6 +43,11 @@ img {
 }
 
 
+.pnt-editor {
+    width: 100%;
+    height: 800px;
+}
+
 /* buttons */
 
 .primary-btn {
