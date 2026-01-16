@@ -9,10 +9,15 @@
     <link rel="stylesheet" href="~/css/loginregistration.css" asp-append-version="true" />
 }
 
+@section Scripts {
+    <script src="~/js/registrationvalidation.js" asp-append-version="true"></script>
+}
+
+
 <div class="register-container">
     <h2>Регистрация</h2>
 
-    <form asp-action="Registration" asp-controller="User" method="post">
+    <form asp-action="Registration" asp-controller="User" method="post" id="registerForm">
         <div class="form-group">
             <label>Потребителско име</label>
             <input asp-for="UserName" type="text" name="UserName" required />

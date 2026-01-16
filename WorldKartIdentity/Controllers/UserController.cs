@@ -31,26 +31,21 @@ namespace WorldKartIdentity.Controllers
             return View();
         }
 
-        [HttpPost/*("registration")*/]
+        [HttpPost]
         public async Task<IActionResult> Registration(UserViewModel userVM)
         {
             if (!ModelState.IsValid)
                 return View(userVM);
 
-            if (userVM.Password != userVM.RepeatPassword)
-            {
-                ModelState.AddModelError("", "Паролите не съвпадат!");
-                return View();
-            }
             bool emailExists = await _db.Users.AnyAsync(u => u.Email == userVM.Email);
             if(emailExists)
             {
-                ModelState.AddModelError("", "Имейлът вече е регистриран!");
+                ModelState.AddModelError("Email", "Имейлът вече е регистриран!");
                 return View();
             }
 
             User user = UserViewModel.UserVMToUser(userVM);
-            var result = await _users.CreateAsync(user, userVM.Password);//за Юсър
+            var result = await _users.CreateAsync(user);//за Юсър
 
             if (result.Succeeded)
             {
@@ -61,11 +56,12 @@ namespace WorldKartIdentity.Controllers
             }
             else
             {
-                return BadRequest(new { errors = result.Errors.Select(e => e.Description) });
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+                return View(userVM);
             }
-            foreach (var error in result.Errors)
-                ModelState.AddModelError("", error.Description);
-            return RedirectToAction("", "");
         }
 
         [HttpGet]

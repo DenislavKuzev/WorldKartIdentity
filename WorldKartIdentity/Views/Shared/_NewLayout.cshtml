@@ -14,27 +14,27 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-transparent fixed-top">
         <div class="container">
-            <a class="navbar-brand text-danger fw-bold text-uppercase" href="#">WORLD KART MASTER </a>
+            <a class="navbar-brand text-danger fw-bold text-uppercase" href="#">WORLD KART MASTER</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" asp-action="Index" asp-controller="Home">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-action="Index" asp-controller="Home">Начална страница</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">За нас</a></li>
                     <li class="nav-item"><a class="nav-link" asp-action="Privacy" asp-controller="Home">Test</a></li>
                     @* @if (User.IsInRole("Users"))
                     { *@
-                        <li class="nav-item"><a class="nav-link" asp-action="TrackRequest" asp-controller="Track">TrackRequest</a></li>
-                 @* }
+                    <li class="nav-item"><a class="nav-link" asp-action="TrackRequest" asp-controller="Track">Заяви писта</a></li>
+                    @* }
                     @if (User.IsInRole("Admin"))
                     { *@
-                        <li class="nav-item"><a class="nav-link" asp-action="Admin" asp-controller="Track">Admin Library</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-action="Admin" asp-controller="Track">Админ Библиотека</a></li>
                     @* } *@
-                    <li class="nav-item"><a class="nav-link" asp-action="TrackGallery" asp-controller="Track">Karting Gallery</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-action="Blogs" asp-controller="Blog">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link text-danger fw-bold" asp-action="Registration" asp-controller="User">Registration</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-action="TrackGallery" asp-controller="Track">Картинг Галерия</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-action="Blogs" asp-controller="Blog">Блог</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Контакти</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger fw-bold" asp-action="Registration" asp-controller="User">Регистрация</a></li>
                 </ul>
             </div>
         </div>
@@ -44,7 +44,7 @@
     <script>window.gtranslateSettings = {"default_language":"en","native_language_names":true,"languages":["en","bg","de"],"wrapper_selector":".gtranslate_wrapper"}</script>
     <script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.7/viewer.min.js" integrity="sha512-lZD0JiwhtP4UkFD1mc96NiTZ14L7MjyX5Khk8PMxJszXMLvu7kjq1sp4bb0tcL6MY+/4sIuiUxubOqoueHrW4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("Scripts", required: false)
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-@RenderSection("Scripts", required: false)
 </html>

@@ -266,6 +266,7 @@ body {
 .text-danger {
     font-size: 16px;
     margin-top: 1px;
+    color: #DC3545;
     display: block;
     font-weight: bold;
 }

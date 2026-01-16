@@ -1,15 +1,20 @@
-﻿using WorldKartIdentity.Database;
+﻿using System.ComponentModel.DataAnnotations;
+using WorldKartIdentity.Database;
 
 namespace WorldKartIdentity.ViewModel
 {
     public class UserViewModel
     {
-        public string UserName { get; set; } = string.Empty;
+        [RegularExpression(@"^[a-zA-Z0-9_]{3,20}$")]
+        public string? UserName { get; set; } = string.Empty;
 
-        public string Email { get; set; } = string.Empty;
+        [Required, EmailAddress]
+        public string? Email { get; set; } = string.Empty;
 
-        public string Password { get; set; } = string.Empty;
+        [Required, MinLength(8)]
+        public string? Password { get; set; } = string.Empty;
 
+        [Compare("Password")]
         public string RepeatPassword { get; set; } = string.Empty;
 
         public string? Picture { get; set; }
