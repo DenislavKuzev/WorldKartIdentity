@@ -73,12 +73,16 @@ namespace WorldKartIdentity.Controllers
         [HttpPost/*("login")*/]
         public async Task<IActionResult> Login(UserViewModel userVM)
         {
-            var user = await _users.FindByEmailAsync(userVM.Email);
+            var user = await _users.FindByEmailAsync(userVM.Email!);
             if (user == null)
-                return Unauthorized();
+            {
+                ModelState.AddModelError("Email", "Невалиден имейл или парола.");
+                return View(userVM);
+            }
+
 
             var result = await _signInManager.PasswordSignInAsync(
-        user, userVM.Password, isPersistent: false, lockoutOnFailure: false);
+        user, userVM.Password!, isPersistent: false, lockoutOnFailure: false);
 
 
             if (!result.Succeeded)

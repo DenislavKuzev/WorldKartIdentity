@@ -1,4 +1,4 @@
-﻿document.getElementById("registerForm").addEventListener("submit", function (e) {
+﻿document.getElementById("registrationForm").addEventListener("submit", function (e) {
         let isValid = true;
 
     const username = document.getElementById("UserName");
