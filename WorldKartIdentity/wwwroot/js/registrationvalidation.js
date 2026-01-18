@@ -9,7 +9,7 @@
     clearErrors();
 
     // USERNAME: 3–20 символа, букви, цифри, _
-    if (!/^[a-zA-Z0-9_]{3, 20}$/.test(username.value)) {
+    if (!/^[a-zA-Z0-9_]{3,20}$/.test(username.value)) {
         showError(username, "Потребителското име трябва да е 3–20 символа и да съдържа само букви, цифри и _!");
     isValid = false;
     }

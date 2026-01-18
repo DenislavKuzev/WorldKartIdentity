@@ -46,3 +46,8 @@
     .navbar-dark .navbar-nav .nav-link:hover {
         color: #ff0000;
     }
+
+.red-menu-element {
+    color: #DC3545 !important;
+    font-weight: bold;
+}

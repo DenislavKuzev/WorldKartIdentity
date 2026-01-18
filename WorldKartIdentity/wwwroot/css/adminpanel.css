@@ -27,6 +27,10 @@
         transform: translateX(5px);
     }
 
+.admin-body{
+    margin-top: 80px;
+}
+
 .card-custom {
     background-color: #b30000; /* червено */
     color: white;

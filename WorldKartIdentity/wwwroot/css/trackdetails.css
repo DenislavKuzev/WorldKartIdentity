@@ -38,10 +38,12 @@ img {
 }
 
 .spad {
-    padding-top: 100px;
     padding-bottom: 100px;
 }
 
+.description{
+    padding-top: 20px;
+}
 
 .pnt-editor {
     width: 100%;
