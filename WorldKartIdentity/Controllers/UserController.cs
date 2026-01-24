@@ -90,35 +90,13 @@ namespace WorldKartIdentity.Controllers
                 ModelState.AddModelError("", "Невалиден имейл или парола.");
                 return View(userVM);
             }
-
-            //return Ok(new TokenPairResponse { AccessToken = token, RefreshToken = refreshPlain });
             return RedirectToAction("Index", "Home");
         }
 
-        //private string GenerateJwt(User user, IList<string> roles)
-        //{
-        //    var jwt = _config.GetSection("Jwt");
-        //    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt["Key"]!));
-        //    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        //    var claims = new List<Claim>
-        //{
-        //    new(JwtRegisteredClaimNames.Sub, user.Id),
-        //    new(JwtRegisteredClaimNames.Email, user.Email ?? ""),
-        //    new(ClaimTypes.Name, user.UserName ?? user.Email ?? "")
-        //};
-
-        //    foreach (var role in roles)
-        //        claims.Add(new Claim(ClaimTypes.Role, role));
-
-        //    var token = new JwtSecurityToken(
-        //        issuer: jwt["Issuer"],
-        //        audience: jwt["Audience"],
-        //        claims: claims,
-        //        expires: DateTime.UtcNow.AddHours(1),
-        //        signingCredentials: creds);
-
-        //    return new JwtSecurityTokenHandler().WriteToken(token);
-        //}
+        [HttpGet]
+        public IActionResult UserProfile()
+        {
+            return View();
+        }
     }
 }

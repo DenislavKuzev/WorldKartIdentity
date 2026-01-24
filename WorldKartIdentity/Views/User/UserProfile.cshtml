@@ -1,0 +1,66 @@
+﻿@model WorldKartIdentity.ViewModel.UserViewModel
+
+@{
+    ViewData["Title"] = "UserProfile";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/userprofile.css" asp-append-version="true" />
+}
+
+<section class="class-details-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="class-details-text">
+                    <div class="cd-text">
+                        <div class="cd-single-item">
+                            <h3>Потребителски профил</h3>
+                        </div>
+                    </div>
+                    <div class="cd-trainer">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="cd-trainer-pic">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLYqyZnntQGILYtk29EB1rpznUnIlOFwl88w&s" alt="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="cd-trainer-text">
+                                    <div class="trainer-title">
+                                        <h4>ИМЕТО</h4>
+                                        <span>ПИЛОТ ИЛИ МЕХАНИК</span>
+                                    </div>
+                                    <div class="trainer-social">
+                                        <div class="trainer-title">
+                                            <span>Социални мрежи</span>
+                                        </div>
+                                        <a href="#"><i class="fa fa-facebook"></i></a>
+                                        <a href="#"><i class="fa fa-twitter"></i></a>
+                                        <a href="#"><i class="fa fa-youtube-play"></i></a>
+                                        <a href="#"><i class="fa fa-instagram"></i></a>
+                                        <a href="#"><i class="fa  fa-envelope-o"></i></a>
+                                    </div><div class="trainer-title">
+                                        <h4>Моите лични данни</h4>
+                                    </div>
+                                    <ul class="trainer-info">
+                                        <li><span>Age</span>35</li>
+                                        <li><span>Weight</span>148lbs</li>
+                                        <li><span>Height</span>10' 2``</li>
+                                        <li><span>Occupation</span>no-founder</li>
+                                    </ul>
+                                    <p>
+                                        МЯСТО - ИНФОРМАЦИЯТА! (може да си добавиш ти сам някакъв твой текст в профила, който другите да видят. Примерно да се преставиш какъв си - механик или пилот, къде караш, в кой отбор и т.н.)         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                        tempor incididunt ut labore et dolore magna aliqua viverra maecenas lacus
+                                        vel facilisis.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

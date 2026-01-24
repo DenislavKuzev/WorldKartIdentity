@@ -1,0 +1,99 @@
+﻿/*---------------------
+  USER DETAILS
+-----------------------*/
+.class-details-section {
+    background: #151515;
+    padding-bottom: 180px;
+    padding-top: 80px;
+}
+
+.h4{
+    color: white;
+}
+
+.class-details-text .cd-text {
+    margin-bottom: 33px;
+}
+
+    .class-details-text .cd-text .cd-single-item h3 {
+        color: #ffffff;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 28px;
+    }
+
+    .class-details-text .cd-text .cd-single-item p {
+        color: #c4c4c4;
+    }
+
+.class-details-text .cd-trainer .cd-trainer-pic img {
+    min-width: 100%;
+}
+
+.class-details-text .cd-trainer .cd-trainer-text {
+    position: relative;
+}
+
+    .class-details-text .cd-trainer .cd-trainer-text .trainer-title {
+        margin-bottom: 18px;
+    }
+
+        .class-details-text .cd-trainer .cd-trainer-text .trainer-title h4 {
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .class-details-text .cd-trainer .cd-trainer-text .trainer-title span {
+            font-size: 12px;
+            color: #aaaaaa;
+            text-transform: uppercase;
+        }
+
+    .class-details-text .cd-trainer .cd-trainer-text .trainer-social {
+        position: absolute;
+        right: 0;
+        top: 20px;
+    }
+
+        .class-details-text .cd-trainer .cd-trainer-text .trainer-social a {
+            display: inline-block;
+            font-size: 14px;
+            color: #c4c4c4;
+            margin-right: 9px;
+        }
+
+            .class-details-text .cd-trainer .cd-trainer-text .trainer-social a:last-child {
+                margin-right: 0;
+            }
+
+    .class-details-text .cd-trainer .cd-trainer-text p {
+        color: #c4c4c4;
+    }
+
+    .class-details-text .cd-trainer .cd-trainer-text .trainer-info {
+        margin-top: 28px;
+        margin-bottom: 26px;
+    }
+
+        .class-details-text .cd-trainer .cd-trainer-text .trainer-info li {
+            font-size: 14px;
+            color: #c4c4c4;
+            list-style: none;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #252525;
+            margin-bottom: 10px;
+        }
+
+            .class-details-text .cd-trainer .cd-trainer-text .trainer-info li:last-child {
+                padding-bottom: 0;
+                margin-bottom: 0;
+                border-bottom: none;
+            }
+
+            .class-details-text .cd-trainer .cd-trainer-text .trainer-info li span {
+                color: #ffffff;
+                font-weight: 700;
+                width: 150px;
+                display: inline-block;
+            }
