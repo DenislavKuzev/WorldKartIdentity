@@ -1,7 +1,7 @@
 ﻿@model WorldKartIdentity.ViewModel.UserViewModel
 
 @{
-    ViewData["Title"] = "UserProfile";
+    ViewData["Title"] = "UserPublicProfile";
     Layout = "~/Views/Shared/_NewLayout.cshtml";
 }
 
@@ -14,6 +14,11 @@
         <div class="row">
             <div class="col-lg-10">
                 <div class="class-details-text">
+                    <div class="cd-text">
+                        <div class="cd-single-item">
+                            <h3>Потребителски профил</h3>
+                        </div>
+                    </div>
                     <div class="cd-trainer">
                         <div class="row">
                             <div class="col-md-5">
@@ -24,7 +29,7 @@
                             <div class="col-md-6">
                                 <div class="cd-trainer-text">
                                     <div class="trainer-title">
-                                        <h4>Име</h4>
+                                        <h4>Model.UserName</h4>
                                         <span>ПИЛОТ ИЛИ МЕХАНИК</span>
                                     </div>
                                     <div class="trainer-social">
@@ -37,16 +42,14 @@
                                         <a href="#"><i class="fa fa-instagram"></i></a>
                                         <a href="#"><i class="fa  fa-envelope-o"></i></a>
                                     </div><div class="trainer-title">
-                                        <h4>Моите лични данни</h4>
+                                        <h4>Данни</h4>
                                     </div>
                                     <ul class="trainer-info">
                                         <li><span>Имейл</span>Model.Email</li>
-                                        <li><span>Парола</span>Model.Password</li>
-                                        <li><span>Телефон</span>Model.PhoneNumber</li>
                                         <li><span>Държава</span>СКОРО</li>
                                     </ul>
                                     <p>
-                                        МЯСТО - ИНФОРМАЦИЯТА! (може да си добавиш ти сам някакъв твой текст в профила, който другите да видят. Примерно да се преставиш какъв си - механик или пилот, къде караш, в кой отбор и т.н.)         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                        МЯСТО - ИНФОРМАЦИЯТА! (може да си добавиш ти сам някакъв твой текст в профила, който другите да видят. Примерно да се преставиш какъв си - механик или пилот, къде караш, в кой отбор или някакъв твой цитат на любим пилот и т.н.)         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                                         tempor incididunt ut labore et dolore magna aliqua viverra maecenas lacus
                                         vel facilisis.
                                     </p>
@@ -66,7 +69,7 @@
             <div class="col-lg-12">
                 <div class="team-title">
                     <div class="section-title">
-                        <span>Моите Треактории</span>
+                        <span>Траектории на Model.UserName</span>
                     </div>
                 </div>
             </div>
@@ -105,7 +108,7 @@
             <div class="col-lg-10">
                 <div class="team-title">
                     <div class="section-title">
-                        <span>Моите Постове</span>
+                        <span>Постове на Model.UserName</span>
                     </div>
                 </div>
             </div>

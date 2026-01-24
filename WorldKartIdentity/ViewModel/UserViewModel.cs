@@ -19,6 +19,8 @@ namespace WorldKartIdentity.ViewModel
 
         public string? Picture { get; set; }
 
+        public string? PhoneNumber { get; set; }
+
         public UserViewModel()
         {
             UserName = string.Empty;
@@ -26,6 +28,7 @@ namespace WorldKartIdentity.ViewModel
             Password = string.Empty;
             RepeatPassword = string.Empty;
             Picture = string.Empty;
+            PhoneNumber = string.Empty;
         }
 
         public UserViewModel(User user)
@@ -34,6 +37,7 @@ namespace WorldKartIdentity.ViewModel
             Email = user.Email;
             Password = user.PasswordHash;
             Picture = user.Picture;
+            PhoneNumber = user.PhoneNumber;
         }
 
         public static User UserVMToUser(UserViewModel userVM)
@@ -43,6 +47,7 @@ namespace WorldKartIdentity.ViewModel
             user.Email = userVM.Email;
             user.PasswordHash = userVM.Password;
             user.Picture = userVM.Picture;
+            user.PhoneNumber = userVM.PhoneNumber;
             return user;
         }
     }

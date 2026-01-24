@@ -3,7 +3,7 @@
 -----------------------*/
 .class-details-section {
     background: #151515;
-    padding-bottom: 180px;
+    padding-bottom: 45px;
     padding-top: 80px;
 }
 
@@ -16,7 +16,7 @@
 }
 
     .class-details-text .cd-text .cd-single-item h3 {
-        color: #ffffff;
+        color: #DC3545;
         font-weight: 600;
         text-transform: uppercase;
         margin-bottom: 28px;
@@ -46,7 +46,7 @@
 
         .class-details-text .cd-trainer .cd-trainer-text .trainer-title span {
             font-size: 12px;
-            color: #aaaaaa;
+            color: #DC3545;
             text-transform: uppercase;
         }
 
@@ -97,3 +97,149 @@
                 width: 150px;
                 display: inline-block;
             }
+
+/*---------------------
+  Team Section
+-----------------------*/
+img {
+    max-width: 100%;
+}
+
+.section-title {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+    .section-title span {
+        font-size: 32px;
+        color: #DC3545;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-top: 8px;
+    }
+
+.set-bg {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+}
+
+
+.team-section {
+    background: #151515;
+}
+
+    .team-section.team-page {
+        padding-bottom: 15px;
+    }
+
+        .team-section.team-page .ts-item {
+            margin-bottom: 30px;
+        }
+
+            .team-section.team-page .ts-item:hover .ts_text {
+                bottom: -30px;
+            }
+
+            .team-section.team-page .ts-item .tt_social {
+                -webkit-transform: skewY(5deg);
+                -ms-transform: skewY(5deg);
+                transform: skewY(5deg);
+                margin-top: 13px;
+            }
+
+                .team-section.team-page .ts-item .tt_social a {
+                    font-size: 14px;
+                    color: #c4c4c4;
+                    margin-right: 10px;
+                }
+
+                    .team-section.team-page .ts-item .tt_social a:last-child {
+                        margin-right: 0;
+                    }
+
+.team-title .section-title {
+    text-align: left;
+    float: left;
+}
+
+.primary-btn.appoinment-btn {
+    background: transparent;
+    border: 2px solid #DC3545;
+    float: right;
+    margin-top: 10px;
+}
+
+.ts-slider .col-lg-4 {
+    max-width: 100%;
+}
+
+.ts-slider.owl-carousel .owl-dots {
+    text-align: center;
+    margin-top: 30px;
+}
+
+    .ts-slider.owl-carousel .owl-dots button {
+        height: 4px;
+        width: 20px;
+        background: #5c5c5c;
+        margin-right: 15px;
+        -webkit-transform: skewY(-5deg);
+        -ms-transform: skewY(-5deg);
+        transform: skewY(-5deg);
+    }
+
+        .ts-slider.owl-carousel .owl-dots button.active {
+            background: #f36100;
+        }
+
+        .ts-slider.owl-carousel .owl-dots button:last-child {
+            margin-right: 0;
+        }
+
+.ts-item {
+    height: 450px;
+    position: relative;
+    overflow: hidden;
+}
+
+    .ts-item:hover .ts_text {
+        bottom: -35px;
+    }
+
+    .ts-item .ts_text {
+        padding: 40px 0 60px;
+        text-align: center;
+        background: #0a0a0a;
+        border-top: 4px solid #464646;
+        -webkit-transform: skewY(-5deg);
+        -ms-transform: skewY(-5deg);
+        transform: skewY(-5deg);
+        position: absolute;
+        left: 0;
+        bottom: -250px;
+        width: 100%;
+        -webkit-transition: all 0.3s;
+        -o-transition: all 0.3s;
+        transition: all 0.3s;
+    }
+
+        .ts-item .ts_text h4 {
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 14px;
+            -webkit-transform: skewY(5deg);
+            -ms-transform: skewY(5deg);
+            transform: skewY(5deg);
+        }
+
+        .ts-item .ts_text span {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #aaaaaa;
+            text-transform: uppercase;
+            -webkit-transform: skewY(5deg);
+            -ms-transform: skewY(5deg);
+            transform: skewY(5deg);
+        }

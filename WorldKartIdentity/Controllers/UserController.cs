@@ -98,5 +98,52 @@ namespace WorldKartIdentity.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> UserProfile(UserViewModel userVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                // връща view-то с въведените данни и грешки
+                return View(userVM);
+            }
+
+            var user = await _users.FindByEmailAsync(userVM.Email!);
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            // Update на данните
+            user.UserName = userVM.UserName;
+            user.Email = userVM.Email;
+            user.PhoneNumber = userVM.PhoneNumber;
+
+            var result = await _users.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                return View(userVM);
+            }
+
+            return RedirectToAction("UserProfile", "User");
+        }
+
+        [HttpGet]
+        public IActionResult UserPublicProfile()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UserPublicProfile(UserViewModel userVM)
+        {
+            return View();
+        }
     }
 }
