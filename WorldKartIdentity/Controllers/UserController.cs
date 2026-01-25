@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -13,13 +14,13 @@ namespace WorldKartIdentity.Controllers
 {
     public class UserController : Controller
     {
-        private readonly UserManager<User> _users;
+        private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly ApplicationDbContext _db;
         private readonly IConfiguration _config;
         public UserController(UserManager<User> users, SignInManager<User> signInManager, IConfiguration config, ApplicationDbContext db)
         {
-            _users = users;
+            _userManager = users;
             _signInManager = signInManager;
             _config = config;
             _db = db;
@@ -45,11 +46,11 @@ namespace WorldKartIdentity.Controllers
             }
 
             User user = UserViewModel.UserVMToUser(userVM);
-            var result = await _users.CreateAsync(user);//за Юсър
+            var result = await _userManager.CreateAsync(user);//за Юсър
 
             if (result.Succeeded)
             {
-                    await _users.AddToRoleAsync(user, "Users");//даване на роля като Юсър //грешката идва от тук
+                    await _userManager.AddToRoleAsync(user, "Users");//даване на роля като Юсър //грешката идва от тук
                     // Влизане веднага след регистрация
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home", new UserViewModel(user));
@@ -73,7 +74,7 @@ namespace WorldKartIdentity.Controllers
         [HttpPost/*("login")*/]
         public async Task<IActionResult> Login(UserViewModel userVM)
         {
-            var user = await _users.FindByEmailAsync(userVM.Email!);
+            var user = await _userManager.FindByEmailAsync(userVM.Email!);
             if (user == null)
             {
                 ModelState.AddModelError("Email", "Невалиден имейл или парола.");
@@ -94,44 +95,17 @@ namespace WorldKartIdentity.Controllers
         }
 
         [HttpGet]
-        public IActionResult UserProfile()
+        public async Task<IActionResult> UserProfile()
         {
-            return View();
-        }
+            UserViewModel loggedUserVM = new UserViewModel();
 
-        [HttpPost]
-        public async Task<IActionResult> UserProfile(UserViewModel userVM)
-        {
-            if (!ModelState.IsValid)
+            if (User.Identity.IsAuthenticated)
             {
-                // връща view-то с въведените данни и грешки
-                return View(userVM);
+                var userId = _userManager.GetUserId(User);
+                User? loggedUser = _db.Users.FirstOrDefault(bl => bl.Id == userId);
+                loggedUserVM = new UserViewModel(loggedUser);
             }
-
-            var user = await _users.FindByEmailAsync(userVM.Email!);
-            if (user == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
-            // Update на данните
-            user.UserName = userVM.UserName;
-            user.Email = userVM.Email;
-            user.PhoneNumber = userVM.PhoneNumber;
-
-            var result = await _users.UpdateAsync(user);
-
-            if (!result.Succeeded)
-            {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-
-                return View(userVM);
-            }
-
-            return RedirectToAction("UserProfile", "User");
+            return View(loggedUserVM);
         }
 
         [HttpGet]
