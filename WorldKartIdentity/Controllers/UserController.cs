@@ -47,6 +47,7 @@ namespace WorldKartIdentity.Controllers
 
             User user = UserViewModel.UserVMToUser(userVM);
             var result = await _userManager.CreateAsync(user);//за Юсър
+            await _userManager.AddPasswordAsync(user, userVM.Password);//за паролата
 
             if (result.Succeeded)
             {

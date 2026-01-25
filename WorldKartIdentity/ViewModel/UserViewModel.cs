@@ -45,7 +45,7 @@ namespace WorldKartIdentity.ViewModel
             User user = new User();
             user.UserName = userVM.UserName;
             user.Email = userVM.Email;
-            user.PasswordHash = userVM.Password;
+            //user.PasswordHash = userVM.Password;
             user.Picture = userVM.Picture;
             user.PhoneNumber = userVM.PhoneNumber;
             return user;
