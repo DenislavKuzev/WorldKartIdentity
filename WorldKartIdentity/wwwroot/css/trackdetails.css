@@ -51,7 +51,6 @@ img {
 }
 
 /* buttons */
-
 .primary-btn {
     display: inline-block;
     font-size: 14px;
@@ -76,9 +75,7 @@ img {
         }
 
 
-/*---------------------
-  Classes Section
------------------------*/
+/* Classes Section */
 
 .classes-section {
     background: #151515;

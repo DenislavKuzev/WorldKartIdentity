@@ -13,6 +13,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-10">
+                <a asp-action="EditUserProfile" asp-controller="User" class="primary-btn btn-normal appoinment-btn">РЕДАКТИРАНЕ</a>
                 <div class="class-details-text">
                     <div class="cd-trainer">
                         <div class="row">
@@ -25,31 +26,34 @@
                                 <div class="cd-trainer-text">
                                     <div class="trainer-title">
                                         <h4>@Model.UserName</h4>
-                                        <span>ПИЛОТ ИЛИ МЕХАНИК</span>
+                                        <span>Няма добавена роля</span>
                                     </div>
                                     <div class="trainer-social">
                                         <div class="trainer-title">
                                             <span>Социални мрежи</span>
+                                        </div> <div class="form-group trainer-row">
+                                            <label><a><i class="fa fa-facebook"></i></a></label>
+                                            <label><a><i class="fa fa-twitter"></i></a></label>
+                                            <label><a><i class="fa fa-youtube-play"></i></a></label>
+                                            <label><a> <i class="fa fa-instagram"></i></a></label>
                                         </div>
-                                        <a href="#"><i class="fa fa-facebook"></i></a>
-                                        <a href="#"><i class="fa fa-twitter"></i></a>
-                                        <a href="#"><i class="fa fa-youtube-play"></i></a>
-                                        <a href="#"><i class="fa fa-instagram"></i></a>
-                                        <a href="#"><i class="fa  fa-envelope-o"></i></a>
                                     </div><div class="trainer-title">
-                                        <h4>Моите лични данни</h4>
+                                        <h4>Моите данни</h4>
+                                        <ul class="trainer-info">
+                                            <li><span>Имейл</span>@Model.Email</li>
+                                            <li class="trainer-row">
+                                                <span>Телефон</span>
+                                                <span>Няма телефон</span>
+                                            </li>
+                                            <li class="trainer-row">
+                                                <span>Държава</span>
+                                                <span>Няма</span>
+                                            </li>
+                                        </ul>
+                                        <p>
+                                            @Model.Bio
+                                        </p>
                                     </div>
-                                    <ul class="trainer-info">
-                                        <li><span>Имейл</span>@Model.Email</li>
-                                        <li><span>Парола</span>@Model.Password</li>
-                                        <li><span>Телефон</span>@Model.PhoneNumber</li>
-                                        <li><span>Държава</span>СКОРО</li>
-                                    </ul>
-                                    <p>
-                                        МЯСТО - ИНФОРМАЦИЯТА! (може да си добавиш ти сам някакъв твой текст в профила, който другите да видят. Примерно да се преставиш какъв си - механик или пилот, къде караш, в кой отбор и т.н.)         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                        tempor incididunt ut labore et dolore magna aliqua viverra maecenas lacus
-                                        vel facilisis.
-                                    </p>
                                 </div>
                             </div>
                         </div>

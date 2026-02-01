@@ -34,7 +34,7 @@ namespace WorldKartIdentity.Database
 
             builder.Entity<TrackLike>()
                 .HasOne(x => x.User)
-                .WithMany(u => u.LikedTracks)
+                .WithMany()
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
@@ -46,7 +46,7 @@ namespace WorldKartIdentity.Database
 
             builder.Entity<BlogLikes>()
                 .HasOne(x => x.User)
-                .WithMany(u => u.LikedBlogs)
+                .WithMany()
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 

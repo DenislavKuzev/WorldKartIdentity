@@ -1,0 +1,86 @@
+﻿@model WorldKartIdentity.ViewModel.UserViewModel
+
+@{
+    ViewData["Title"] = "UserProfile";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/userprofile.css" asp-append-version="true" />
+}
+
+<section class="class-details-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10">
+                <form asp-action="EditUserProfile" asp-controller="User" method="post">
+                    <div class="class-details-text">
+                        <div class="cd-trainer">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="cd-trainer-pic">
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLYqyZnntQGILYtk29EB1rpznUnIlOFwl88w&s" alt="">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="cd-trainer-text">
+                                        <div class="trainer-title">
+                                            <h4>@Model.UserName</h4>
+                                                <label>Роля</label>
+                                                <select asp-for="RoleInKarting" class="form-control">
+                                                    <option>Пилот</option>
+                                                    <option>Механик</option>
+                                                </select>
+                                        </div>
+                                        <div class="trainer-social">
+                                            <div class="trainer-title">
+                                                <span>Социални мрежи</span>
+                                            </div> <div class="form-group trainer-row">
+                                                    <label><a><i class="fa fa-facebook"></i></a></label>
+                                                    <input asp-for="FacebookUrl" class="form-control" />
+                                            </div>
+                                            <div class="form-group trainer-row">
+                                                    <label><a><i class="fa fa-twiter"></i></a></label>
+                                                    <input asp-for="TikTokUrl" class="form-control" />
+                                            </div>
+                                            <div class="form-group trainer-row">
+                                                    <label><a><i class="fa fa-youtube-play"></i></a></label>
+                                                    <input asp-for="YoutubeUrl" class="form-control" />
+                                            </div>
+                                            <div class="form-group trainer-row">
+                                                    <label><a> <i class="fa fa-instagram"></i></a></label>
+                                                    <input asp-for="InstagramUrl" class="form-control" />
+                                            </div>
+                                        </div><div class="trainer-title">
+                                            <h4>Моите данни</h4>
+                                            <ul class="trainer-info">
+                                                <li>
+                                                    <span>Имейл</span>
+                                                    @Model.Email
+                                                </li>
+                                                <li class="trainer-row">
+                                                    <span>Телефон</span>
+                                                        <input asp-for="PhoneNumber" value="" type="tel" class="form-control inline-input" />
+                                                </li>
+                                                <li class="trainer-row">
+                                                    <span>Държава</span>
+                                                        <input asp-for="Country" type="tel" class="form-control inline-input" />
+                                                </li>
+                                            </ul>
+                                            <p>
+                                                    <label>Информация (публична)</label>
+                                                    <textarea asp-for="Bio" class="form-control"></textarea>
+                                            </p>
+                                                <button type="submit" class="primary-btn btn-normal appoinment-btn">Запиши</button>
+                                                <a asp-action="UserProfile" class="primary-btn btn-normal appoinment-btn">Откажи</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,6 +1,4 @@
-﻿/*---------------------
-  USER DETAILS
------------------------*/
+﻿/* USER DETAILS */
 .class-details-section {
     background: #151515;
     padding-bottom: 45px;
@@ -98,9 +96,31 @@
                 display: inline-block;
             }
 
-/*---------------------
-  Team Section
------------------------*/
+/* buttons */
+.primary-btn {
+    display: inline-block;
+    font-size: 14px;
+    padding: 17px 30px 16px;
+    color: #ffffff;
+    background: #f36100;
+    line-height: normal;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+    .primary-btn.btn-normal {
+        -webkit-transition: all 0.3s;
+        -o-transition: all 0.3s;
+        transition: all 0.3s;
+    }
+
+        .primary-btn.btn-normal:hover {
+            background: #DC3545;
+            border-color: #DC3545;
+        }
+
+/* Team Section */
 img {
     max-width: 100%;
 }
@@ -243,3 +263,26 @@ img {
             -ms-transform: skewY(5deg);
             transform: skewY(5deg);
         }
+
+/* EDIT INPUTS */
+.trainer-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+    .trainer-row span {
+        min-width: 120px; /* държи текста в една линия */
+        color: #ffffff;
+        font-weight: 700;
+    }
+
+.inline-input {
+    width: 250px;
+    padding: 6px 10px;
+    font-size: 14px;
+}
+
+.trainer-row {
+    display: flex !important;
+}

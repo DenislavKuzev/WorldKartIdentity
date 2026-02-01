@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.UserSecrets;
@@ -99,26 +100,62 @@ namespace WorldKartIdentity.Controllers
         public async Task<IActionResult> UserProfile()
         {
             UserViewModel loggedUserVM = new UserViewModel();
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = _userManager.GetUserId(User);
+                User? loggedUser = await _db.Users.FirstOrDefaultAsync(bl => bl.Id == userId);
+                if (loggedUser != null)
+                {
+                    loggedUserVM = new UserViewModel(loggedUser);
+                }
+            }
+
+            return View(loggedUserVM);
+        }
+        [HttpGet]
+        public IActionResult EditUserProfile()
+        {
+            UserViewModel loggedUserVM = new UserViewModel();
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = _userManager.GetUserId(User);
+                User? loggedUser = _db.Users.FirstOrDefault(bl => bl.Id == userId);
+                if (loggedUser != null)
+                {
+                    loggedUserVM = new UserViewModel(loggedUser);
+                }
+            }
+            return View(loggedUserVM);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditUserProfile(UserViewModel userVM)
+        {
+            var userId = _userManager.GetUserId(User);
+            var user = await _db.Users.FindAsync(userId);
+            if (user == null)
+                return NotFound();
+            var editedUser = UserViewModel.UserVMToUser(userVM);
+            editedUser.Id = userId;
+            _db.Users.Update(editedUser);
+            await _db.SaveChangesAsync();
+            return RedirectToAction("UserProfile");
+        }
+
+        [HttpGet]
+        public IActionResult UserPublicProfile(bool edit = false)
+        {
+            UserViewModel loggedUserVM = new UserViewModel();
 
             if (User.Identity.IsAuthenticated)
             {
                 var userId = _userManager.GetUserId(User);
                 User? loggedUser = _db.Users.FirstOrDefault(bl => bl.Id == userId);
-                loggedUserVM = new UserViewModel(loggedUser);
+                if (loggedUser != null)
+                {
+                    loggedUserVM = new UserViewModel(loggedUser);
+                }
             }
             return View(loggedUserVM);
-        }
-
-        [HttpGet]
-        public IActionResult UserPublicProfile()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> UserPublicProfile(UserViewModel userVM)
-        {
-            return View();
         }
     }
 }
