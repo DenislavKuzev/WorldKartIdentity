@@ -11,15 +11,17 @@
     password.addEventListener("blur", validatePassword);
     repeatPassword.addEventListener("blur", validateRepeatPassword);
 
-    form.addEventListener("submit", function (e) {
+form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
     const isFormValid =
     validateUsername() &
     validateEmail() &
     validatePassword() &
     validateRepeatPassword();
 
-    if (!isFormValid) {
-        e.preventDefault();
+    if (isFormValid) {
+        handleSubmition(e);
     }
 });
 
@@ -68,6 +70,27 @@
 
     clearError(repeatPassword);
     return true;
+}
+
+function handleSubmition(e) {
+    const fd = new FormData(form);
+    const reqbody = {
+        UserName: fd.get("UserName"),
+        Email: fd.get("Email"),
+        Password: fd.get("Password"),
+        RepeatPassword: fd.get("RepeatPassword")
+    };
+
+    let res = await fetch("/User/Registration", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(reqbody)
+    });
+
+    let resBody = await res.json();
+
 }
 
     // ========== HELPERS ==========

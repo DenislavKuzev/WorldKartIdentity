@@ -37,13 +37,16 @@ namespace WorldKartIdentity.Controllers
         public async Task<IActionResult> Registration(UserViewModel userVM)
         {
             if (!ModelState.IsValid)
-                return View(userVM);
+                return Json(ModelState);
 
             bool emailExists = await _db.Users.AnyAsync(u => u.Email == userVM.Email);
             if(emailExists)
             {
-                ModelState.AddModelError("Email", "Имейлът вече е регистриран!");
-                return View();
+                return Json(new
+                {
+                    success = false,
+                    message = "Имейлът вече е регистриран"
+                });
             }
 
             User user = UserViewModel.UserVMToUser(userVM);
@@ -63,7 +66,7 @@ namespace WorldKartIdentity.Controllers
                 {
                     ModelState.AddModelError("", error.Description);
                 }
-                return View(userVM);
+                return Json(ModelState);
             }
         }
 

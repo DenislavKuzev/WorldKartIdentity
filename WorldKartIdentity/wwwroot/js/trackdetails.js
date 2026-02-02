@@ -1,5 +1,8 @@
-﻿import * as P from "../lib/pintura/pintura.js";
-import * as A from "../lib/annotorious/annotorious.min.js";
+﻿window.process = window.process || { env: { NODE_ENV: "production" } }
+
+import * as P from "../lib/pintura/pintura.js";
+import  "../lib/node_modules/@recogito/annotorious/dist/annotorious.min.js";
+
 //import "../img/kustendil"
 
 //pintura
@@ -19,7 +22,8 @@ const editor = P.appendEditor(".pnt-editor", {
         "sharpie",
         "arrow",
         "rectangle",
-        "eraser"
+        "eraser",
+        "path"
     ]),
     locale: {
         ...P.locale_en_gb,
@@ -29,7 +33,7 @@ const editor = P.appendEditor(".pnt-editor", {
     }
 });
 
-let annoEditor = null;
+let anno = null;
 //on done editing
 editor.on("process", (result) => {
 
@@ -40,14 +44,26 @@ editor.on("process", (result) => {
     editor.destroy();
 
     //swap image in DOM
-    const img = document.getElementById("photo");
-    const imageContainer = document.querySelector(".imageContainer");
+    const imageContainer = document.querySelector(".img-container");
+    const img = document.createElement("img");
+    imageContainer.innerHTML = "";      // clear first
+    imageContainer.appendChild(img);    // then appen
+
     img.src = url;
+    img.style.maxWidth = "100%";
+    img.style.height = "auto";
+
     img.onload = () => {
-        image
-        annoEditor = A.Annotorious.init({
-            image: ''
-        })
+        // destroy previous annotator if you re-run
+        if (anno?.destroy) anno.destroy();
+        anno = null;
+
+        // v3 API
+        anno = Annotorious.init({
+            image: img
+        }); // or just createImageAnnotator(img) if global is in scope
+        // anno.loadAnnotations('...') etc.
+
         URL.revokeObjectURL(url);
     };
 });
