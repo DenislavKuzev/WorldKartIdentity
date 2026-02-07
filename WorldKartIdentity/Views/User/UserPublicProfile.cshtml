@@ -23,14 +23,21 @@
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="cd-trainer-pic">
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLYqyZnntQGILYtk29EB1rpznUnIlOFwl88w&s" alt="">
+                                    @if (!string.IsNullOrEmpty(Model.Picture))
+                                    {
+                                        <img src="@Model.Picture" alt="Profile picture" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/img/defaultprofilepic.png" alt="Default picture" />
+                                    }
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="cd-trainer-text">
                                     <div class="trainer-title">
                                         <h4>@Model.UserName</h4>
-                                        <span>ПИЛОТ ИЛИ МЕХАНИК</span>
+                                        <span>@Model.RoleInKarting</span>
                                     </div>
                                     <div class="trainer-social">
                                         <div class="trainer-title">
@@ -46,12 +53,10 @@
                                     </div>
                                     <ul class="trainer-info">
                                         <li><span>Имейл</span>@Model.Email</li>
-                                        <li><span>Държава</span>СКОРО</li>
+                                        <li><span>Държава</span>@Model.Country</li>
                                     </ul>
                                     <p>
-                                        МЯСТО - ИНФОРМАЦИЯТА! (може да си добавиш ти сам някакъв твой текст в профила, който другите да видят. Примерно да се преставиш какъв си - механик или пилот, къде караш, в кой отбор или някакъв твой цитат на любим пилот и т.н.)         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                        tempor incididunt ut labore et dolore magna aliqua viverra maecenas lacus
-                                        vel facilisis.
+                                        @Model.Bio
                                     </p>
                                 </div>
                             </div>

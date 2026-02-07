@@ -19,7 +19,14 @@
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="cd-trainer-pic">
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLYqyZnntQGILYtk29EB1rpznUnIlOFwl88w&s" alt="">
+                                    @if (!string.IsNullOrEmpty(Model.Picture))
+                                    {
+                                        <img src="@Model.Picture" alt="Profile picture" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/img/defaultprofilepic.png" alt="Default picture" />
+                                    }
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -43,11 +50,11 @@
                                             <li><span>Имейл</span>@Model.Email</li>
                                             <li class="trainer-row">
                                                 <span>Телефон</span>
-                                                <span>Няма телефон</span>
+                                                <span>@Model.PhoneNumber</span>
                                             </li>
                                             <li class="trainer-row">
                                                 <span>Държава</span>
-                                                <span>Няма</span>
+                                                <span>@Model.Country</span>
                                             </li>
                                         </ul>
                                         <p>

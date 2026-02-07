@@ -13,19 +13,31 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-10">
-                <form asp-action="EditUserProfile" asp-controller="User" method="post">
+                <form asp-action="EditUserProfile" asp-controller="User" method="post" enctype="multipart/form-data">
                     <div class="class-details-text">
                         <div class="cd-trainer">
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="cd-trainer-pic">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLYqyZnntQGILYtk29EB1rpznUnIlOFwl88w&s" alt="">
+                                        @if (!string.IsNullOrEmpty(Model.Picture))
+                                        {
+                                            <img src="@Model.Picture" alt="Profile picture" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/img/defaultprofilepic.png" alt="Default picture" />
+                                        }
+                                        <!-- пазим текущата снимка -->
+                                        <input type="hidden" asp-for="Picture" />
+                                        <!-- нов файл -->
+                                        <input asp-for="PictureFile" type="file" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="cd-trainer-text">
                                         <div class="trainer-title">
                                             <h4>@Model.UserName</h4>
+                                            <input type="hidden" asp-for="UserName" />
                                                 <label>Роля</label>
                                                 <select asp-for="RoleInKarting" class="form-control">
                                                     <option>Пилот</option>
@@ -37,19 +49,19 @@
                                                 <span>Социални мрежи</span>
                                             </div> <div class="form-group trainer-row">
                                                     <label><a><i class="fa fa-facebook"></i></a></label>
-                                                    <input asp-for="FacebookUrl" class="form-control" />
+                                                <input asp-for="FacebookUrl" type="text" name="FacebookUrl" class="form-control" />
                                             </div>
                                             <div class="form-group trainer-row">
                                                     <label><a><i class="fa fa-twiter"></i></a></label>
-                                                    <input asp-for="TikTokUrl" class="form-control" />
+                                                <input asp-for="TikTokUrl" type="text" name="TikTokUrl" class="form-control" />
                                             </div>
                                             <div class="form-group trainer-row">
                                                     <label><a><i class="fa fa-youtube-play"></i></a></label>
-                                                    <input asp-for="YoutubeUrl" class="form-control" />
+                                                <input asp-for="YoutubeUrl" type="text" name="YouTubeUrl" class="form-control" />
                                             </div>
                                             <div class="form-group trainer-row">
                                                     <label><a> <i class="fa fa-instagram"></i></a></label>
-                                                    <input asp-for="InstagramUrl" class="form-control" />
+                                                <input asp-for="InstagramUrl" type="text" name="InstagramUrl" class="form-control" />
                                             </div>
                                         </div><div class="trainer-title">
                                             <h4>Моите данни</h4>
@@ -57,14 +69,15 @@
                                                 <li>
                                                     <span>Имейл</span>
                                                     @Model.Email
+                                                    <input type="hidden" asp-for="Email" />
                                                 </li>
                                                 <li class="trainer-row">
                                                     <span>Телефон</span>
-                                                        <input asp-for="PhoneNumber" value="" type="tel" class="form-control inline-input" />
+                                                        <input asp-for="PhoneNumber" name="PhoneNumber" type="tel" class="form-control inline-input" />
                                                 </li>
                                                 <li class="trainer-row">
                                                     <span>Държава</span>
-                                                        <input asp-for="Country" type="tel" class="form-control inline-input" />
+                                                        <input asp-for="Country" name="Country" type="tel" class="form-control inline-input" />
                                                 </li>
                                             </ul>
                                             <p>

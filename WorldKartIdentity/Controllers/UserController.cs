@@ -137,9 +137,32 @@ namespace WorldKartIdentity.Controllers
             var user = await _db.Users.FindAsync(userId);
             if (user == null)
                 return NotFound();
-            var editedUser = UserViewModel.UserVMToUser(userVM);
-            editedUser.Id = userId;
-            _db.Users.Update(editedUser);
+            //var editedUser = UserViewModel.UserVMToUser(userVM);
+            //editedUser.Id = userId;
+            //_db.Users.Update(editedUser);
+            user.PhoneNumber = userVM.PhoneNumber;
+            user.Bio = userVM.Bio;
+            user.Country = userVM.Country;
+            user.RoleInKarting = userVM.RoleInKarting;
+            user.FacebookUrl = userVM.FacebookUrl;
+            user.InstagramUrl = userVM.InstagramUrl;
+            user.TikTokUrl = userVM.TikTokUrl;
+            user.YoutubeUrl = userVM.YoutubeUrl;
+            user.Picture = userVM.Picture;
+
+            if (userVM.PictureFile != null && userVM.PictureFile.Length > 0)
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "~/img/users");
+                Directory.CreateDirectory(uploadsFolder);
+                var fileName = Guid.NewGuid() + Path.GetExtension(userVM.PictureFile.FileName);
+                var filePath = Path.Combine(uploadsFolder, fileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                { 
+                    await userVM.PictureFile.CopyToAsync(stream);
+                }
+                user.Picture = "~/img/users/" + fileName;
+            }
+
             await _db.SaveChangesAsync();
             return RedirectToAction("UserProfile");
         }

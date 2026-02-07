@@ -18,6 +18,7 @@ namespace WorldKartIdentity.ViewModel
         public string RepeatPassword { get; set; } = string.Empty;
 
         public string? Picture { get; set; }
+        public IFormFile? PictureFile { get; set; }
         public string? Country { get; set; }
         public string? PhoneNumber { get; set; }
         public string? Bio { get; set; }

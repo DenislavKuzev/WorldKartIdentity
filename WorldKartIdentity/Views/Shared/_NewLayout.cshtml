@@ -22,20 +22,22 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" asp-action="Index" asp-controller="Home">Начална страница</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">За нас</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-action="Privacy" asp-controller="Home">Test</a></li>
-                    @* @if (User.IsInRole("Users"))
-                    { *@
-                    <li class="nav-item"><a class="nav-link" asp-action="TrackRequest" asp-controller="Track">Заяви писта</a></li>
-                    @* }
-                    @if (User.IsInRole("Admin"))
+                    @*if (User.IsInRole("Admin"))
                     { *@
                     <li class="nav-item"><a class="nav-link" asp-action="Admin" asp-controller="Track">Админ Библиотека</a></li>
                     @* } *@
                     <li class="nav-item"><a class="nav-link" asp-action="TrackGallery" asp-controller="Track">Картинг Галерия</a></li>
+                    @* @if (User.IsInRole("Users"))
+                    { *@
+                    <li class="nav-item"><a class="nav-link" asp-action="TrackRequest" asp-controller="Track">Заяви писта</a></li>
                     <li class="nav-item"><a class="nav-link" asp-action="Blogs" asp-controller="Blog">Блог</a></li>
+                    @* } *@
                     <li class="nav-item"><a class="nav-link red-menu-element fw-bold" asp-action="Registration" asp-controller="User">Регистрация</a></li>
+                    @if (User.IsInRole("Users"))
+                    {
                     <li class="nav-item"><a class="nav-link " asp-action="UserPublicProfile" asp-controller="User">Публик Юсър</a></li>
                     <li class="nav-item"><a class="nav-link fa fa-user" aria-hidden="true" asp-action="UserProfile" asp-controller="User"></a></li>
+                    }
                 </ul>
             </div>
         </div>

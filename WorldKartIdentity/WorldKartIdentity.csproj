@@ -24,8 +24,6 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
-	<Target Name="NpmInstall" BeforeTargets="Build">
-		<Exec Command="npm install @recogito/annotorious" WorkingDirectory="wwwroot/lib" />
-	</Target>
+	
 
 </Project>
