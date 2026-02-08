@@ -152,7 +152,7 @@ namespace WorldKartIdentity.Controllers
 
             if (userVM.PictureFile != null && userVM.PictureFile.Length > 0)
             {
-                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "~/img/users");
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/users");
                 Directory.CreateDirectory(uploadsFolder);
                 var fileName = Guid.NewGuid() + Path.GetExtension(userVM.PictureFile.FileName);
                 var filePath = Path.Combine(uploadsFolder, fileName);
@@ -160,7 +160,7 @@ namespace WorldKartIdentity.Controllers
                 { 
                     await userVM.PictureFile.CopyToAsync(stream);
                 }
-                user.Picture = "~/img/users/" + fileName;
+                user.Picture = "/img/users/" + fileName;
             }
 
             await _db.SaveChangesAsync();
