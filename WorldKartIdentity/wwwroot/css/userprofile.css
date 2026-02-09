@@ -30,6 +30,7 @@
 
 .class-details-text .cd-trainer .cd-trainer-text {
     position: relative;
+    padding-bottom: 90px;
 }
 
     .class-details-text .cd-trainer .cd-trainer-text .trainer-title {
@@ -50,8 +51,9 @@
 
     .class-details-text .cd-trainer .cd-trainer-text .trainer-social {
         position: absolute;
-        right: 0;
-        top: 20px;
+        right: -320px; /* мести ги вдясно */
+        top: 0;
+        width: 300px;
     }
 
         .class-details-text .cd-trainer .cd-trainer-text .trainer-social a {
@@ -65,9 +67,16 @@
                 margin-right: 0;
             }
 
-    .class-details-text .cd-trainer .cd-trainer-text p {
-        color: #c4c4c4;
-    }
+.trainer-social .trainer-row {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* разстояние икона ↔ input */
+    margin-bottom: 12px; /* разстояние между редовете */
+}
+
+.class-details-text .cd-trainer .cd-trainer-text p {
+    color: #c4c4c4;
+}
 
     .class-details-text .cd-trainer .cd-trainer-text .trainer-info {
         margin-top: 28px;
@@ -95,6 +104,11 @@
                 width: 150px;
                 display: inline-block;
             }
+
+.trainer-social label {
+    width: 30px;
+    text-align: center;
+}
 
 /* buttons */
 .primary-btn {
@@ -186,8 +200,9 @@ img {
 .primary-btn.appoinment-btn {
     background: transparent;
     border: 2px solid #DC3545;
-    float: right;
+    float: none;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .ts-slider .col-lg-4 {
