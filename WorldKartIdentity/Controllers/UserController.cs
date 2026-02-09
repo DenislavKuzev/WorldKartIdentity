@@ -40,7 +40,7 @@ namespace WorldKartIdentity.Controllers
                 return Json(ModelState);
 
             bool emailExists = await _db.Users.AnyAsync(u => u.Email == userVM.Email);
-            if(emailExists)
+            if (emailExists)
             {
                 return Json(new
                 {
@@ -55,10 +55,10 @@ namespace WorldKartIdentity.Controllers
 
             if (result.Succeeded)
             {
-                    await _userManager.AddToRoleAsync(user, "Users");//даване на роля като Юсър //грешката идва от тук
-                    // Влизане веднага след регистрация
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home", new UserViewModel(user));
+                await _userManager.AddToRoleAsync(user, "Users");//даване на роля като Юсър //грешката идва от тук
+                                                                 // Влизане веднага след регистрация
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return RedirectToAction("Index", "Home", new UserViewModel(user));
             }
             else
             {
@@ -70,7 +70,6 @@ namespace WorldKartIdentity.Controllers
             }
         }
 
-        [HttpGet]
         public IActionResult Login()
         {
             return View();
@@ -182,6 +181,25 @@ namespace WorldKartIdentity.Controllers
                 }
             }
             return View(loggedUserVM);
+        }
+
+        [HttpGet("/user/me")]
+        public async Task<JsonResult> Me()
+        {
+            var userId = _userManager.GetUserId(User);
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+                return Json(new
+                {
+                    authenticated = false,
+                });
+
+            return Json(new
+            {
+                authenticated = true,
+                userId = user.Id,
+                username = user.UserName
+            });
         }
     }
 }

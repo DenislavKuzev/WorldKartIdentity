@@ -138,5 +138,20 @@ namespace WorldKartIdentity.Controllers
             db.SaveChanges();
             return View();
         }
+
+        [HttpPost]
+        public IActionResult CreateTrackAnnotation([FromBody] TrackAnnotationViewModel model)
+        {
+            var trackAnnotation = new TrackAnnotation
+            {
+                UserId = userManager.GetUserId(User),
+                TrackId = model.TrackId,
+                AnnotationJson = model.AnnotationJson
+            };
+
+            db.TrackAnnotations.Add(trackAnnotation);
+            db.SaveChanges();
+            return Ok();
+        }
     }
 }

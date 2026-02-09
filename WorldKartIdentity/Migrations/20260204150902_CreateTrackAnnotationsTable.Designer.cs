@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorldKartIdentity.Database;
 
@@ -11,9 +12,11 @@ using WorldKartIdentity.Database;
 namespace WorldKartIdentity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260204150902_CreateTrackAnnotationsTable")]
+    partial class CreateTrackAnnotationsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -312,7 +315,7 @@ namespace WorldKartIdentity.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AnnotationJson")
+                    b.Property<string>("JsonContent")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -322,16 +325,6 @@ namespace WorldKartIdentity.Migrations
                     b.Property<int?>("TrackId1")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserAuthData")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("TrackId")
@@ -340,10 +333,6 @@ namespace WorldKartIdentity.Migrations
                     b.HasIndex("TrackId1")
                         .IsUnique()
                         .HasFilter("[TrackId1] IS NOT NULL");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("TrackAnnotations", (string)null);
                 });
@@ -569,19 +558,7 @@ namespace WorldKartIdentity.Migrations
                         .WithOne("Annotation")
                         .HasForeignKey("WorldKartIdentity.Database.TrackAnnotation", "TrackId1");
 
-                    b.HasOne("WorldKartIdentity.Database.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WorldKartIdentity.Database.User", null)
-                        .WithMany("TrackAnnotations")
-                        .HasForeignKey("UserId1");
-
                     b.Navigation("Track");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("WorldKartIdentity.Database.TrackLike", b =>
@@ -613,11 +590,6 @@ namespace WorldKartIdentity.Migrations
                     b.Navigation("Annotation");
 
                     b.Navigation("Likes");
-                });
-
-            modelBuilder.Entity("WorldKartIdentity.Database.User", b =>
-                {
-                    b.Navigation("TrackAnnotations");
                 });
 #pragma warning restore 612, 618
         }

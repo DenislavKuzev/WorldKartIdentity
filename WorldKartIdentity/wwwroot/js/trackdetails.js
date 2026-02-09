@@ -1,9 +1,7 @@
 ﻿window.process = window.process || { env: { NODE_ENV: "production" } }
 
 import * as P from "../lib/pintura/pintura.js";
-import  "../lib/node_modules/@recogito/annotorious/dist/annotorious.min.js";
 
-//import "../img/kustendil"
 
 //pintura
 P.setPlugins(P.plugin_crop, P.plugin_annotate);
@@ -34,38 +32,68 @@ const editor = P.appendEditor(".pnt-editor", {
 });
 
 let anno = null;
+const loggedUserRes = await fetch('/user/me');
+const loggedUser = await loggedUserRes.json();
+console.log(loggedUser);
 //on done editing
-editor.on("process", (result) => {
+editor.on("process", async (result) => {
+    console.log(loggedUser.authenticated);
+    if (loggedUser.authenticated) {
 
-    const blob = result.dest; //proccessed image(as blob)
-    const url = URL.createObjectURL(blob);
+        const blob = result.dest; //proccessed image(as blob)
+        const url = URL.createObjectURL(blob);
 
-    //close editor
-    editor.destroy();
+        //close editor
+        editor.destroy();
 
-    //swap image in DOM
-    const imageContainer = document.querySelector(".img-container");
-    const img = document.createElement("img");
-    imageContainer.innerHTML = "";      // clear first
-    imageContainer.appendChild(img);    // then appen
+        //swap image in DOM
+        const imageContainer = document.querySelector(".img-container");
+        const img = document.createElement("img");
+        imageContainer.innerHTML = "";      // clear first
+        imageContainer.appendChild(img);    // then appen
 
-    img.src = url;
-    img.style.maxWidth = "100%";
-    img.style.height = "auto";
+        img.src = url;
+        img.onload = () => {
+            // destroy previous annotator if you re-run
+            if (anno?.destroy) anno.destroy();
+            anno = null;
 
-    img.onload = () => {
-        // destroy previous annotator if you re-run
-        if (anno?.destroy) anno.destroy();
-        anno = null;
+            // v3 API
+            anno = Annotorious.init({
+                image: img
+            });
+            anno.setAuthInfo({
+                id: `user:${loggedUser.userId}`,
+                displayName: loggedUser.username
+            });
+            URL.revokeObjectURL(url);
 
-        // v3 API
-        anno = Annotorious.init({
-            image: img
-        }); // or just createImageAnnotator(img) if global is in scope
-        // anno.loadAnnotations('...') etc.
-
-        URL.revokeObjectURL(url);
-    };
+            //attachEvents();
+        };
+    }
+    else
+    {
+        window.location.href = '/User/Login';
+    }
+    
 });
 
 
+
+function attachEvents() {
+    anno.on('createAnnotation', async (a) => {
+        console.log(`reached event: ${a}, track: ${window.trackContext}`);
+        const params = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                trackId: window.trackContext.trackId,
+                annotationJson: JSON.stringify(a),
+            })
+        }
+
+        const res = await fetch('/Track/CreateTrackAnnotation', params);
+    });
+}
