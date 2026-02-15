@@ -1,0 +1,81 @@
+﻿@model List<UserViewModel>
+
+@{
+    ViewData["Title"] = "Потребители";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/adminuserstable.css" asp-append-version="true" />
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Потребители</h2>
+    <table class="table admin-users-table">
+        <thead>
+            <tr>
+                <th>Направи админ</th>
+                <th>Снимка</th>
+                <th>Име</th>
+                <th>Имейл</th>
+                <th>Държава</th>
+                <th>Роля в картинг</th>
+                <th>Телефон</th>
+                <th>Роля</th>
+                <th>🗑</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <!-- ➕ Make Admin -->
+                    <td>
+                        @if (!user.IsAdmin)
+                        {
+                            <form asp-action="MakeAdmin" asp-controller="Admin" method="post">
+                                <input type="hidden" name="Id" value="@user.Id" />
+                                <button type="submit" class="make-admin-btn">+</button>
+                            </form>
+                        }
+                    </td>
+
+                    <!-- 👤 Picture -->
+                    <td>
+                        <img src="@user.Picture"
+                             class="admin-users-avatar"
+                             onerror="this.src='/img/defaultprofilepic.png'" />
+                    </td>
+
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    <td>@(user.Country ?? "-")</td>
+                    <td>@(user.RoleInKarting ?? "-")</td>
+                    <td>@(user.PhoneNumber ?? "-")</td>
+
+                    <!-- 🔑 Role -->
+                    <td>
+                        @if (user.IsAdmin)
+                        {
+                            <span class="role-admin">Admin</span>
+                        }
+                        else
+                        {
+                            <span class="role-user">User</span>
+                        }
+                    </td>
+
+                    <!-- 🗑 Delete -->
+                    <td>
+                        <form asp-action="DeleteUser" asp-controller="Admin" method="post"
+                              onsubmit="return confirm('Сигурен ли си, че искаш да изтриеш този потребител?');">
+                            <input type="hidden" name="Id" value="@user.Id" />
+                            <button type="submit" class="delete-user-btn">🗑</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

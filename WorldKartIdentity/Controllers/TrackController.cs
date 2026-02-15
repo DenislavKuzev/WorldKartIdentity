@@ -99,9 +99,15 @@ namespace WorldKartIdentity.Controllers
 
 
         [HttpGet]
-        public IActionResult CreateTrack()
+        public IActionResult CreateTrack(string name, string country, string locationUrl)
         {
-            return View();
+            var model = new TrackRequestViewModel
+            {
+                Name = name,
+                Country = country,
+                LocationUrl = locationUrl
+            };
+            return View(model);
         }
 
         [HttpPost]
@@ -124,6 +130,7 @@ namespace WorldKartIdentity.Controllers
             return RedirectToAction("TrackGallery");
         }
 
+
         [HttpGet]
         public IActionResult TrackRequest()
         {
@@ -131,12 +138,12 @@ namespace WorldKartIdentity.Controllers
         }
 
         [HttpPost]
-        public IActionResult TrackRequests(TrackRequestViewModel trackrequestVM)
+        public IActionResult TrackRequest(TrackRequestViewModel trackrequestVM)
         {
             TrackRequest trackrequest = TrackRequestViewModel.TrackRequestVMToTrackRequest(trackrequestVM);
             db.TrackRequests.Add(trackrequest);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]

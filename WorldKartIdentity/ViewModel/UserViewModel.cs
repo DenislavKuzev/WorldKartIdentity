@@ -5,6 +5,7 @@ namespace WorldKartIdentity.ViewModel
 {
     public class UserViewModel
     {
+        public string Id { get; set; } 
         [RegularExpression(@"^[a-zA-Z0-9_]{3,20}$")]
         public string? UserName { get; set; } = string.Empty;
 
@@ -27,10 +28,12 @@ namespace WorldKartIdentity.ViewModel
         public string? InstagramUrl { get; set; }
         public string? TikTokUrl { get; set; }
         public string? YoutubeUrl { get; set; }
+        public bool IsAdmin { get; set; }
 
 
         public UserViewModel()
         {
+            Id = string.Empty;
             UserName = string.Empty;
             Email = string.Empty;
             Password = string.Empty;
@@ -44,6 +47,7 @@ namespace WorldKartIdentity.ViewModel
             InstagramUrl = string.Empty;
             TikTokUrl = string.Empty;
             YoutubeUrl = string.Empty;
+            IsAdmin = false;
         }
 
         public UserViewModel(User user)
@@ -60,6 +64,7 @@ namespace WorldKartIdentity.ViewModel
             InstagramUrl = user.InstagramUrl;
             TikTokUrl = user.TikTokUrl;
             YoutubeUrl = user.YoutubeUrl;
+            IsAdmin = true;
         }
         public static User UserVMToUser(UserViewModel userVM)
         {

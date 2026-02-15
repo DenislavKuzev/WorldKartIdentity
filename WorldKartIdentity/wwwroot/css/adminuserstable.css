@@ -1,0 +1,84 @@
+﻿body {
+    background: linear-gradient(135deg, #0a1d3b, #0f2e5d);
+    min-height: 100vh;
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Таблицата */
+.admin-users-table {
+    margin-top: 40px;
+    border-radius: 14px;
+    overflow: hidden;
+    background-color: #1e1e1e;
+}
+
+    .admin-users-table th {
+        background-color: #DC3545;
+        color: #fff;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .admin-users-table td {
+        text-align: center;
+        vertical-align: middle;
+        color: black;
+    }
+
+/* Аватар */
+.admin-users-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #444;
+}
+
+/* + бутон (Make Admin) */
+.make-admin-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: #198754; /* bootstrap green */
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+    .make-admin-btn:hover {
+        background-color: #157347;
+    }
+
+/* 🗑 Delete */
+.delete-user-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: #DC3545;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+    .delete-user-btn:hover {
+        background-color: #bb2d3b;
+    }
+
+/* Badge */
+.role-admin {
+    background-color: #dc3545;
+    padding: 6px 12px;
+    border-radius: 12px;
+    color: white;
+    font-size: 13px;
+}
+
+.role-user {
+    background-color: #6c757d;
+    padding: 6px 12px;
+    border-radius: 12px;
+    color: white;
+    font-size: 13px;
+}
