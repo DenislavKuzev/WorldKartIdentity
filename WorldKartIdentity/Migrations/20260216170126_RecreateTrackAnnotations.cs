@@ -5,7 +5,7 @@
 namespace WorldKartIdentity.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateTrackAnnotationsTable : Migration
+    public partial class RecreateTrackAnnotations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,9 @@ namespace WorldKartIdentity.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TrackId = table.Column<int>(type: "int", nullable: false),
-                    JsonContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AnnotationJson = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserAuthData = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TrackId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -34,6 +36,12 @@ namespace WorldKartIdentity.Migrations
                         column: x => x.TrackId1,
                         principalTable: "Tracks",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_TrackAnnotations_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -48,6 +56,11 @@ namespace WorldKartIdentity.Migrations
                 column: "TrackId1",
                 unique: true,
                 filter: "[TrackId1] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TrackAnnotations_UserId",
+                table: "TrackAnnotations",
+                column: "UserId");
         }
 
         /// <inheritdoc />
