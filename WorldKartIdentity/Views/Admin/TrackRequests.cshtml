@@ -10,7 +10,7 @@
 }
 
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Заявени писти</h2>
+    <h2 class="page-title text-center mb-4">Заявени писти</h2>
 
     <table class="table admin-users-table">
         <thead>
@@ -28,7 +28,7 @@
                 <tr>
                     <td>
                         <a asp-controller="Track"
-                           asp-action="Create"
+                           asp-action="CreateTrack"
                            asp-route-name="@request.Name"
                            asp-route-country="@request.Country"
                            asp-route-locationUrl="@request.LocationUrl"

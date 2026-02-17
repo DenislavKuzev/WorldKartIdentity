@@ -1,0 +1,46 @@
+﻿@model List<WorldKartIdentity.ViewModel.TrackViewModel>
+
+@{
+    ViewData["Title"] = "Потребители";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/adminuserstable.css" asp-append-version="true" />
+}
+
+<div class="container mt-5">
+    <h2 class="page-title text-center">Писти</h2>
+    <table class="table admin-users-table">
+        <thead>
+            <tr>
+                <th>Име</th>
+                <th>Локация</th>
+                <th>Email</th>
+                <th>Телефон</th>
+                <th>Работно време</th>
+                <th>Редактиране</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var track in Model)
+            {
+                <tr>
+                    <td>@track.Name</td>
+                    <td>@track.Location</td>
+                    <td>@track.Email</td>
+                    <td>@track.TelNumber</td>
+                    <td>@track.Worktime</td>
+                    <td>
+                        <a asp-controller="Track"
+                           asp-action="EditTrack"
+                           asp-route-id="@track.Id"
+                           class="edit-btn">
+                            ✏️
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

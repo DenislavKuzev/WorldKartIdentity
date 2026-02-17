@@ -86,5 +86,23 @@ namespace WorldKartIdentity.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult Tracks()
+        {
+            var tracks = db.Tracks.ToList();
+            var model = tracks.Select(t => new TrackViewModel
+            {
+                Id = t.Id,
+                Name = t.Name,
+                PictureBase64 = t.Picture,
+                Location = t.Location,
+                Email = t.Email,
+                TelNumber = t.TelNumber,
+                Worktime = t.Worktime
+            }).ToList();
+
+            return View(model);
+        }
+
     }
 }

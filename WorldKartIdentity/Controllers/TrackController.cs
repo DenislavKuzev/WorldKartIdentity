@@ -146,6 +146,37 @@ namespace WorldKartIdentity.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        //[Authorize(Roles = "Admin")]
+        public IActionResult EditTrack(int id)
+        {
+            var track = db.Tracks.FirstOrDefault(t => t.Id == id);
+            if (track == null)
+                return NotFound();
+
+            var model = TrackViewModel.TrackToTrackVM(track);
+            return View(model);
+        }
+
+        [HttpPost]
+        //[Authorize(Roles = "Admin")]
+        public IActionResult EditTrack(TrackViewModel model)
+        {
+            var track = db.Tracks.FirstOrDefault(t => t.Id == model.Id);
+            if (track == null)
+                return NotFound();
+
+            // 🔒 Редактираме САМО тези полета
+            track.Email = model.Email;
+            track.Worktime = model.Worktime;
+            track.TelNumber = model.TelNumber;
+            track.Description = model.Description;
+
+            db.SaveChanges();
+            return RedirectToAction("Tracks", "Admin");
+        }
+
+
         [HttpPost]
         public IActionResult CreateTrackAnnotation([FromBody] TrackAnnotationViewModel model)
         {

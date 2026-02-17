@@ -5,6 +5,11 @@
     font-family: 'Segoe UI', sans-serif;
 }
 
+.page-title {
+    margin-top: 80px;
+    margin-bottom: 40px;
+}
+
 /* Таблицата */
 .admin-users-table {
     margin-top: 40px;
@@ -82,3 +87,12 @@
     color: white;
     font-size: 13px;
 }
+
+.edit-btn {
+    font-size: 18px;
+    text-decoration: none;
+}
+
+    .edit-btn:hover {
+        transform: scale(1.2);
+    }
