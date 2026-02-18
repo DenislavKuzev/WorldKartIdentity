@@ -293,7 +293,10 @@ namespace WorldKartIdentity.Controllers
             }
             else
             {
-                if(i)
+                if(res.Errors.First().Code == "4")
+                {
+
+                }
             }
             return Ok();
 
