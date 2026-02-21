@@ -1,4 +1,4 @@
-﻿@model List<TrackRequestViewModel>
+﻿@model List<WorldKartIdentity.ViewModel.TrackRequestViewModel>
 
 @{
     ViewData["Title"] = "Заявени писти";
@@ -32,7 +32,7 @@
                            asp-route-name="@request.Name"
                            asp-route-country="@request.Country"
                            asp-route-locationUrl="@request.LocationUrl"
-                           class="make-admin-btn"
+                           class="admin-btn"
                            title="Създай писта">
                             +
                         </a>

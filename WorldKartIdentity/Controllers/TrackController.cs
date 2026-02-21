@@ -101,13 +101,13 @@ namespace WorldKartIdentity.Controllers
         [HttpGet]
         public IActionResult CreateTrack(string name, string country, string locationUrl)
         {
-            var model = new TrackRequestViewModel
+            var model = new TrackViewModel
             {
                 Name = name,
-                Country = country,
-                LocationUrl = locationUrl
+                Location = country,
+                GoogleMapsLink = locationUrl
             };
-            return View(model);
+            return View("~/Views/Track/CreateTrack.cshtml", model);
         }
 
         [HttpPost]
