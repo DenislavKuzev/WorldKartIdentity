@@ -329,9 +329,6 @@ namespace WorldKartIdentity.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("TrackId")
@@ -342,8 +339,6 @@ namespace WorldKartIdentity.Migrations
                         .HasFilter("[TrackId1] IS NOT NULL");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("TrackAnnotations", (string)null);
                 });
@@ -570,14 +565,10 @@ namespace WorldKartIdentity.Migrations
                         .HasForeignKey("WorldKartIdentity.Database.TrackAnnotation", "TrackId1");
 
                     b.HasOne("WorldKartIdentity.Database.User", "User")
-                        .WithMany()
+                        .WithMany("TrackAnnotations")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("WorldKartIdentity.Database.User", null)
-                        .WithMany("TrackAnnotations")
-                        .HasForeignKey("UserId1");
 
                     b.Navigation("Track");
 

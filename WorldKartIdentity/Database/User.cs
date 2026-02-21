@@ -13,8 +13,8 @@ namespace WorldKartIdentity.Database
         public string? TikTokUrl { get; set; }
         public string? YoutubeUrl { get; set; }
 
-        public ICollection<TrackAnnotation> TrackAnnotations { get; set; } = new List<TrackAnnotation>();
 
+        public ICollection<TrackAnnotation> TrackAnnotations { get; set; } = new List<TrackAnnotation>();
 
     }
 }

@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 using WorldKartIdentity.Database;
@@ -70,6 +74,7 @@ namespace WorldKartIdentity.Controllers
             }
         }
 
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
@@ -156,7 +161,7 @@ namespace WorldKartIdentity.Controllers
                 var fileName = Guid.NewGuid() + Path.GetExtension(userVM.PictureFile.FileName);
                 var filePath = Path.Combine(uploadsFolder, fileName);
                 using (var stream = new FileStream(filePath, FileMode.Create))
-                { 
+                {
                     await userVM.PictureFile.CopyToAsync(stream);
                 }
                 user.Picture = "/img/users/" + fileName;
@@ -200,6 +205,108 @@ namespace WorldKartIdentity.Controllers
                 userId = user.Id,
                 username = user.UserName
             });
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> ForgotPassword([FromBody] string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return Json(new
+                {
+                    type = "error",
+                    msg = "Потребител с този имейл не съществува"
+                });
+            }
+            string pstoken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var tokenBytes = Encoding.UTF8.GetBytes(pstoken);
+            var tokenEncoded = WebEncoders.Base64UrlEncode(tokenBytes);
+
+       
+            string resetLink = Url.Action("ResetPassword", "User", new { token = tokenEncoded, email = user.Email }, Request.Scheme) ?? string.Empty;
+            
+            try
+            {
+                // Credentials
+                var credentials = new NetworkCredential("worldkarting101@gmail.com", Environment.GetEnvironmentVariable("EMAIL_APP_PASSWORD"));
+
+                var mail = new MailMessage()
+                {
+                    From = new MailAddress(email, "World Karting Track"),
+                    Subject = "Забравена парола",
+                    Body = $"<p>Здравейте,</p>\r\n\r\n<p>Получихме заявка за смяна на паролата към Вашия акаунт.</p>\r\n\r\n<p>За да зададете нова парола, моля натиснете бутона по-долу:</p>\r\n\r\n<p style='text-align:center;margin:30px 0;'>\r\n<a href='{resetLink}' \r\n   style='background-color:#DC3545;\r\n          color:#ffffff;\r\n          padding:12px 25px;\r\n          text-decoration:none;\r\n          border-radius:6px;\r\n          font-weight:bold;\r\n          display:inline-block;'>\r\n    Смяна на парола\r\n</a>\r\n</p>\r\n\r\n<p>Ако бутонът не работи, копирайте и поставете следния линк в браузъра си:</p>\r\n\r\n<p style='word-break:break-all;color:#2563eb;'>\r\n{resetLink}\r\n</p>\r\n\r\n<p style='margin-top:25px;'>\r\nАко Вие не сте заявили смяна на парола, можете спокойно да игнорирате този имейл.\r\n</p>"
+
+                };
+
+                mail.IsBodyHtml = true;
+                mail.To.Add(new MailAddress(email));
+
+
+                var client = new SmtpClient()
+                {
+                    Port = 587,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Host = "smtp.gmail.com",
+                    EnableSsl = true,
+                    Credentials = credentials,
+                    Timeout = 15000,
+                };
+                await client.SendMailAsync(mail);
+
+                return Json(new
+                {
+                    type = "success",
+                    msg = "Имейл за нулиране на парола бе изпратен на" + email
+                });
+            }
+            catch (Exception)
+            {
+                return Json(new
+                {
+                    type = "error",
+                    msg = "Имейлът не съществува"
+                });
+            }
+
+        }
+
+        public IActionResult ResetPassword(string token, string email)
+        {
+            var model = new ResetPasswordViewModel { Token = token, Email = email };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            string token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(model.Token));
+
+            var res = await _userManager.ResetPasswordAsync(user, token, model.NewPassword);
+            if (res.Succeeded) 
+            {
+                TempData["Message"] = "Паролата беше успешно сменена. Можете да влезете с новата си парола-S";
+                return Ok();
+            }
+            else
+            {
+                if(res.Errors.First().Code == "4")
+                {
+
+                }
+            }
+            return Ok();
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

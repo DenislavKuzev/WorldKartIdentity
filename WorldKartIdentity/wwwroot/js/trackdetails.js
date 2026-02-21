@@ -68,7 +68,7 @@ editor.on("process", async (result) => {
             });
             URL.revokeObjectURL(url);
 
-            //attachEvents();
+            attachEvents();
         };
     }
     else

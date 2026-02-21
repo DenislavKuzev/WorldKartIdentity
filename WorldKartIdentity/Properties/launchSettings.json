@@ -4,7 +4,8 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "EMAIL_APP_PASSWORD": "pcjq bqjq ereh loig"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5252"
@@ -13,7 +14,8 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "EMAIL_APP_PASSWORD": "pcjq bqjq ereh loig"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7001;http://localhost:5252"
@@ -23,6 +25,7 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
+        //"EMAIL_APP_PASSWORD": "pcjq bqjq ereh loig"
       }
     },
     "WSL": {
@@ -32,6 +35,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_URLS": "https://localhost:7001;http://localhost:5252"
+        //"EMAIL_APP_PASSWORD": "pcjq bqjq ereh loig"
       },
       "distributionName": ""
     }

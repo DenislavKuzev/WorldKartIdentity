@@ -178,17 +178,25 @@ namespace WorldKartIdentity.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateTrackAnnotation([FromBody] TrackAnnotationViewModel model)
+        public async Task<IActionResult> CreateTrackAnnotation([FromBody] TrackAnnotationViewModel model)
         {
-            var trackAnnotation = new TrackAnnotation
+            try
             {
-                UserId = userManager.GetUserId(User),
-                TrackId = model.TrackId,
-                AnnotationJson = model.AnnotationJson
-            };
+                var trackAnnotation = new TrackAnnotation
+                {
+                    UserId = userManager.GetUserId(User),
+                    TrackId = model.TrackId,
+                    AnnotationJson = model.AnnotationJson
+                };
 
-            db.TrackAnnotations.Add(trackAnnotation);
-            db.SaveChanges();
+                await db.TrackAnnotations.AddAsync(trackAnnotation);
+                await db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
             return Ok();
         }
     }

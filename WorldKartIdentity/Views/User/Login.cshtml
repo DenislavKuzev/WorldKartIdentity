@@ -9,16 +9,21 @@
     <link rel="stylesheet" href="~/css/loginregistration.css" asp-append-version="true" />
 }
 
+@section Scripts {
+    <script src="~/js/loginpage.js" asp-append-version="true"></script>
+}
+
 <div class="register-container">
     <h2>Вход</h2>
 
-    <form asp-action="Login" asp-controller="User" method="post">
-        <div class="form-group">
+    <form>
+        @Html.AntiForgeryToken()
+        <div class="form-group em">
             <label>Имейл</label>
-            <input asp-for="Email" type="email" name="Email" required />
+            <input asp-for="Email" type="email" class="email-field" name="Email" required />
             <span class="text-danger"></span>
         </div>
-        <div class="form-group">
+        <div class="form-group pass">
             <label>Парола</label>
             <input asp-for="Password" type="password" name="Password" required minlength="6" />
             <span class="text-danger"></span>
