@@ -80,7 +80,7 @@ namespace WorldKartIdentity.Controllers
             return View();
         }
 
-        [HttpPost/*("login")*/]
+        [HttpPost]
         public async Task<IActionResult> Login(UserViewModel userVM)
         {
             var user = await _userManager.FindByEmailAsync(userVM.Email!);

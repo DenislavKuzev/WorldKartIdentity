@@ -147,7 +147,7 @@ namespace WorldKartIdentity.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult EditTrack(int id)
         {
             var track = db.Tracks.FirstOrDefault(t => t.Id == id);
@@ -159,7 +159,7 @@ namespace WorldKartIdentity.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult EditTrack(TrackViewModel model)
         {
             var track = db.Tracks.FirstOrDefault(t => t.Id == model.Id);
