@@ -18,6 +18,8 @@ namespace WorldKartIdentity.Database
 
         public DbSet<TrackAnnotation> TrackAnnotations { get; set; }
 
+        public DbSet<TrackTrajectory> TrackTrajectories { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -32,6 +34,7 @@ namespace WorldKartIdentity.Database
             builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
             builder.Entity<RefreshToken>().ToTable("RefreshTokens");
             builder.Entity<TrackAnnotation>().ToTable("TrackAnnotations");
+            builder.Entity<TrackTrajectory>().ToTable("TrackTrajectory");
 
             builder.Entity<User>()
 .HasMany(u => u.TrackAnnotations)
@@ -43,6 +46,7 @@ namespace WorldKartIdentity.Database
             .HasKey(x => new { x.UserId, x.TrackId });
             builder.Entity<BlogLikes>().HasKey(x => x.Id);
             builder.Entity<TrackAnnotation>().HasKey(x => x.Id);
+            builder.Entity<TrackTrajectory>().HasKey(x => x.Id);
 
             builder.Entity<TrackLike>()
                 .HasOne(x => x.User)
@@ -61,6 +65,12 @@ namespace WorldKartIdentity.Database
     .WithOne()
     .HasForeignKey<TrackAnnotation>(x => x.TrackId)
     .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<TrackTrajectory>()
+                .HasOne(x => x.Track)
+                .WithMany(t => t.Trajectories)
+                .HasForeignKey(x => x.TrackId)
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             builder.Entity<BlogLikes>()

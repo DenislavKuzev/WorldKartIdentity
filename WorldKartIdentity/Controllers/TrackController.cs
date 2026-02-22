@@ -88,11 +88,16 @@ namespace WorldKartIdentity.Controllers
         [HttpGet]
         public IActionResult TrackDetails(int id)
         {
-            var track = db.Tracks.FirstOrDefault(t => t.Id == id);
+            var track = db.Tracks.Include(t => t.Trajectories)
+                .ThenInclude(t => t.User).FirstOrDefault(t => t.Id == id);
+
             if (track == null)
                 return NotFound();
 
             TrackViewModel trackViewModel = TrackViewModel.TrackToTrackVM(track);
+            trackViewModel.Trajectories = trackViewModel.Trajectories = track.Trajectories
+        .Select(TrackTrajectoryViewModel.TrajectoryToTrajectoryVM)
+        .ToList();
 
             return View(trackViewModel);
         }
@@ -166,7 +171,6 @@ namespace WorldKartIdentity.Controllers
             if (track == null)
                 return NotFound();
 
-            // 🔒 Редактираме САМО тези полета
             track.Email = model.Email;
             track.Worktime = model.Worktime;
             track.TelNumber = model.TelNumber;
@@ -196,6 +200,32 @@ namespace WorldKartIdentity.Controllers
             {
 
             }
+
+            return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> TrajectoryDetails(int id)
+        {
+            var trajectory = await db.TrackTrajectories.Include(t => t.User)
+                    .Include(t => t.Track)
+                    .FirstOrDefaultAsync(t => t.Id == id);
+
+            return View(TrackTrajectoryViewModel.TrajectoryToTrajectoryVM(trajectory));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateTrajectory([FromBody] TrackTrajectoryViewModel model)
+        {
+            var trajectory = new TrackTrajectory
+            {
+                UserId = userManager.GetUserId(User),
+                TrackId = model.TrackId,
+                TrajectoryBase64 = model.Base64
+            };
+
+            await db.TrackTrajectories.AddAsync(trajectory);
+            await db.SaveChangesAsync();
 
             return Ok();
         }

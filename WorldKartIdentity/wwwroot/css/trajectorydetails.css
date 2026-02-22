@@ -1,0 +1,306 @@
+﻿/* wwwroot/css/tracktrajectory-details.css */
+
+/* base */
+p {
+    font-size: 14px;
+    font-family: "Muli", sans-serif;
+    color: #a9a9a9;
+    font-weight: 400;
+    line-height: 24px;
+    margin: 0 0 15px 0;
+}
+
+img {
+    max-width: 100%;
+}
+
+.spad {
+    padding-bottom: 100px;
+}
+
+.description {
+    padding-top: 20px;
+}
+
+/* hero/breadcrumb */
+.breadcrumb-section {
+    position: relative;
+    height: 350px;
+    padding-top: 140px;
+}
+
+.breadcrumb-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.85));
+}
+
+.breadcrumb-text {
+    position: relative;
+    z-index: 2;
+}
+
+.crumb-kicker {
+    font-size: 16px;
+    color: #DC3545;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.breadcrumb-text h2 {
+    font-size: 58px;
+    color: #DC3545;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 10px 0 14px 0;
+}
+
+.crumb-meta {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top:55px;
+}
+
+.meta-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #0a0a0a;
+    border: 1px solid #252525;
+    padding: 10px 20px;
+    color: #c4c4c4;
+    font-size: 14px;
+    transform: skewY(-2deg);
+}
+
+    .meta-pill i {
+        color: #f36100;
+    }
+
+.primary-btn {
+    display: inline-block;
+    font-size: 14px;
+    padding: 17px 30px 16px;
+    color: #ffffff;
+    background: #f36100;
+    line-height: normal;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 700;
+    border: 2px solid transparent;
+}
+
+    .primary-btn.btn-normal {
+        transition: all 0.3s;
+    }
+
+        .primary-btn.btn-normal:hover {
+            background: #DC3545;
+            border-color: #DC3545;
+        }
+
+    .primary-btn.appoinment-btn {
+        background: transparent;
+        border: 2px solid #DC3545;
+        float: right;
+        margin-top: 10px;
+    }
+
+        .primary-btn.appoinment-btn:hover {
+            background: #DC3545;
+        }
+
+.btn-ghost {
+    background: transparent;
+    border: 2px solid #464646;
+}
+
+    .btn-ghost:hover {
+        border-color: #DC3545;
+    }
+
+/* section bg */
+.class-details-section {
+    background: #151515;
+    padding-bottom: 60px;
+}
+
+/* panels (dark, borders like your theme) */
+.panel {
+    background: #0a0a0a;
+    border: 1px solid #252525;
+    position: relative;
+    padding: 22px 22px 18px 22px;
+    overflow: hidden;
+}
+
+    .panel:before {
+        content: "";
+        position: absolute;
+        left: -10px;
+        top: -38px;
+        height: 90px;
+        width: 700px;
+        border-top: 4px solid #464646;
+        background: #0a0a0a;
+        transform: rotate(-5deg);
+        z-index: 0;
+    }
+
+    .panel > * {
+        position: relative;
+        z-index: 1;
+    }
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+}
+
+    .panel-header h3 {
+        color: #DC3545;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+.panel-line {
+    flex: 1;
+    height: 1px;
+    background: #252525;
+}
+
+.panel-hint {
+    color: #c4c4c4;
+    margin-bottom: 14px;
+}
+
+/* annotorious area */
+.annot-wrap {
+    border: 1px solid #252525;
+    background: #151515;
+    padding: 14px;
+}
+
+.traj-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #1f1f1f;
+}
+
+/* right column */
+.sticky {
+    position: sticky;
+    top: 20px;
+}
+
+.comment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.comment-card {
+    background: #151515;
+    border: 1px solid #252525;
+    padding: 12px 12px 10px 12px;
+    position: relative;
+}
+
+    .comment-card:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 4px;
+        background: var(--accent, #f36100);
+    }
+
+.comment-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.comment-badge {
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #ffffff;
+    background: rgba(255,255,255,0.08);
+    padding: 6px 10px;
+    border: 1px solid #252525;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.icon-btn {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid #252525;
+    color: #c4c4c4;
+    cursor: pointer;
+}
+
+    .icon-btn:hover {
+        border-color: #DC3545;
+        color: #ffffff;
+    }
+
+.small-muted {
+    font-size: 12px;
+    color: #8f8f8f;
+    margin-top: 12px;
+}
+
+.info-list {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+}
+
+    .info-list li {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid #252525;
+        color: #c4c4c4;
+    }
+
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+
+        .info-list li span {
+            color: #aaaaaa;
+        }
+
+    .info-list b {
+        color: #ffffff;
+    }
+
+/* Annotorious tweak (optional): make handles visible on dark bg */
+.a9s-annotation .a9s-inner {
+    stroke: #DC3545;
+}
+
+.track-link :hover {
+    color: #DC3545;
+}

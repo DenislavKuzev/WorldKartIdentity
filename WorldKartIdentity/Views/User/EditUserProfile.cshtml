@@ -30,7 +30,7 @@
                                         <!-- пазим текущата снимка -->
                                         <input type="hidden" asp-for="Picture" />
                                         <!-- нов файл -->
-                                        <input asp-for="PictureFile" type="file" class="form-control" />
+                                        <input asp-for="PictureFile" type="file" class="form-control mt-1" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -38,7 +38,7 @@
                                         <div class="trainer-title">
                                             <h4>@Model.UserName</h4>
                                             <input type="hidden" asp-for="UserName" />
-                                                <label>Роля</label>
+                                                <label class="text-danger">Роля</label>
                                                 <select asp-for="RoleInKarting" class="form-control">
                                                     <option>Пилот</option>
                                                     <option>Механик</option>
@@ -97,3 +97,9 @@
         </div>
     </div>
 </section>
+
+<style>
+    body{
+        background-color: #151515 !important;
+    }
+</style>

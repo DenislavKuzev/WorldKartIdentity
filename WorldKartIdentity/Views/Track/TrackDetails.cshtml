@@ -1,4 +1,5 @@
-﻿@model WorldKartIdentity.ViewModel.TrackViewModel
+﻿@using System.Text.Json
+@model WorldKartIdentity.ViewModel.TrackViewModel
 
 @{
     ViewData["Title"] = "TrackDetails";
@@ -50,9 +51,19 @@
 {
     <section class="class-details-section spad">
         <div class="container d-flex align-items-center justify-content-center">
-            <div class="row img-container d-flex w-75 h-75">
+            <div class="row img-container d-flex w-100 h-75">
                 <div class="col-lg-10 pnt-editor">
                 </div>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <section class="class-details-section spad">
+        <div class="container d-flex align-items-center justify-content-center">
+            <div class="row img-container d-flex w-75 h-75">
+                <image src="data:image/jpeg;base64,@Model.PictureBase64" class="w-100 h-100"></image>
             </div>
         </div>
     </section>
@@ -71,30 +82,21 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-4 col-sm-6">
-                <div class="ts-item set-bg" style="background-image: url('data:image/webp;base64,UklGRtADAABXRUJQVlA4IMQDAADQJACdASrGAOoAPp1KokylpCOlpZHoqLATiWluz5/SCWoouUVh0z5P5jPvWsrl2uzuUEEc5F6xCef7wD1gZiL85LS5KXV7OJd+0hz5LRXvlmgtXCIkxrHJR1GBbLRUIRDSdzPclODK8DA4jbktWjfZ+hhx1dCZr6f3BkM7oTtl15PMCvxbaYhUzsqUzhSUn5FM7+l4Sa8ljVABrbEhy4F3gLWONiCFhnxY+WDc/oyoVpNjQypg4LlAdrn9AqAPVwPmoVldeyFT/NOKYQpgidkj9IKwxCRqZeEKO4+VXwUvGqXUqz6pEzrPDJ33hggp+nxJLhurdztCrQjHBLdUk3hiDxDlVwBZqDK2usjGGdK2rvRfcXfjmdJyvwmtMj+JY2r1CSeviu7A1yMA+X5yOAAA/vj0bHjbvShxi8Lzj4+WWxhhU8Wc+Rz1rbNjQEiYo9WyKs6oDxF74vh2YEfWa6nBVYY7GWoGUlMIYmN5jA4zaiKYCwLMA5dKZFIa/eb4JZB3/lOAI6xzJof9s2M2gBJwX6+4yT+EcKtJngw/6IP2B40NC631SaeCq9f2+YfQAYO7UuUO/swcEqgVfdwSMkHOFeRU6j/M6mEWLXhUkwak7Z1AD8uk5T9g2XOq1+9pEwgTRVe5wbACdl1leGiE7q0ye6Z6HMLKBGJv81v1+iUhk69tw67eSsp78ddsceQskGIbWrkyovh6U8uBhkHrmlWvWW6Wr+aHQwaZiVN+s1+88i8JohAYxj+fH7Uvb1FBfA18+GCW04tp/TwqUO9KHy1wEz1HvBsrlaWToI73VFJahFUwY8uCAE9KmLEn7HmkZ2kG82rUpNRGopGSOLU54lyVilVUnI1DoWQJJUksFdJYZBQTLMy7KKSwXJU+KOqF74dso0CTiF96zRf76rRC3MvGfwecwStmnIUWk2X/m1gph8VXq3dUbd98N/D0b8Gj/0Wn1gxMYokEcyJgLQZ0ryKVhi0YaIDv3qyQexHMVJ7SvZefIBAp9rlP6Rd0uMjTjCiCKKHlBxNPdlALhJ7+L/OunRy1fPEYW+mlgzSzHK1fps1cqjvk7qnaHufq9Hu9gmyqjVUOQt4+Ndi4N6XiunUpvAxazwbgU1mgzINNKJND5lRC1zd1EfJyPzvMCR1TbR4aFwCsWMIwDkGGrqu5FHquXXhW6o74MJg+Jwr1PYDICiUJ/V57hssRkEnnk4F0eQNbkxGEEJpVL/w6jT8Zir76Btu5S3nlCyZXuDSb6mmS/5VrkytIE1lFl7cEUqumJCa9AAAA');">
+            @foreach (var trajectory in Model.Trajectories)
+            {
+                
+              <a class="col-lg-4 col-sm-6" asp-action="TrajectoryDetails" asp-action="TrajectoryDetails" asp-controller="Track" asp-route-id="@trajectory.Id">
+                <div class="ts-item set-bg" style="background-image: url('data:image/png;base64,@trajectory.Base64');">
                     <div class="ts_text">
-                        <h4>Added by:</h4>
-                        <span>Number of likes</span>
+                        <h4>Added by: @trajectory.User.UserName</h4>
+                        @* <span>Number of likes</span> *@
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <div class="ts-item set-bg" style="background-image: url('data:image/webp;base64,UklGRtADAABXRUJQVlA4IMQDAADQJACdASrGAOoAPp1KokylpCOlpZHoqLATiWluz5/SCWoouUVh0z5P5jPvWsrl2uzuUEEc5F6xCef7wD1gZiL85LS5KXV7OJd+0hz5LRXvlmgtXCIkxrHJR1GBbLRUIRDSdzPclODK8DA4jbktWjfZ+hhx1dCZr6f3BkM7oTtl15PMCvxbaYhUzsqUzhSUn5FM7+l4Sa8ljVABrbEhy4F3gLWONiCFhnxY+WDc/oyoVpNjQypg4LlAdrn9AqAPVwPmoVldeyFT/NOKYQpgidkj9IKwxCRqZeEKO4+VXwUvGqXUqz6pEzrPDJ33hggp+nxJLhurdztCrQjHBLdUk3hiDxDlVwBZqDK2usjGGdK2rvRfcXfjmdJyvwmtMj+JY2r1CSeviu7A1yMA+X5yOAAA/vj0bHjbvShxi8Lzj4+WWxhhU8Wc+Rz1rbNjQEiYo9WyKs6oDxF74vh2YEfWa6nBVYY7GWoGUlMIYmN5jA4zaiKYCwLMA5dKZFIa/eb4JZB3/lOAI6xzJof9s2M2gBJwX6+4yT+EcKtJngw/6IP2B40NC631SaeCq9f2+YfQAYO7UuUO/swcEqgVfdwSMkHOFeRU6j/M6mEWLXhUkwak7Z1AD8uk5T9g2XOq1+9pEwgTRVe5wbACdl1leGiE7q0ye6Z6HMLKBGJv81v1+iUhk69tw67eSsp78ddsceQskGIbWrkyovh6U8uBhkHrmlWvWW6Wr+aHQwaZiVN+s1+88i8JohAYxj+fH7Uvb1FBfA18+GCW04tp/TwqUO9KHy1wEz1HvBsrlaWToI73VFJahFUwY8uCAE9KmLEn7HmkZ2kG82rUpNRGopGSOLU54lyVilVUnI1DoWQJJUksFdJYZBQTLMy7KKSwXJU+KOqF74dso0CTiF96zRf76rRC3MvGfwecwStmnIUWk2X/m1gph8VXq3dUbd98N/D0b8Gj/0Wn1gxMYokEcyJgLQZ0ryKVhi0YaIDv3qyQexHMVJ7SvZefIBAp9rlP6Rd0uMjTjCiCKKHlBxNPdlALhJ7+L/OunRy1fPEYW+mlgzSzHK1fps1cqjvk7qnaHufq9Hu9gmyqjVUOQt4+Ndi4N6XiunUpvAxazwbgU1mgzINNKJND5lRC1zd1EfJyPzvMCR1TbR4aFwCsWMIwDkGGrqu5FHquXXhW6o74MJg+Jwr1PYDICiUJ/V57hssRkEnnk4F0eQNbkxGEEJpVL/w6jT8Zir76Btu5S3nlCyZXuDSb6mmS/5VrkytIE1lFl7cEUqumJCa9AAAA');">
-                    <div class="ts_text">
-                        <h4>Added by:</h4>
-                        <span>Number of likes</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <div class="ts-item set-bg" style="background-image: url('data:image/webp;base64,UklGRtADAABXRUJQVlA4IMQDAADQJACdASrGAOoAPp1KokylpCOlpZHoqLATiWluz5/SCWoouUVh0z5P5jPvWsrl2uzuUEEc5F6xCef7wD1gZiL85LS5KXV7OJd+0hz5LRXvlmgtXCIkxrHJR1GBbLRUIRDSdzPclODK8DA4jbktWjfZ+hhx1dCZr6f3BkM7oTtl15PMCvxbaYhUzsqUzhSUn5FM7+l4Sa8ljVABrbEhy4F3gLWONiCFhnxY+WDc/oyoVpNjQypg4LlAdrn9AqAPVwPmoVldeyFT/NOKYQpgidkj9IKwxCRqZeEKO4+VXwUvGqXUqz6pEzrPDJ33hggp+nxJLhurdztCrQjHBLdUk3hiDxDlVwBZqDK2usjGGdK2rvRfcXfjmdJyvwmtMj+JY2r1CSeviu7A1yMA+X5yOAAA/vj0bHjbvShxi8Lzj4+WWxhhU8Wc+Rz1rbNjQEiYo9WyKs6oDxF74vh2YEfWa6nBVYY7GWoGUlMIYmN5jA4zaiKYCwLMA5dKZFIa/eb4JZB3/lOAI6xzJof9s2M2gBJwX6+4yT+EcKtJngw/6IP2B40NC631SaeCq9f2+YfQAYO7UuUO/swcEqgVfdwSMkHOFeRU6j/M6mEWLXhUkwak7Z1AD8uk5T9g2XOq1+9pEwgTRVe5wbACdl1leGiE7q0ye6Z6HMLKBGJv81v1+iUhk69tw67eSsp78ddsceQskGIbWrkyovh6U8uBhkHrmlWvWW6Wr+aHQwaZiVN+s1+88i8JohAYxj+fH7Uvb1FBfA18+GCW04tp/TwqUO9KHy1wEz1HvBsrlaWToI73VFJahFUwY8uCAE9KmLEn7HmkZ2kG82rUpNRGopGSOLU54lyVilVUnI1DoWQJJUksFdJYZBQTLMy7KKSwXJU+KOqF74dso0CTiF96zRf76rRC3MvGfwecwStmnIUWk2X/m1gph8VXq3dUbd98N/D0b8Gj/0Wn1gxMYokEcyJgLQZ0ryKVhi0YaIDv3qyQexHMVJ7SvZefIBAp9rlP6Rd0uMjTjCiCKKHlBxNPdlALhJ7+L/OunRy1fPEYW+mlgzSzHK1fps1cqjvk7qnaHufq9Hu9gmyqjVUOQt4+Ndi4N6XiunUpvAxazwbgU1mgzINNKJND5lRC1zd1EfJyPzvMCR1TbR4aFwCsWMIwDkGGrqu5FHquXXhW6o74MJg+Jwr1PYDICiUJ/V57hssRkEnnk4F0eQNbkxGEEJpVL/w6jT8Zir76Btu5S3nlCyZXuDSb6mmS/5VrkytIE1lFl7cEUqumJCa9AAAA');">
-                    <div class="ts_text">
-                        <h4>Added by:</h4>
-                        <span>Number of likes</span>
-                    </div>
-                </div>
-            </div>
+             </a>
+            }
+
+           
+           
         </div>
         <a href="#" class="primary-btn btn-normal appoinment-btn">ВСИЧКИ ТРАЕКТОРИИ</a>
     </div>
@@ -144,9 +146,10 @@
 
 @section Scripts {
     <script>
-        window.trackContext = {
-            trackId: @Model.Id
-        };
+        window.trackContext = @Html.Raw(JsonSerializer.Serialize(new {
+      trackId = Model.Id,
+      trackBase64 = Model.PictureBase64   // no .ToString() needed
+  }));
     </script>
 
     <script type="module" src="~/lib/pintura/pintura.js"></script>

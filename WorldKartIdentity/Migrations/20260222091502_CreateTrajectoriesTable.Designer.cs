@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorldKartIdentity.Database;
 
@@ -11,9 +12,11 @@ using WorldKartIdentity.Database;
 namespace WorldKartIdentity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260222091502_CreateTrajectoriesTable")]
+    partial class CreateTrajectoriesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -390,9 +393,6 @@ namespace WorldKartIdentity.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("TrackId")
                         .HasColumnType("int");
 
@@ -400,17 +400,11 @@ namespace WorldKartIdentity.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("TrackId");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("TrackTrajectory", (string)null);
+                    b.ToTable("TrackTrajectory");
                 });
 
             modelBuilder.Entity("WorldKartIdentity.Database.User", b =>
@@ -633,15 +627,7 @@ namespace WorldKartIdentity.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WorldKartIdentity.Database.User", "User")
-                        .WithMany("TrackTrajectories")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Track");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("WorldKartIdentity.Database.BlogPost", b =>
@@ -662,8 +648,6 @@ namespace WorldKartIdentity.Migrations
             modelBuilder.Entity("WorldKartIdentity.Database.User", b =>
                 {
                     b.Navigation("TrackAnnotations");
-
-                    b.Navigation("TrackTrajectories");
                 });
 #pragma warning restore 612, 618
         }

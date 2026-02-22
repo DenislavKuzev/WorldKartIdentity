@@ -28,6 +28,8 @@ namespace WorldKartIdentity.ViewModel
         public int LikesCount { get; set; }
         public bool IsLikedByCurrentUser { get; set; }
 
+        public ICollection<TrackTrajectoryViewModel> Trajectories { get; set; } = new List<TrackTrajectoryViewModel>();
+
         public TrackViewModel()
         {
             PictureFile = null!;

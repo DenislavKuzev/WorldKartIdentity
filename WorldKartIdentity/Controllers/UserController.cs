@@ -62,7 +62,7 @@ namespace WorldKartIdentity.Controllers
                 await _userManager.AddToRoleAsync(user, "Users");//даване на роля като Юсър //грешката идва от тук
                                                                  // Влизане веднага след регистрация
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                return RedirectToAction("Index", "Home", new UserViewModel(user));
+                return RedirectToAction("Index", "Home");//
             }
             else
             {

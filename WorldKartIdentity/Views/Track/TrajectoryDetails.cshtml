@@ -1,0 +1,114 @@
+﻿
+@model WorldKartIdentity.ViewModel.TrackTrajectoryViewModel
+
+@{
+    ViewData["Title"] = "Trajectory Details";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/trajectorydetails.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/node_modules/@@recogito/annotorious/dist/annotorious.min.css" />
+}
+
+<section class="breadcrumb-section set-bg"
+         style="background-image:url('/img/trackbackground.png'); background-size:cover; background-position:center; background-repeat:no-repeat;">
+    <div class="breadcrumb-overlay"></div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb-text">
+                    <h2>Траектория</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="class-details-section description spad">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>Аннотация</h3>
+                        <div class="panel-line"></div>
+                    </div>
+
+                    <p class="panel-hint">
+                        Използвай мишката: маркирай зона върху изображението → добави коментар и избери цвят.
+                    </p>
+
+                    <div class="annot-wrap">
+                        <img id="trajImage"
+                             class="traj-image"
+                             src="/img/kustendiltrack.png"
+                             alt="Trajectory image" />
+                    </div>
+
+                    <div class="toolbar mt-3">
+
+                        <button type="button" class="primary-btn btn-normal btn-ghost" id="btnClear">
+                            Изчисти
+                        </button>
+
+                        @* <a class="primary-btn btn-normal btn-ghost"
+                           asp-action="Index"
+                           asp-controller="TrackTrajectory"
+                           asp-route-trackId="@Model.TrackId">
+                            Всички траектории
+                        </a> *@
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                @* <div class="panel sticky">
+                    <div class="panel-header">
+                        <h3>Коментари</h3>
+                        <div class="panel-line"></div>
+                    </div>
+
+                    <div id="commentList" class="comment-list">
+                        
+                    </div>
+                </div> *@
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>Детайли</h3>
+                        <div class="panel-line"></div>
+                    </div>
+
+                    <ul class="info-list">
+                        <li><span>Добавено от: </span> <b>@Model.User.UserName</b></li>
+                        <li><span>Добавено на</span> <b>@Model.CreatedOn</b></li>
+                        <li><span>Писта</span> <a class="text-decoration-none track-link" asp-action="TrackDetails" asp-controller="Track" asp-route-id="@Model.TrackId"><b>@Model.Track.Name</b></a></li>
+                    </ul>
+                </div>
+
+                <a class="primary-btn btn-normal appoinment-btn mt-3"
+                   asp-action="TrackDetails"
+                   asp-controller="Track"
+                   asp-route-id="@Model.TrackId">
+                    НАЗАД
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/lib/node_modules/@@recogito/annotorious/dist/annotorious.min.js"></script>
+
+    @* <script>
+        // Pass server info to JS
+        window.trajectoryContext = @Html.Raw(JsonSerializer.Serialize(new {
+            trajectoryId = Model.Id,
+            trackId = Model.TrackId
+        }));
+    </script> *@
+
+    <script src="~/js/tracktrajectory-details.js" asp-append-version="true"></script>
+}

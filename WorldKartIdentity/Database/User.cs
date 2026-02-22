@@ -16,5 +16,7 @@ namespace WorldKartIdentity.Database
 
         public ICollection<TrackAnnotation> TrackAnnotations { get; set; } = new List<TrackAnnotation>();
 
+        public ICollection<TrackTrajectory> TrackTrajectories { get; set; } = new List<TrackTrajectory>();
+
     }
 }
