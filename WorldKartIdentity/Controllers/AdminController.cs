@@ -6,7 +6,7 @@ using WorldKartIdentity.ViewModel;
 
 namespace WorldKartIdentity.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext db;
@@ -49,7 +49,6 @@ namespace WorldKartIdentity.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> MakeAdmin(string id)
         {
             var user = await userManager.FindByIdAsync(id);
@@ -62,7 +61,6 @@ namespace WorldKartIdentity.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await userManager.FindByIdAsync(id);

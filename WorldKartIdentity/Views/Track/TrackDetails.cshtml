@@ -46,14 +46,17 @@
     </div>
 </section>
 
-<section class="class-details-section spad">
-    <div class="container d-flex align-items-center justify-content-center">
-        <div class="row img-container d-flex w-75 h-75">
-            <div class="col-lg-10 pnt-editor">
+@if (User.Identity.IsAuthenticated == true)
+{
+    <section class="class-details-section spad">
+        <div class="container d-flex align-items-center justify-content-center">
+            <div class="row img-container d-flex w-75 h-75">
+                <div class="col-lg-10 pnt-editor">
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+}
 
 <section class="team-section team-page spad">
     <div class="container">

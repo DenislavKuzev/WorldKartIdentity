@@ -94,7 +94,6 @@ namespace WorldKartIdentity.Controllers
             var result = await _signInManager.PasswordSignInAsync(
         user, userVM.Password!, isPersistent: false, lockoutOnFailure: false);
 
-
             if (!result.Succeeded)
             {
                 ModelState.AddModelError("", "Невалиден имейл или парола.");

@@ -16,7 +16,7 @@
 <div class="register-container">
     <h2>Вход</h2>
 
-    <form>
+    <form asp-controller="User" asp-action="Login" method="post" id="loginForm">
         @Html.AntiForgeryToken()
         <div class="form-group em">
             <label>Имейл</label>
