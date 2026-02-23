@@ -190,7 +190,9 @@ namespace WorldKartIdentity.Controllers
                 {
                     UserId = userManager.GetUserId(User),
                     TrackId = model.TrackId,
-                    AnnotationJson = model.AnnotationJson
+                    TrackTrajectoryId = model.TrajectoryId,
+                    AnnotationJson = model.AnnotationJson,
+                    AnnotationJsonId = model.AnnotationJsonId
                 };
 
                 await db.TrackAnnotations.AddAsync(trackAnnotation);
@@ -198,7 +200,7 @@ namespace WorldKartIdentity.Controllers
             }
             catch (Exception ex)
             {
-
+              
             }
 
             return Ok();
@@ -209,6 +211,7 @@ namespace WorldKartIdentity.Controllers
         {
             var trajectory = await db.TrackTrajectories.Include(t => t.User)
                     .Include(t => t.Track)
+                    .Include(t => t.Annotations)
                     .FirstOrDefaultAsync(t => t.Id == id);
 
             return View(TrackTrajectoryViewModel.TrajectoryToTrajectoryVM(trajectory));

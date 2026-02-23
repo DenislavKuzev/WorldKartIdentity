@@ -18,8 +18,11 @@ namespace WorldKartIdentity.ViewModel
 
         public Track? Track { get; set; }
 
+        public List<string>? AnnotationBodies { get; set; }
+
         public static TrackTrajectoryViewModel TrajectoryToTrajectoryVM(TrackTrajectory trajectory)
         {
+            var annotationBodies = trajectory.Annotations.Select(a => a.AnnotationJson).ToList();
             return new TrackTrajectoryViewModel
             {
                 Id = trajectory.Id,
@@ -28,7 +31,8 @@ namespace WorldKartIdentity.ViewModel
                 Base64 = trajectory.TrajectoryBase64,
                 Track = trajectory.Track,
                 User = trajectory.User,
-                CreatedOn = trajectory.CreatedOn
+                CreatedOn = trajectory.CreatedOn,
+                AnnotationBodies = annotationBodies
             };
         }
 

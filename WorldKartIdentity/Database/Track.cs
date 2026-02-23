@@ -27,7 +27,7 @@ public class Track
 
     public ICollection<TrackLike> Likes { get; set; } = new List<TrackLike>();
 
-    public TrackAnnotation Annotation { get; set; }
+    public ICollection<TrackAnnotation> Comments { get; set; } = new List<TrackAnnotation>();
 
     public ICollection<TrackTrajectory> Trajectories { get; set; } = new List<TrackTrajectory>();
 

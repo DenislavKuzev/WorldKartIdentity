@@ -9,5 +9,8 @@ namespace WorldKartIdentity.ViewModel
 
         public string AnnotationJson { get; set; } = null!;
 
+        public string AnnotationJsonId { get; set; } = null!;
+
+        public int TrajectoryId { get; set; }
     }
 }

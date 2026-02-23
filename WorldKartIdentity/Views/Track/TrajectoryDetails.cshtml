@@ -1,4 +1,5 @@
-﻿
+﻿@using System.Text.Json
+
 @model WorldKartIdentity.ViewModel.TrackTrajectoryViewModel
 
 @{
@@ -29,29 +30,30 @@
 <section class="class-details-section description spad">
     <div class="container">
         <div class="row g-4">
-            <div class="col-lg-8">
+            <div class="col-lg-8 h-100">
                 <div class="panel">
-                    <div class="panel-header">
-                        <h3>Аннотация</h3>
-                        <div class="panel-line"></div>
-                    </div>
-
-                    <p class="panel-hint">
-                        Използвай мишката: маркирай зона върху изображението → добави коментар и избери цвят.
-                    </p>
+                    @if (User.Identity.IsAuthenticated)
+                    {  
+                      <p class="panel-hint">
+                          Маркирай зона върху изображението → добави коментар и избери цвят.
+                      </p>
+                    }
 
                     <div class="annot-wrap">
                         <img id="trajImage"
                              class="traj-image"
-                             src="/img/kustendiltrack.png"
+                             src="data:image/jpeg;base64,@Model.Base64"
                              alt="Trajectory image" />
                     </div>
 
                     <div class="toolbar mt-3">
-
-                        <button type="button" class="primary-btn btn-normal btn-ghost" id="btnClear">
-                            Изчисти
-                        </button>
+                        @if(User.Identity.IsAuthenticated)
+                        {
+                          <button type="button" class="primary-btn btn-normal btn-ghost" id="btnClear">
+                            Изчисти локално
+                          </button>
+                        })
+                        
 
                         @* <a class="primary-btn btn-normal btn-ghost"
                            asp-action="Index"
@@ -82,9 +84,9 @@
                     </div>
 
                     <ul class="info-list">
-                        <li><span>Добавено от: </span> <b>@Model.User.UserName</b></li>
-                        <li><span>Добавено на</span> <b>@Model.CreatedOn</b></li>
-                        <li><span>Писта</span> <a class="text-decoration-none track-link" asp-action="TrackDetails" asp-controller="Track" asp-route-id="@Model.TrackId"><b>@Model.Track.Name</b></a></li>
+                        <li><span>Добавено от </span> <b>@Model.User.UserName</b></li>
+                        <li><span>Добавено на </span> <b>@Model.CreatedOn</b></li>
+                        <li><span>Писта </span> <a class="text-decoration-none track-link" asp-action="TrackDetails" asp-controller="Track" asp-route-id="@Model.TrackId"><b>@Model.Track.Name</b></a></li>
                     </ul>
                 </div>
 
@@ -100,15 +102,21 @@
 </section>
 
 @section Scripts {
-    <script src="~/lib/node_modules/@@recogito/annotorious/dist/annotorious.min.js"></script>
+    @if (User.Identity.IsAuthenticated)
+    {  
+       <script src="~/lib/node_modules/@@recogito/annotorious/dist/annotorious.min.js"></script>
+    }
 
-    @* <script>
-        // Pass server info to JS
+
+    <script>
         window.trajectoryContext = @Html.Raw(JsonSerializer.Serialize(new {
             trajectoryId = Model.Id,
-            trackId = Model.TrackId
+            trackId = Model.TrackId,
+            annotations = Model.AnnotationBodies
+  .Select(j => JsonSerializer.Deserialize<object>(j))
+  .ToArray()
         }));
-    </script> *@
+    </script>
 
-    <script src="~/js/tracktrajectory-details.js" asp-append-version="true"></script>
+    <script src="~/js/trajectorydetails.js" asp-append-version="true"></script>
 }

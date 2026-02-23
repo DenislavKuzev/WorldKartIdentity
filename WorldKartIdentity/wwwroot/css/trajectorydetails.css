@@ -186,13 +186,17 @@ img {
     padding: 14px;
 }
 
-.traj-image {
-    width: 100%;
-    height: auto;
+    .annot-wrap > div {
+        display: block !important;
+        width: 100% !important;
+    }
+
+.traj-image{
+    width: 100% !important;
+    height: 100% !important;
     display: block;
     border: 1px solid #1f1f1f;
 }
-
 /* right column */
 .sticky {
     position: sticky;

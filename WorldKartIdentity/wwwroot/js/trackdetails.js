@@ -4,9 +4,7 @@ import * as P from "../lib/pintura/pintura.js";
 
 const userRes = await fetch('/user/me');
 const user = await userRes.json();
-const imgContainer = document.querySelector(".img-container");
 
-let anno = null;
 //pintura
 if (user.authenticated) {
     console.log(window.trackContext.trackBase64);
@@ -55,73 +53,14 @@ if (user.authenticated) {
             })
         });
 
-        //close editor
-        //editor.destroy();
-
-        //const img = document.createElement("img");
-        //imgContainer.innerHTML = "";      // clear first
-        //imgContainer.appendChild(img);    // then appen
-
-        //img.src = url;
-        //img.onload = () => {
-        //    // destroy previous annotator if you re-run
-        //    if (anno?.destroy) anno.destroy();
-        //    anno = null;
-
-        //    // v3 API
-        //    anno = Annotorious.init({
-        //        image: img
-        //    });
-        //    anno.setAuthInfo({
-        //        id: `user:${user.userId}`,
-        //        displayName: user.username
-        //    });
-        //    URL.revokeObjectURL(url);
-
-        //    attachEvents();
-        //};
-
     });
 }
+async function blobToBase64(blob) {
+    const arrayBuffer = await blob.arrayBuffer();
+    const bytes = new Uint8Array(arrayBuffer);
 
+    let binary = "";
+    bytes.forEach(b => binary += String.fromCharCode(b));
 
-
-
-//function attachEvents() {
-//    anno.on('createAnnotation', async (a) => {
-//        await sendAnnotationRequest('/Track/CreateTrackAnnotation', a);
-//    });
-
-//    //anno.on('updateAnnotation', async (a) => {
-//    //    await sendAnnotationRequest('/Track/UpdateTrackAnnotation', a);
-//    //})
-
-//    //anno.on('deleteAnnotation', async (a) => {
-//    //    await sendAnnotationRequest('/Track/DeleteTrackAnnotation', a);
-//}
-
-//async function blobToBase64(blob) {
-//    const arrayBuffer = await blob.arrayBuffer();
-//    const bytes = new Uint8Array(arrayBuffer);
-
-//    let binary = "";
-//    bytes.forEach(b => binary += String.fromCharCode(b));
-
-//    return btoa(binary);
-//}
-
-//async function sendAnnotationRequest(url, a) {
-//    console.log(`reached event: ${a}, track: ${window.trackContext}`);
-
-//    const params = {
-//        method: 'POST',
-//        headers: {
-//            'Content-Type': 'application/json'
-//        },
-//        body: JSON.stringify({
-//            trackId: window.trackContext.trackId,
-//            annotationJson: JSON.stringify(a),
-//        })
-//    }
-//    await fetch(url, params);
-//}
+    return btoa(binary);
+}

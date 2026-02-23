@@ -14,5 +14,7 @@
         public Track Track { get; set; } = null!;
 
         public User User { get; set; } = default!;
+
+        public ICollection<TrackAnnotation> Annotations { get; set; } = new List<TrackAnnotation>();
     }
 }
