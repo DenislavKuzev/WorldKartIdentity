@@ -9,7 +9,7 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/css/trajectorydetails.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/lib/node_modules/@@recogito/annotorious/dist/annotorious.min.css" />
+    <link rel="stylesheet" href="~/lib/annotorious/annotorious.min.css" />
 }
 
 <section class="breadcrumb-section set-bg"
@@ -104,7 +104,7 @@
 @section Scripts {
     @if (User.Identity.IsAuthenticated)
     {  
-       <script src="~/lib/node_modules/@@recogito/annotorious/dist/annotorious.min.js"></script>
+       <script src="~/lib/annotorious/annotorious.min.js"></script>
     }
 
 

@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\lib\annotorious\" />
   </ItemGroup>
 
 	<Target Name="NpmInstall" BeforeTargets="Build">
