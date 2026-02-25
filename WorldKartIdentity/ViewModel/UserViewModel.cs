@@ -30,6 +30,8 @@ namespace WorldKartIdentity.ViewModel
         public string? YoutubeUrl { get; set; }
         public bool IsAdmin { get; set; }
 
+        public List<TrackTrajectoryViewModel> TrackTrajectory { get; set; }
+
 
         public UserViewModel()
         {
