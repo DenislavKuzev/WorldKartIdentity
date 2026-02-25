@@ -6,7 +6,7 @@ namespace WorldKartIdentity.ViewModel
     {
 
         public int Id { get; set; }
-        public string Title { get; set; } = null!;
+        public string Title { get; set; } = string.Empty;
 
         public string Content { get; set; } = null!;
 
@@ -24,7 +24,7 @@ namespace WorldKartIdentity.ViewModel
 
         public bool LikedByCurrentUser { get; set; }
 
-
+        public string? AuthorPicture { get; set; }
 
         public BlogViewModel()
         {

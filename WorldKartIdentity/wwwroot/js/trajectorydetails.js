@@ -1,6 +1,7 @@
 ﻿window.process = window.process || { env: { NODE_ENV: "production" } }
 let anno = null;
 let user = null;
+const btnClear = document.getElementById("btnClear");
 
 document.addEventListener("DOMContentLoaded", async () => {
     const userRes = await fetch('/user/me');
@@ -27,7 +28,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 function attachEvents() {
     anno.on('createAnnotation', async (a) => {
-        console.log(JSON.stringify(a));
         await sendAnnotationRequest('/Track/CreateTrackAnnotation', a);
     });
 
@@ -55,4 +55,25 @@ async function sendAnnotationRequest(url, a) {
             })
         }
         await fetch(url, params);
+}
+btnClear.addEventListener("click", function (e){
+    const annotations = anno.getAnnotations();
+    if (annotations.length > 0) {
+        annotations.forEach(a =>
+        {
+            const creatorId = getCreatorId(a);
+            if (creatorId == `user:${user.userId}`) {
+                anno.removeAnnotation(a);
+            }
+
+        });
+       
+        
     }
+})
+
+function getCreatorId(annotation) {
+    return annotation.body
+        ?.find(b => b.purpose === "commenting")
+        ?.creator?.id;
+}

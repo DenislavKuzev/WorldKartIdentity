@@ -62,8 +62,8 @@ namespace WorldKartIdentity.Database
 
             builder.Entity<TrackAnnotation>()
     .HasOne(x => x.Track)
-    .WithOne()
-    .HasForeignKey<TrackAnnotation>(x => x.TrackId)
+    .WithMany(x => x.Annotations)
+    .HasForeignKey(x => x.TrackId)
     .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<TrackTrajectory>()

@@ -26,15 +26,15 @@ namespace WorldKartIdentity.Controllers
         public async Task<IActionResult> Blogs()
         {
             var viewModel = new List<BlogViewModel>();
+
             var blogs = await db.Blogs.Take(100).Include(b => b.Author).ToListAsync();
             HashSet<int> likeIds = new HashSet<int>();
 
             if (User.Identity.IsAuthenticated)
             {
- 
-                string userId = _userManager.GetUserId(User);
+                var user = await _userManager.GetUserAsync(User);
                 likeIds = (await db.BlogLikes
-                    .Where(bl => bl.UserId == userId)
+                    .Where(bl => bl.UserId == user.Id)
                     .Select(bl => bl.BlogId)
                     .ToListAsync())
                     .ToHashSet();

@@ -109,10 +109,18 @@
     border: none;
     outline: none;
     box-shadow: none !important;
-    padding: 0;
+    padding: 5px;
+    color: white !important;
     font-size: 1.1rem;
-    background: transparent;
+    background: #0000002b !important;
 }
+
+    .textarea-plain::placeholder {
+        color: #ffffff6b;
+    }
+    .textarea-plain:focus {
+        background-color: #0000002b;
+    }
 
 /* Thread Line */
 .thread-line-container {
@@ -193,6 +201,7 @@
     border: none;
     font-weight: 600;
     padding: 8px 24px;
+
 }
 
     .btn-post:hover {

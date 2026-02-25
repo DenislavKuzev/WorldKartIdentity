@@ -15,16 +15,15 @@
                     <div class="d-flex gap-3">
                         <div class="flex-shrink-0">
                             <div class="thread-line-container">
-                                <img src="https://i.pravatar.cc/150?img=60" class="rounded-circle" width="44" height="44" alt="Avatar">
+                                <img src="~/img/defaultprofilepic.png" class="rounded-circle" width="44" height="44" alt="Avatar">
                                 <div class="thread-line"></div>
                             </div>
                         </div>
 
                         <div class="flex-grow-1">
                             <div class="user-header-row">
-                                <span class="fw-bold">st_raikin41</span> @* replace with currently logged in user *@
+                                <span class="fw-bold">@User.Identity.Name</span> @* replace with currently logged in user *@
                                 <i class="bi bi-chevron-right text-muted small" style="font-size: 0.7rem;"></i>
-                                <input type="text" class="topic-input" asp-for="Title" placeholder="Add a topic">
                             </div>
 
                             <textarea id="post-text" asp-for="Content" class="form-control textarea-plain mb-2" rows="2" placeholder="Напишете нещо..."></textarea>

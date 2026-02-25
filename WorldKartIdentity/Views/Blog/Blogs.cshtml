@@ -1,6 +1,7 @@
 ﻿@model List<WorldKartIdentity.ViewModel.BlogViewModel>
 @{
     Layout = "~/Views/Shared/_NewLayout.cshtml";
+
 }
 
 @section Styles {
@@ -38,7 +39,7 @@
                     <div class="d-flex mh-100">
                         <div class="me-3 flex-shrink-0">
                             <div class="avatar-container">
-                                <img src="https://i.pravatar.cc/150?img=8" class="rounded-circle img-fluid" alt="User">
+                            <img src="@(blog.Author.Picture != string.Empty ? blog.Author.Picture : "/img/defaultprofilepic.png")" class="rounded-circle img-fluid" alt="User">
                             </div> @* todo: replace placeholder with the author's pfp' *@
                        </div>
 

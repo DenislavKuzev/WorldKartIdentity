@@ -180,6 +180,7 @@ namespace WorldKartIdentity.Controllers
             return RedirectToAction("Tracks", "Admin");
         }
 
+        #region Annotations
 
         [HttpPost]
         public async Task<IActionResult> CreateTrackAnnotation([FromBody] TrackAnnotationViewModel model)
@@ -200,11 +201,36 @@ namespace WorldKartIdentity.Controllers
             }
             catch (Exception ex)
             {
-              
+
             }
 
             return Ok();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateTrackAnnotation([FromBody] TrackAnnotationViewModel model)
+        {
+            var annotation = await db.TrackAnnotations.FirstOrDefaultAsync(a => a.AnnotationJsonId == model.AnnotationJsonId);
+            annotation.AnnotationJson = model.AnnotationJson;
+
+            db.TrackAnnotations.Update(annotation);
+            await db.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteTrackAnnotation([FromBody] TrackAnnotationViewModel model)
+        {
+            var annotation = await db.TrackAnnotations.FirstOrDefaultAsync(a => a.AnnotationJsonId == model.AnnotationJsonId);
+
+            db.TrackAnnotations.Remove(annotation);
+            await db.SaveChangesAsync();
+
+            return Ok();
+        }
+        #endregion Annotations
+
 
         [HttpGet]
         public async Task<IActionResult> TrajectoryDetails(int id)
