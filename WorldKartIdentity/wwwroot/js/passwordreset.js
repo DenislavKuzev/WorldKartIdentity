@@ -75,7 +75,7 @@
         };
         console.log(formData.Token);
         try {
-            const response = await fetch('/User/ResetPassword', {
+            const response = await fetch('/user/resetpassword', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -84,14 +84,8 @@
                 body: JSON.stringify(formData)
             });
             const result = await response.json();
-
-            if (response.ok) {
-                const result = await response.json();
-                alert('Паролата е успешно нулирана!');
-                window.location.href = '/User/Login'; // Redirect to login page
-            } else {
-                const error = await response.json();
-                alert(`Грешка: ${error.message || 'Неуспешно нулиране на паролата.'}`);
+            if (confirm(result.message)) {
+                window.location.href = "/User/Login";
             }
         } catch (error) {
             console.error('Error:', error);

@@ -52,7 +52,10 @@ namespace WorldKartIdentity.Controllers
                 await _userManager.AddToRoleAsync(user, "Users");//даване на роля като Юсър //грешката идва от тук
                                                                  // Влизане веднага след регистрация
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                return RedirectToAction("Index", "Home");
+                return Json(new
+                {
+                    success = true
+                });
             }
             else
             {
@@ -247,7 +250,7 @@ namespace WorldKartIdentity.Controllers
                 return Json(new
                 {
                     type = "success",
-                    msg = "Имейл за нулиране на парола бе изпратен на" + email
+                    msg = "Имейл за нулиране на парола бе изпратен на " + email
                 });
             }
             catch (Exception)
@@ -261,30 +264,38 @@ namespace WorldKartIdentity.Controllers
 
         }
 
+        [HttpGet]
         public IActionResult ResetPassword(string token, string email)
         {
             var model = new ResetPasswordViewModel { Token = token, Email = email };
             return View(model);
         }
 
-        [HttpPost]
+        [HttpPost("/user/resetpassword")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        public async Task<JsonResult> ResetPassword(ResetPasswordViewModel model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
             string token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(model.Token));
 
             var res = await _userManager.ResetPasswordAsync(user, token, model.NewPassword);
-            if (res.Succeeded) 
+            if (res.Succeeded)
             {
-                TempData["Message"] = "Паролата беше успешно сменена. Можете да влезете с новата си парола-S";
-                return Ok();
+                //TempData["Message"] = "Паролата беше успешно сменена. Можете да влезете с новата си парола-S";
+                return Json(new {
+                  success = true,
+                  message = "Паролата беше успешно сменена. Можете да влезете с новата си парола."
+                });
+
             }
             else
             {
-                
+                return Json(new
+                {
+                    success = false,
+                    message = "Грешка при смяна на паролата. Възможно е линкът да е изтекъл. Моля, опитайте отново"
+                });
             }
-            return Ok();
 
         }
 

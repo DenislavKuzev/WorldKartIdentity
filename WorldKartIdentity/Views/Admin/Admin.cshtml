@@ -1,4 +1,4 @@
-﻿@model WorldKartIdentity.ViewModel.TrackViewModel
+﻿@model WorldKartIdentity.ViewModel.AdminViewModel
 
 @{
     ViewData["Title"] = "Admin Library";
@@ -37,7 +37,7 @@
                     <div class="card card-custom mb-3 shadow">
                         <div class="card-body text-center">
                             <h5 class="card-title">Картинг Писти</h5>
-                            <h2 class="card-text"> 2 </h2>
+                            <h2 class="card-text"> @Model.TracksCount </h2>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                     <div class="card card-custom mb-3 shadow">
                         <div class="card-body text-center">
                             <h5 class="card-title">Траектории</h5>
-                            <h2 class="card-text"> 3 </h2>
+                            <h2 class="card-text"> @Model.TrackTrajectoriesCount </h2>
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                     <div class="card card-custom mb-3 shadow">
                         <div class="card-body text-center">
                             <h5 class="card-title">Хора създали траектории</h5>
-                            <h2 class="card-text"> 0 </h2>
+                            <h2 class="card-text"> @Model.UsersCreatedTrajectoriesCount </h2>
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.Xml;
 using WorldKartIdentity.Database;
 using WorldKartIdentity.ViewModel;
 
@@ -17,12 +19,19 @@ namespace WorldKartIdentity.Controllers
             this.userManager = userManager;
         }
 
-        public IActionResult Admin()
+        public async Task<IActionResult> Admin()
         {
-            ViewBag.KartingTracks = 0;
-            ViewBag.Trajectories = 0;
-            ViewBag.Users = 0;
-            return View();
+            var usersCreatedTrajectoriesCount = await db.TrackTrajectories
+                .Where(tt => tt.UserId != null)
+                .GroupBy(tt => tt.UserId)
+                .CountAsync();
+            var vm = new AdminViewModel
+            {
+                TracksCount = await db.Tracks.CountAsync(),
+                TrackTrajectoriesCount = await db.TrackTrajectories.CountAsync(),
+                UsersCreatedTrajectoriesCount = usersCreatedTrajectoriesCount
+            };
+            return View(vm);
         }
 
         public async Task<IActionResult> Users()

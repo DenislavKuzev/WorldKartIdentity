@@ -99,6 +99,8 @@ async function handleSubmition(e) {
         } else if (splitMsg[1].includes("U")) {
             showError(username, splitMsg[0]);
         }
+    } else {
+        window.location.href = "/";
     }
 
 }
