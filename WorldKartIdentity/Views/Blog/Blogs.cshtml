@@ -15,7 +15,7 @@
 
 <div class="d-flex flex-column align-items-end w-100 justify-content-end m-5 blog-container overflow-auto">
 
-    <div class="container d-flex flex-column gap-3 justify-content-center position-relative text-white blog-container">
+  
         @if (User.Identity.IsAuthenticated)
         {
             <button type="button" class="post-btn btn btn-dark rounded-pill px-4 py-2 fw-bold" data-bs-toggle="modal" data-bs-target="#threadModal">
@@ -101,7 +101,6 @@
             </div>
         } *@
 
-    </div>
 </div>
 
 @await Html.PartialAsync("/Views/PartialViews/_CreateBlog.cshtml", new BlogViewModel())

@@ -38,20 +38,10 @@ namespace WorldKartIdentity.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Registration(UserViewModel userVM)
+        public async Task<IActionResult> Registration([FromBody] UserViewModel userVM)
         {
             if (!ModelState.IsValid)
                 return Json(ModelState);
-
-            bool emailExists = await _db.Users.AnyAsync(u => u.Email == userVM.Email);
-            if (emailExists)
-            {
-                return Json(new
-                {
-                    success = false,
-                    message = "Имейлът вече е регистриран"
-                });
-            }
 
             User user = UserViewModel.UserVMToUser(userVM);
             var result = await _userManager.CreateAsync(user);//за Юсър
@@ -62,15 +52,15 @@ namespace WorldKartIdentity.Controllers
                 await _userManager.AddToRoleAsync(user, "Users");//даване на роля като Юсър //грешката идва от тук
                                                                  // Влизане веднага след регистрация
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                return RedirectToAction("Index", "Home");//
+                return RedirectToAction("Index", "Home");
             }
             else
             {
-                foreach (var error in result.Errors)
+                return Json(new
                 {
-                    ModelState.AddModelError("", error.Description);
-                }
-                return Json(ModelState);
+                    success = false,
+                    message = GetRegistrationErrorMessage(result)
+                });
             }
         }
 
@@ -109,7 +99,7 @@ namespace WorldKartIdentity.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var userId = _userManager.GetUserId(User);
-                User? loggedUser = await _db.Users.FirstOrDefaultAsync(bl => bl.Id == userId);
+                User? loggedUser = await _db.Users.Include(t => t.TrackTrajectories).FirstOrDefaultAsync(bl => bl.Id == userId);
                 if (loggedUser != null)
                 {
                     loggedUserVM = new UserViewModel(loggedUser);
@@ -292,10 +282,7 @@ namespace WorldKartIdentity.Controllers
             }
             else
             {
-                if(res.Errors.First().Code == "4")
-                {
-
-                }
+                
             }
             return Ok();
 
@@ -307,6 +294,21 @@ namespace WorldKartIdentity.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        private string GetRegistrationErrorMessage(IdentityResult result)
+        {
+            var error = result.Errors.FirstOrDefault();
+            string message = "Грешка при регистрация.E";
+            if (error.Code == "DuplicateEmail")
+            {
+                message = "Потребител с този имейл вече е регестриран.E";//latin
+            }
+            else if (error.Code == "DuplicateUserName")
+            {
+                message = "Потребител с това име вече е регистриран.U";
+            }
+            return message;
         }
     }
 }

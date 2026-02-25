@@ -30,7 +30,7 @@ namespace WorldKartIdentity.ViewModel
         public string? YoutubeUrl { get; set; }
         public bool IsAdmin { get; set; }
 
-        public List<TrackTrajectoryViewModel> TrackTrajectory { get; set; }
+        public List<TrackTrajectoryViewModel> TrackTrajectories { get; set; } = new List<TrackTrajectoryViewModel>();
 
 
         public UserViewModel()
@@ -66,6 +66,11 @@ namespace WorldKartIdentity.ViewModel
             InstagramUrl = user.InstagramUrl;
             TikTokUrl = user.TikTokUrl;
             YoutubeUrl = user.YoutubeUrl;
+
+            var trackTrajectories = user.TrackTrajectories.Select(tt => TrackTrajectoryViewModel.TrajectoryToTrajectoryVM(tt))
+                .ToList();
+
+            TrackTrajectories = trackTrajectories;
             IsAdmin = true;
         }
         public static User UserVMToUser(UserViewModel userVM)
