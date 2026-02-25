@@ -86,7 +86,7 @@ namespace WorldKartIdentity.Controllers
             var user = await _userManager.FindByEmailAsync(userVM.Email!);
             if (user == null)
             {
-                ModelState.AddModelError("Email", "Невалиден имейл или парола.");
+                ModelState.AddModelError("Email", "Невалиден имейл!");
                 return View(userVM);
             }
 
@@ -96,8 +96,8 @@ namespace WorldKartIdentity.Controllers
 
             if (!result.Succeeded)
             {
-                ModelState.AddModelError("", "Невалиден имейл или парола.");
-                return View(userVM);
+                ModelState.AddModelError("Password", "Грешна парола! Опитай пак.");
+                return View("Login" , userVM);
             }
             return RedirectToAction("Index", "Home");
         }

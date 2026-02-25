@@ -21,12 +21,12 @@
         <div class="form-group em">
             <label>Имейл</label>
             <input asp-for="Email" type="email" class="email-field" name="Email" required />
-            <span class="text-danger"></span>
+            <span asp-validation-for="Email" class=" text-danger"></span>
         </div>
         <div class="form-group pass">
             <label>Парола</label>
             <input asp-for="Password" type="password" name="Password" required minlength="6" />
-            <span class="text-danger"></span>
+            <span asp-validation-for="Password" class=" text-danger"></span>
         </div>
 
         <div class="form-group d-flex justify-content-between align-items-center">
