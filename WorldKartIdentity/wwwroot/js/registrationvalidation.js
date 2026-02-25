@@ -6,10 +6,10 @@
     const repeatPassword = document.getElementById("RepeatPassword");
 
     // ========== EVENTS ==========
-    username.addEventListener("blur", validateUsername);
-    email.addEventListener("blur", validateEmail);
-    password.addEventListener("blur", validatePassword);
-    repeatPassword.addEventListener("blur", validateRepeatPassword);
+    username.addEventListener("input", validateUsername);
+    email.addEventListener("input", validateEmail);
+    password.addEventListener("input", validatePassword);
+    repeatPassword.addEventListener("input", validateRepeatPassword);
 
 form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -72,15 +72,16 @@ form.addEventListener("submit", function (e) {
     return true;
 }
 
-function handleSubmition(e) {
+async function handleSubmition(e) {
     const fd = new FormData(form);
     const reqbody = {
-        UserName: fd.get("UserName"),
-        Email: fd.get("Email"),
-        Password: fd.get("Password"),
-        RepeatPassword: fd.get("RepeatPassword")
+        userName: fd.get("UserName"),
+        email: fd.get("Email"),
+        password: fd.get("Password"),
+        repeatPassword: fd.get("RepeatPassword")
     };
-
+    console.log(fd.get("UserName"));
+    console.log(fd.get("Email"))
     let res = await fetch("/User/Registration", {
         method: "POST",
         headers: {
@@ -90,6 +91,15 @@ function handleSubmition(e) {
     });
 
     let resBody = await res.json();
+    if (!resBody.success) {
+        let splitMsg = resBody.message.split(".");
+        console.log(splitMsg[0]);
+        if (splitMsg[1].includes("E")) {
+            showError(email, splitMsg[0]);
+        } else if (splitMsg[1].includes("U")) {
+            showError(username, splitMsg[0]);
+        }
+    }
 
 }
 

@@ -1,25 +1,60 @@
-﻿body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #2b2b2b;
+﻿
+    html, body {
+    height: 100%;
 }
 
-/* Custom styles not covered by standard Bootstrap utilities */
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    background-color: #2b2b2b;
+    overflow-y: auto;
+}
 
 .blog-container {
-    max-height: calc(100vh - 120px);
+    min-height:0;
+    color: white;
+    gap: 16px;
+    overflow-y:auto;
 }
 
 .blog-card {
-    /*max-width: 1100px;*/ /* Slightly wider to accommodate two images comfortably */
     background: white;
     border: 1px solid black;
-    min-height: 100px;
-    height: fit-content;
+    
+}
+.flex-grow-1 {
+    min-width: 0;
+}
+/*---------------------------------------------------------------------------------------------------*/
+
+/*html, body {
+    height: 100%;
 }
 
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    overflow-y: auto;
+    background: #2b2b2b;
+}
+
+.blog-container {
+    min-height: 0;
+}
+
+.blog-card {
+    overflow: hidden;
+}
+
+.flex-grow-1 {
+    min-width: 0;
+}*/
 /* Avatar Styling */
 .avatar-container {
     position: relative;
@@ -48,7 +83,7 @@
     object-fit: cover;
     /* Ensures images have a subtle definition against white background */
     border: 1px solid rgba(0, 0, 0, 0.08);
-    height: 120px;
+    height: 140px !important;
     width: 180px !important;
 }
 
