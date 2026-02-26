@@ -39,10 +39,10 @@
                                         <div class="trainer-title">
                                             <span>Социални мрежи</span>
                                         </div> <div class="form-group trainer-row">
-                                            <label><a><i class="fa fa-facebook"></i></a></label>
-                                            <label><a><i class="fa fa-twitter"></i></a></label>
-                                            <label><a><i class="fa fa-youtube-play"></i></a></label>
-                                            <label><a> <i class="fa fa-instagram"></i></a></label>
+                                            <label><a href="@Model.FacebookUrl"><i class="fa fa-facebook"></i></a></label>
+                                            <label><a href="@Model.TikTokUrl"><i class="fa fa-twitter"></i></a></label>
+                                            <label><a href="@Model.YoutubeUrl"><i class="fa fa-youtube-play"></i></a></label>
+                                            <label><a href="@Model.InstagramUrl"> <i class="fa fa-instagram"></i></a></label>
                                         </div>
                                         <form asp-action="Logout" asp-controller="User" method="post">
                                             <button type="submit" class="primary-btn btn-normal appoinment-btn">
