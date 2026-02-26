@@ -98,7 +98,7 @@ async function handleSubmition(e) {
             showError(email, splitMsg[0]);
         } else if (splitMsg[1].includes("U")) {
             showError(username, splitMsg[0]);
-        }
+        } 
     } else {
         window.location.href = "/";
     }

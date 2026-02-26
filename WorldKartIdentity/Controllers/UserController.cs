@@ -29,6 +29,8 @@ namespace WorldKartIdentity.Controllers
             _signInManager = signInManager;
             _config = config;
             _db = db;
+            _signInManager.Options.Password.RequireNonAlphanumeric = false;
+            _userManager.Options.Password.RequireNonAlphanumeric = false;
         }
 
         [HttpGet]
@@ -43,13 +45,16 @@ namespace WorldKartIdentity.Controllers
             if (!ModelState.IsValid)
                 return Json(ModelState);
 
+            // за тестовият нормален юзър се използва парола "testUser123@, тъй като не можехме да го променим в документацията след предаването и;
+
             User user = UserViewModel.UserVMToUser(userVM);
             var result = await _userManager.CreateAsync(user);//за Юсър
-            await _userManager.AddPasswordAsync(user, userVM.Password);//за паролата
 
-            if (result.Succeeded)
+            var passwordResult = await _userManager.AddPasswordAsync(user, userVM.Password);//за правилно хеширане на паролата
+
+            if (result.Succeeded && passwordResult.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, "Users");//даване на роля като Юсър //грешката идва от тук
+                await _userManager.AddToRoleAsync(user, "Users");//даване на роля като Юсър 
                                                                  // Влизане веднага след регистрация
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return Json(new
@@ -86,6 +91,7 @@ namespace WorldKartIdentity.Controllers
 
             var result = await _signInManager.PasswordSignInAsync(
         user, userVM.Password!, isPersistent: false, lockoutOnFailure: false);
+
 
             if (!result.Succeeded)
             {

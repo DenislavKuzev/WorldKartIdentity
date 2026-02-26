@@ -18,7 +18,7 @@
                 <th>Направи писта</th>
                 <th>Име</th>
                 <th>Държава</th>
-                <th>Локация</th>
+                @* <th>Локация</th> *@
             </tr>
         </thead>
 
@@ -41,11 +41,11 @@
 
                     <td>@request.Name</td>
                     <td>@request.Country</td>
-                    <td>
+                    @* <td>
                         <a href="@request.LocationUrl" target="_blank">
                             Виж карта
                         </a>
-                    </td>
+                    </td> *@
                 </tr>
             }
         </tbody>

@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log(window.trajectoryContext);
         anno.setAnnotations(window.trajectoryContext.annotations);
 
-        
         attachEvents();
     }
 });
@@ -40,37 +39,60 @@ function attachEvents() {
     });
 
 }
-async function sendAnnotationRequest(url, a) {
 
-        const params = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                trackId: window.trajectoryContext.trackId,
-                trajectoryId: window.trajectoryContext.trajectoryId,
-                annotationJson: JSON.stringify(a),
-                annotationJsonId: a.id
-            })
+async function sendAnnotationRequest(url, a) {
+    const params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            trackId: window.trajectoryContext.trackId,
+            trajectoryId: window.trajectoryContext.trajectoryId,
+            annotationJson: JSON.stringify(a),
+            annotationJsonId: a.id
+        })
+    }
+
+    try {
+        const res = await fetch(url, params);
+        if (!res.ok) {
+            const text = await res.text().catch(() => null);
+            console.error(`Server returned ${res.status} for ${url}`, text);
+            return { ok: false, status: res.status, body: text };
         }
-        await fetch(url, params);
+        const json = await res.json().catch(() => null);
+        return { ok: true, status: res.status, body: json };
+    } catch (err) {
+        console.error('Failed sending annotation request', err);
+        return { ok: false, error: err };
+    }
 }
-btnClear.addEventListener("click", function (e){
+
+btnClear && btnClear.addEventListener("click", async function (e) {
+    if (!anno) return;
+
     const annotations = anno.getAnnotations();
     if (annotations.length > 0) {
-        annotations.forEach(a =>
-        {
+        for (const a of annotations) {
             const creatorId = getCreatorId(a);
-            if (creatorId == `user:${user.userId}`) {
-                anno.removeAnnotation(a);
-            }
 
-        });
-       
-        
+            if (creatorId === `user:${user.userId}`) {
+
+                const result = await sendAnnotationRequest('/Track/DeleteTrackAnnotation', a);
+
+                if (result.ok) {
+                    anno.removeAnnotation(a);
+                } else {
+                    console.warn('Server delete failed, removing locally anyway', result);
+                    anno.removeAnnotation(a);
+                }
+
+             
+            }
+        }
     }
-})
+});
 
 function getCreatorId(annotation) {
     return annotation.body
