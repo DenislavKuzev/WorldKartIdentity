@@ -45,8 +45,6 @@ namespace WorldKartIdentity.Controllers
             if (!ModelState.IsValid)
                 return Json(ModelState);
 
-            // за тестовият нормален юзър се използва парола "testUser123@, тъй като не можехме да го променим в документацията след предаването и;
-
             User user = UserViewModel.UserVMToUser(userVM);
             var result = await _userManager.CreateAsync(user);//за Юсър
 
@@ -231,7 +229,7 @@ namespace WorldKartIdentity.Controllers
 
                 var mail = new MailMessage()
                 {
-                    From = new MailAddress(email, "World Karting Track"),
+                    From = new MailAddress("worldkarting101@gmail.com", "World Karting Track"),
                     Subject = "Забравена парола",
                     Body = $"<p>Здравейте,</p>\r\n\r\n<p>Получихме заявка за смяна на паролата към Вашия акаунт.</p>\r\n\r\n<p>За да зададете нова парола, моля натиснете бутона по-долу:</p>\r\n\r\n<p style='text-align:center;margin:30px 0;'>\r\n<a href='{resetLink}' \r\n   style='background-color:#DC3545;\r\n          color:#ffffff;\r\n          padding:12px 25px;\r\n          text-decoration:none;\r\n          border-radius:6px;\r\n          font-weight:bold;\r\n          display:inline-block;'>\r\n    Смяна на парола\r\n</a>\r\n</p>\r\n\r\n<p>Ако бутонът не работи, копирайте и поставете следния линк в браузъра си:</p>\r\n\r\n<p style='word-break:break-all;color:#2563eb;'>\r\n{resetLink}\r\n</p>\r\n\r\n<p style='margin-top:25px;'>\r\nАко Вие не сте заявили смяна на парола, можете спокойно да игнорирате този имейл.\r\n</p>"
 
