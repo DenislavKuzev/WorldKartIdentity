@@ -13,7 +13,7 @@
 <div class="container-fluid admin-body">
     <div class="row">
         <div class="col-md-2 bg-light sidebar p-3">
-            <h4 class="text-center mb-4 text-danger">Админ Меню</h4>
+            <h4 class="text-center mb-4 text-danger">Админ меню</h4>
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link" asp-action="Tracks" asp-controller="Admin">Писти</a>
@@ -22,7 +22,7 @@
                     <a class="nav-link" asp-action="TrackRequests" asp-controller="Admin">Заявени писти</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" asp-action="CreateTrack" asp-controller="Track">Създаване на Писти</a>
+                    <a class="nav-link" asp-action="CreateTrack" asp-controller="Track">Създаване на писта</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" asp-action="Users" asp-controller="Admin">Потребители</a>
@@ -31,12 +31,12 @@
         </div>
 
         <div class="col-md-10">
-            <h2 class=" text-center mb-4 text-white">Админ Панел</h2>
+            <h2 class=" text-center mb-4 text-white">Админ панел</h2>
             <div class="row">
                 <div class="col-md-4">
                     <div class="card card-custom mb-3 shadow">
                         <div class="card-body text-center">
-                            <h5 class="card-title">Картинг Писти</h5>
+                            <h5 class="card-title">Картинг писти</h5>
                             <h2 class="card-text"> @Model.TracksCount </h2>
                         </div>
                     </div>

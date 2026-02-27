@@ -25,9 +25,9 @@
 
                     @if (User.IsInRole("Admin"))
                     { 
-                        <li class="nav-item"><a class="nav-link" asp-action="Admin" asp-controller="Admin">Админ Библиотека</a></li> 
+                        <li class="nav-item"><a class="nav-link" asp-action="Admin" asp-controller="Admin">Админ библиотека</a></li> 
                     }
-                    <li class="nav-item"><a class="nav-link" asp-action="TrackGallery" asp-controller="Track">Картинг Галерия</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-action="TrackGallery" asp-controller="Track">Картинг галерия</a></li>
                     @if (User.IsInRole("Users"))
                     {
                         <li class="nav-item"><a class="nav-link" asp-action="TrackRequest" asp-controller="Track">Заяви писта</a></li>

@@ -72,6 +72,12 @@ namespace WorldKartIdentity.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteUser(string id)
         {
+            var currentUserId = userManager.GetUserId(User);
+            if (id == currentUserId)
+            {
+                return RedirectToAction("Users", "Admin");
+            }
+
             var user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
