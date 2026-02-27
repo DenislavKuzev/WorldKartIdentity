@@ -41,9 +41,13 @@
 
                     <td>@request.Name</td>
                     <td>@request.Country</td>
-                    <td>@request.LocationUrl</td>
+                    <td><a href="@TrackRequestViewModel.ToShareLink(request.LocationUrl)">Виж карта</a></td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
+<script>
+
+</script>
