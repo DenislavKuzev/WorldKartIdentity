@@ -10,8 +10,6 @@ if (user.authenticated) {
     console.log(window.trackContext.trackBase64);
     P.setPlugins(P.plugin_crop, P.plugin_annotate);
 
-    
-
     const editor = P.appendEditor(".pnt-editor", {
         src: "data:image/png;base64," + window.trackContext.trackBase64,
 

@@ -215,6 +215,9 @@ namespace WorldKartIdentity.Controllers
                     msg = "Потребител с този имейл не съществува"
                 });
             }
+            string appPassword = Environment.GetEnvironmentVariable("EMAIL_APP_PASSWORD");
+            Console.WriteLine("\n \n App Password: " + appPassword + "\n \n");
+
             string pstoken = await _userManager.GeneratePasswordResetTokenAsync(user);
             var tokenBytes = Encoding.UTF8.GetBytes(pstoken);
             var tokenEncoded = WebEncoders.Base64UrlEncode(tokenBytes);
@@ -225,7 +228,7 @@ namespace WorldKartIdentity.Controllers
             try
             {
                 // Credentials
-                var credentials = new NetworkCredential("worldkarting101@gmail.com", Environment.GetEnvironmentVariable("EMAIL_APP_PASSWORD"));
+                var credentials = new NetworkCredential("worldkarting101@gmail.com", appPassword);
 
                 var mail = new MailMessage()
                 {
