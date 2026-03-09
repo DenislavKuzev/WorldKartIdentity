@@ -264,7 +264,7 @@ namespace WorldKartIdentity.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error sending email: " + JsonSerializer.Serialize(ex));
+                Console.WriteLine("Error sending email: " + $"{ex.Message}\n \n {ex.InnerException} \n \n {ex.HelpLink}");
                 return Json(new
                 {
                     type = "error",
