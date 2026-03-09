@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Mail;
@@ -260,8 +261,9 @@ namespace WorldKartIdentity.Controllers
                     msg = "Имейл за нулиране на парола бе изпратен на " + email
                 });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine("Error sending email: " + ex.Message);
                 return Json(new
                 {
                     type = "error",
