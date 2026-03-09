@@ -254,7 +254,7 @@ namespace WorldKartIdentity.Controllers
                     Credentials = credentials,
                     Timeout = 6000,
                 };
-                await client.SendMailAsync(mail);
+                client.Send(mail);
 
                 return Json(new
                 {
