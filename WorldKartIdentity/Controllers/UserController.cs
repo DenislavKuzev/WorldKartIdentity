@@ -246,7 +246,7 @@ namespace WorldKartIdentity.Controllers
 
                 var client = new SmtpClient()
                 {
-                    Port = 587,
+                    Port = 443,
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     UseDefaultCredentials = false,
                     Host = "smtp.gmail.com",
