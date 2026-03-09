@@ -12,6 +12,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using WorldKartIdentity.Database;
 using WorldKartIdentity.ViewModel;
 using static WorldKartIdentity.Helpers.TokenHelper;
@@ -251,7 +252,7 @@ namespace WorldKartIdentity.Controllers
                     Host = "smtp.gmail.com",
                     EnableSsl = true,
                     Credentials = credentials,
-                    Timeout = 15000,
+                    Timeout = 6000,
                 };
                 await client.SendMailAsync(mail);
 
@@ -263,7 +264,7 @@ namespace WorldKartIdentity.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error sending email: " + ex.Message);
+                Console.WriteLine("Error sending email: " + JsonSerializer.Serialize(ex));
                 return Json(new
                 {
                     type = "error",
