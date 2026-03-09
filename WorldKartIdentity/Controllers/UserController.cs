@@ -252,7 +252,7 @@ namespace WorldKartIdentity.Controllers
                     Host = "smtp.gmail.com",
                     EnableSsl = true,
                     Credentials = credentials,
-                    Timeout = 6000,
+                    Timeout = 15000,
                 };
                 client.Send(mail);
 
