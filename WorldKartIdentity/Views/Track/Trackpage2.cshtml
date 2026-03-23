@@ -1,0 +1,158 @@
+﻿@using System.Text.Json
+@* @model WorldKartIdentity.ViewModel.TrackViewModel *@
+
+@{
+    ViewData["Title"] = "TrackDetails";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/test/trackdetails.css" asp-append-version="true" />
+}
+
+
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Картинг Писта Пауталия</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <section class="breadcrumb-section set-bg" style="background-image:url('/img/trackbackground.png');
+                background-size:cover;
+                background-position:center;
+                background-repeat:no-repeat;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb-text">
+                        <h2>A name</h2>
+                    </div>
+                </div>
+            </div>
+            <a class="primary-btn btn-normal appoinment-btn" asp-action="TrackGallery" asp-controller="Track">НАЗАД</a>
+        </div>
+    </section>
+
+    <main class="container page-content">
+        <section class="hero-grid">
+            <article class="panel panel-large">
+                <div class="panel-heading">
+                    <p class="section-tag">Преглед</p>
+                    <h2>Най-важното с един поглед</h2>
+                </div>
+
+                <div class="track-stage">
+                    <div class="track-surface">
+                        <svg class="track-svg" viewBox="0 0 700 360" aria-label="Схема на трасето">
+                            <path d="M88 255
+                     C38 250, 32 190, 70 163
+                     L150 106
+                     C190 77, 255 88, 282 132
+                     C299 161, 338 171, 375 154
+                     L477 106
+                     C542 75, 633 96, 650 151
+                     C663 195, 625 235, 573 237
+                     L456 240
+                     C416 241, 388 258, 375 286
+                     C352 334, 283 343, 230 319
+                     L145 281
+                     C128 273, 109 258, 88 255Z"
+                                  class="track-outline" />
+                            <path d="M88 255
+                     C38 250, 32 190, 70 163
+                     L150 106
+                     C190 77, 255 88, 282 132
+                     C299 161, 338 171, 375 154
+                     L477 106
+                     C542 75, 633 96, 650 151
+                     C663 195, 625 235, 573 237
+                     L456 240
+                     C416 241, 388 258, 375 286
+                     C352 334, 283 343, 230 319
+                     L145 281
+                     C128 273, 109 258, 88 255Z"
+                                  class="track-inner" />
+
+                            <line x1="120" y1="229" x2="120" y2="275" class="finish-line-primary" />
+                            <line x1="135" y1="229" x2="135" y2="275" class="finish-line-secondary" />
+                            <line x1="150" y1="229" x2="150" y2="275" class="finish-line-primary" />
+
+                            <circle cx="235" cy="103" r="7" class="track-dot" />
+                            <circle cx="478" cy="104" r="7" class="track-dot" />
+                            <circle cx="570" cy="237" r="7" class="track-dot" />
+                            <circle cx="297" cy="326" r="7" class="track-dot" />
+                        </svg>
+
+                        <div class="track-meta">
+                            <div class="meta-card">
+                                <span class="meta-label">Най-използвана конфигурация</span>
+                                <strong>Голяма конфигурация</strong>
+                            </div>
+                            <div class="meta-card">
+                                <span class="meta-label">Подходящо за</span>
+                                <strong>Картинг и супермото</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <div class="side-column">
+                <section class="panel">
+                    <div class="panel-heading panel-heading-tight">
+                        <div>
+                            <p class="section-tag">Основни данни</p>
+                            <h2>Ясно и бързо</h2>
+                        </div>
+                        <span class="info-pill">Лесно за сканиране</span>
+                    </div>
+
+                    <div class="stats-grid">
+                        <article class="stat-card">
+                            <div class="stat-value">740 м</div>
+                            <div class="stat-label">Дължина</div>
+                        </article>
+                        <article class="stat-card">
+                            <div class="stat-value">13</div>
+                            <div class="stat-label">Завоя</div>
+                        </article>
+                        <article class="stat-card">
+                            <div class="stat-value">8–12 м</div>
+                            <div class="stat-label">Ширина</div>
+                        </article>
+                        <article class="stat-card">
+                            <div class="stat-value">1973</div>
+                            <div class="stat-label">Създадена</div>
+                        </article>
+                        <article class="stat-card">
+                            <div class="stat-value">4</div>
+                            <div class="stat-label">Трасе вариации</div>
+                        </article>
+                        <article class="stat-card">
+                            <div class="stat-value">Нощно</div>
+                            <div class="stat-label">Осветление</div>
+                        </article>
+                    </div>
+                </section>
+
+            </div>
+        </section>
+
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+@section Scripts {
+    <script src="~/css/test/trackdetails.js" asp-append-version="true"></script>
+}

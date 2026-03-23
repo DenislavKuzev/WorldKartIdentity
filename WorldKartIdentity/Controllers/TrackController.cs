@@ -85,6 +85,12 @@ namespace WorldKartIdentity.Controllers
             return RedirectToAction("TrackGallery");
         }
 
+
+        public IActionResult Trackpage2()
+        {
+            return View();
+        }
+
         [HttpGet]
         public IActionResult TrackDetails(int id)
         {
