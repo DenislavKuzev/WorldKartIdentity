@@ -514,3 +514,25 @@ img {
                 width: 150px;
                 display: inline-block;
             }
+
+
+
+/*** Service ***/
+.service-item {
+    position: relative;
+    margin-top: 2.5rem;
+    overflow: hidden;
+}
+
+    .service-item .service-img {
+        position: relative;
+        display: inline-block;
+        width: 400px;
+        height: 480px;
+    }
+
+
+    .service-item.service-item-right {
+        border-radius: 0 500px 500px 0;
+        background: linear-gradient(to left, var(--bs-secondary), var(--bs-dark));
+    }

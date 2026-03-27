@@ -27,17 +27,18 @@
                                         {
                                             <img src="~/img/defaultprofilepic.png" alt="Default picture" />
                                         }
-                                        <!-- пазим текущата снимка -->
                                         <input type="hidden" asp-for="Picture" />
-                                        <!-- нов файл -->
                                         <input asp-for="PictureFile" type="file" class="form-control mt-1" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="cd-trainer-text">
                                         <div class="trainer-title">
-                                            <h4>@Model.UserName</h4>
-                                            <input type="hidden" asp-for="UserName" />
+                                            @* <h4>@Model.UserName</h4>
+                                            <input type="hidden" asp-for="UserName" /> *@
+                                            <li class="trainer-row">
+                                                <input asp-for="UserName" name="UserName" type="name" class="form-control inline-input" />
+                                            </li>
                                                 <label class="text-danger">Роля</label>
                                                 <select asp-for="RoleInKarting" class="form-control">
                                                     <option>Пилот</option>

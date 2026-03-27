@@ -142,6 +142,7 @@ namespace WorldKartIdentity.Controllers
             //var editedUser = UserViewModel.UserVMToUser(userVM);
             //editedUser.Id = userId;
             //_db.Users.Update(editedUser);
+            user.UserName = userVM.UserName;
             user.PhoneNumber = userVM.PhoneNumber;
             user.Bio = userVM.Bio;
             user.Country = userVM.Country;
@@ -320,14 +321,14 @@ namespace WorldKartIdentity.Controllers
         private string GetRegistrationErrorMessage(IdentityResult result)
         {
             var error = result.Errors.FirstOrDefault();
-            string message = "Грешка при регистрация.E";
+            string message = "Грешка при регистрация.";
             if (error.Code == "DuplicateEmail")
             {
-                message = "Потребител с този имейл вече е регестриран.E";//latin
+                message = "Потребител с този имейл вече е регестриран.";//latin
             }
             else if (error.Code == "DuplicateUserName")
             {
-                message = "Потребител с това име вече е регистриран.U";
+                message = "Потребител с това име вече е регистриран.";
             }
             return message;
         }

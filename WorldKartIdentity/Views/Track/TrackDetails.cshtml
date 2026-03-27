@@ -28,14 +28,14 @@
     </div>
 </section>
 
-<section class="class-details-section description">
+@* <section class="class-details-section description">
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
                 <div class="class-details-text">
                     <div class="cd-text">
                         <div class="cd-single-item">
-                            <h3>Описание</h3>
+                            <h3 class="fa fa-info-circle" aria-hidden="true">  Описание</h3>
                             <p>
                                 @Model.Description
                             </p>
@@ -45,7 +45,30 @@
             </div>
         </div>
     </div>
+</section> *@
+
+<section class="class-details-section description">
+<div class="container-fluid py-3">
+    <div class="container py-3">
+        <div class="service-item service-item-right">
+            <div class="row g-4 align-items-center">
+                <div class="col-md-5 order-md-1 text-md-end">
+                    <div class="service-img p-5 wow fadeInLeft" data-wow-delay="0.2s">
+                            <img class="img-fluid rounded-circle" src="~/img/trackdescription.jpg" alt="Track Info">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="service-text px-5 px-md-5 py-md-5 fadeInLeft">
+                        <h3 class="text-uppercase text-danger">Описание</h3>
+                        <p class="mb-5">@Model.Description</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </section>
+
 
 @if (User.Identity.IsAuthenticated == true)
 {
