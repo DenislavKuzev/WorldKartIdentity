@@ -124,13 +124,13 @@ namespace WorldKartIdentity.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateTrack(TrackViewModel trackVM)
+        public async Task<IActionResult> CreateTrack(TrackViewModel trackVM)
         {
             if (trackVM.PictureFile != null && trackVM.PictureFile.Length > 0)
             {
                 using (var memoryStream = new MemoryStream())
                 {
-                    trackVM.PictureFile.CopyToAsync(memoryStream);
+                    await trackVM.PictureFile.CopyToAsync(memoryStream);
                     byte[] imageBytes = memoryStream.ToArray();
 
                     string base64String = Convert.ToBase64String(imageBytes);

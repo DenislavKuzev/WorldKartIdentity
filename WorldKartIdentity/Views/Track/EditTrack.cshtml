@@ -34,7 +34,7 @@
                         <div class="cd-text">
                             <div class="cd-single-item text-danger">
                                 <h2>Описание</h2>
-                                <textarea asp-for="Description" class="form-control"></textarea>
+                                <textarea asp-for="Description" class="form-control" style="height: 200px;"></textarea>
                             </div>
                         </div>
                     </div>
@@ -48,18 +48,18 @@
             <div class="row">
                 <div class="col-lg-6 col-sm-6">
                     <div class="section-title contact-title">
-                        <span>Данни на пистата</span>
+                        <h2 class="text-danger">Данни на пистата</h2>
                     </div>
                     <div class="cw-text text-danger">
-                        <h2>Имейл</h2>
+                        <span>Имейл</span>
                         <input asp-for="Email" class="form-control" />
                     </div>
                     <div class="cw-text text-danger">
-                        <h2>Телефон</h2>
+                        <span>Телефон</span>
                         <input asp-for="TelNumber" class="form-control" />
                     </div>
                     <div class="cw-text text-danger">
-                        <h2>Работно време</h2>
+                        <span>Работно време</span>
                         <input asp-for="Worktime" class="form-control" />
                     </div>
                     <br />
