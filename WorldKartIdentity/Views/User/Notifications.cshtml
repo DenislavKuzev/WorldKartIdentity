@@ -1,0 +1,70 @@
+﻿@model ICollection<WorldKartIdentity.ViewModel.NotificationViewModel>
+@{
+    ViewData["Title"] = "Notifications";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/notifications.css" asp-append-version="true" />
+}
+
+<div class="container py-5" style="max-width:840px;">
+
+    <!-- Header -->
+    <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-3">
+        <div class="d-flex align-items-center gap-3">
+            <h1 class="page-title mb-0">ИЗВЕСТИЯ</h1>
+            <span class="badge bg-danger rounded-pill fs-6 px-3 py-2" id="unread-badge">5 нови</span>
+        </div>
+        <button class="btn btn-outline-secondary btn-sm btn-mark-all" onclick="markAll()">
+            <i class="bi bi-check2-all me-1"></i>Маркирай всички
+        </button>
+    </div>
+
+    <!-- Filter pills -->
+    <ul class="nav filter-pills mb-4 gap-1 flex-nowrap overflow-auto" id="filter-nav">
+        <li class="nav-item"><a class="nav-link active" href="#" onclick="filterTab(event,'all')">Всички</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="filterTab(event,'like')">Харесвания</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="filterTab(event,'track')">Писти</a></li>
+        @* <li class="nav-item"><a class="nav-link" href="#" onclick="filterTab(event,'event')">Събития</a></li> *@
+    </ul>
+
+    <!-- List -->
+    @if (Model.Any()){
+    <div class="d-flex flex-column gap-2" id="notif-list">
+
+        <p class="day-label mb-1">Днес</p>
+
+            @foreach(var n in Model)
+            {
+                <div class="notif-card p-3 d-flex align-items-start gap-3" data-type="like" data-id="1" onclick="handleClick(event,this)">
+                    <div class="unread-dot mt-1"></div>
+                    <div class="notif-icon like">❤️</div>
+                    <div class="flex-grow-1">
+                        <div class="notif-title mb-1">@n.Title</div>
+                        <div class="notif-desc">@Html.Raw(n.Message)</div>
+                    </div>
+                    <div class="d-flex flex-column align-items-end gap-2">
+                        <span class="notif-time">@n.CreatedAt</span>
+                        <button class="btn btn-sm p-0 text-secondary del-btn" onclick="deleteNotif(event,1)" title="Изтрий"><i class="bi bi-x"></i></button>
+                    </div>
+                </div>
+            }
+       
+
+
+
+        </div>
+    }
+    else
+    {
+        <!-- Empty state -->
+        <div id="empty-state" class="d-none text-center py-5 text-secondary">
+            <i class="bi bi-bell-slash fs-1 d-block mb-3 opacity-25"></i>
+            <p>Няма известия</p>
+        </div>
+    }
+
+
+    
+
+</div>

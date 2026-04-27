@@ -8,40 +8,44 @@
     <link rel="stylesheet" href="~/css/blog.css" asp-append-version="true" />
 }
 
-@section Scripts{
+@section Scripts {
     <script src="~/js/blog.js"></script>
 
 }
 
-<div class="d-flex flex-column align-items-end w-100 justify-content-end m-5 blog-container overflow-auto">
+<div class="container-fluid d-flex h-auto blog-container-wrap flex-column">
 
-  
-        @if (User.Identity.IsAuthenticated)
-        {
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="w-100 d-flex align-items-center justify-content-end p-3 post-btn-wrap">
             <button type="button" class="post-btn btn btn-dark rounded-pill px-4 py-2 fw-bold" data-bs-toggle="modal" data-bs-target="#threadModal">
-                    <i class="bi bi-plus-lg"></i>
-            </button>
-        }
-        else
-        {
-            <a class="post-btn btn btn-dark rounded-pill px-4 py-2 fw-bold text-decoration-none" asp-controller="User" asp-action="Login">
                 <i class="bi bi-plus-lg"></i>
-            </a>
-        }
-        
+            </button>
+        </div>
 
-        @* @if(Model.Any())
-        { *@
+    }
+    else
+    {
+        <a class="post-btn btn btn-dark rounded-pill px-4 py-2 fw-bold text-decoration-none" asp-controller="User" asp-action="Login">
+            <i class="bi bi-plus-lg"></i>
+        </a>
+    }
+
+
+    @if (Model.Any())
+    {
+        <div class="d-flex flex-column blog-container">
             @foreach (var blog in Model)
             {
                 <div class="blog-card p-3 rounded-4 shadow-sm w-100 bg-dark">
 
-                    <div class="d-flex mh-100">
+                    <div class="d-flex mh-100 text-white">
                         <div class="me-3 flex-shrink-0">
                             <div class="avatar-container">
-                            <img src="@(blog.Author.Picture != string.Empty ? blog.Author.Picture : "/img/defaultprofilepic.png")" class="rounded-circle img-fluid" alt="User">
+                                <img src="@(blog.Author.Picture != string.Empty ? blog.Author.Picture : "/img/defaultprofilepic.png")" class="rounded-circle img-fluid" alt="User">
                             </div> @* todo: replace placeholder with the author's pfp' *@
-                       </div>
+                        </div>
 
                         <div class="flex-grow-1">
                             <div class="d-flex justify-content-between align-items-center mb-1">
@@ -67,43 +71,59 @@
                             </div>
 
                             <div class="d-flex align-items-center gap-4 mt-2">
-                            @if (User.Identity.IsAuthenticated)
-                            {
                                 <button class="heart-btn @(blog.LikedByCurrentUser ? "is-liked" : "") action-icon-wrapper text-white d-flex align-items-center justify-content-center" data-bid="@blog.Id" id="heartBtn">
                                     <svg class="heart-icon text-white d-flex align-items-center justify-content-center">
-                                        <path d="M 12 21.35 l -1.45 -1.32 C 5.4 15.36 2 12.28 2 8.5 C 2 5.42 4.42 3 7 3 c 1.74 0 3.41 0.81 5 3 C 13.09 3.81 14.76 3 16.5 3 C 19.58 3 22 5.42 22 8.5 c 0 3.78 -3.4 6.86 -8.55 11.54 L 12 21.35 z"  stroke-linejoin="round" stroke-linecap="round" />
+                                        <path d="M 12 21.35 l -1.45 -1.32 C 5.4 15.36 2 12.28 2 8.5 C 2 5.42 4.42 3 7 3 c 1.74 0 3.41 0.81 5 3 C 13.09 3.81 14.76 3 16.5 3 C 19.58 3 22 5.42 22 8.5 c 0 3.78 -3.4 6.86 -8.55 11.54 L 12 21.35 z" stroke-linejoin="round" stroke-linecap="round" />
                                     </svg>
                                     <span class="likes-count">@blog.Likes</span>
                                 </button>
-                            }
-                            
-                                @* <div class="action-icon-wrapper text-small text-white">
-                                <i class="bi bi-chat fs-5 rotate-90 text-white"></i> <span>17</span>
-                            </div>
-                            <div class="action-icon-wrapper text-small text-white">
-                                <i class="bi bi-repeat fs-5 text-white"></i> <span>49</span>
-                            </div>
-                            <div class="action-icon-wrapper text-white">
-                                <i class="bi bi-send fs-5 rotate-90 text-white"></i>
-                            </div> *@
+                                <div class="action-icon-wrapper text-small text-white">
+                                    <i class="bi bi-chat fs-5 rotate-90 text-white"></i> <span>18</span>
+                                </div>
+                                <div class="action-icon-wrapper text-small text-white">
+                                    <i class="bi-shield-exclamation fs-5 text-white"></i> >
+                                </div>
+                                <div class="action-icon-wrapper text-white">
+                                    <i class="bi bi-send fs-5 rotate-90 text-white"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-            }
 
-        @* }
-        else
-        {
-            <div class="text-center w-100">
-                <h5>No blogs available</h5>
+            }
+        </div>
+
+
+        <div class="comment-section w-25">
+            <div class="cs-header">
+                <span class="cs-title">Comments</span>
+                <div class="header-right">
+                    <span class="count-badge" id="count-badge">3 comments</span>
+                    <button class="close-btn">×</button>
+                </div>
             </div>
-        } *@
+
+            <div class="comments-list" id="comments-list"></div>
+
+            <div class="composer">
+                <textarea id="new-comment" rows="3" placeholder="Add a comment…"></textarea>
+                <div class="composer-footer">
+                    <button class="send-btn" id="send-btn" onclick="postComment()" disabled>Post</button>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center w-100">
+            <h5>Няма блогове</h5>
+        </div>
+    }
 
 </div>
 
 @await Html.PartialAsync("/Views/PartialViews/_CreateBlog.cshtml", new BlogViewModel())
 
 
-                              
+

@@ -26,6 +26,8 @@ namespace WorldKartIdentity.ViewModel
 
         public string? AuthorPicture { get; set; }
 
+        public bool Focus { get; set; } = false;
+
         public BlogViewModel()
         {
         }

@@ -1,5 +1,6 @@
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,7 @@ namespace WorldKartMaster
     {
         public async static Task Main(string[] args)
         {
+            string id = Environment.GetEnvironmentVariable("GOOGLE_CLIENT_ID");
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -25,16 +27,36 @@ namespace WorldKartMaster
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
-                options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
             })
             .AddCookie(IdentityConstants.ApplicationScheme, options =>
             {
                 options.ExpireTimeSpan = TimeSpan.FromHours(5);
                 options.SlidingExpiration = true;
+                options.LoginPath = "/Account/Login";
+            })
+            .AddCookie(IdentityConstants.ExternalScheme, options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromHours(5);
+                options.SlidingExpiration = true;
+            })
+            .AddGoogle(options =>
+            {
+                options.ClientId = Environment.GetEnvironmentVariable("GOOGLE_CLIENT_ID");
+                options.ClientSecret = Environment.GetEnvironmentVariable("GOOGLE_CLIENT_SECRET");
+                options.SaveTokens = true;
             })
             .AddBearerToken(IdentityConstants.BearerScheme);
 
-            builder.Services.AddIdentityCore<User>()     //staro
+            builder.Services.AddIdentityCore<User>(options =>
+            {
+                options.User.AllowedUserNameCharacters =
+        "abcdefghijklmnopqrstuvwxyz" +
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+        "абвгдежзийклмнопрстуфхцчшщъьюяАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЬЮЯ" +
+        "0123456789_-.@ ";
+            })     //staro
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddSignInManager()

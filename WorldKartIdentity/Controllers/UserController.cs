@@ -1,15 +1,19 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using brevo_csharp.Api;
+using brevo_csharp.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.UserSecrets;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
-using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
@@ -42,7 +46,7 @@ namespace WorldKartIdentity.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Registration([FromBody] UserViewModel userVM)
+        public async Task<JsonResult> Registration([FromBody] UserViewModel userVM)
         {
             if (!ModelState.IsValid)
                 return Json(ModelState);
@@ -78,27 +82,87 @@ namespace WorldKartIdentity.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult ExternalLogin(string provider)
+        {
+            var redirectUrl = Url.Action("ExternalLoginCallback", "User");
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            return Challenge(properties, provider);
+        }
+
+        public async Task <IActionResult> ExternalLoginCallback()
+        {
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if(info != null)
+            {
+                var signInRes = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: true);
+
+                if (signInRes.Succeeded)
+                {
+                    await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    string email = info.Principal.FindFirstValue(ClaimTypes.Email);
+                    string name = info.Principal.FindFirstValue(ClaimTypes.Name).Replace(" ", "_");
+                    
+
+                    var user = new User
+                    {
+                        UserName = name,
+                        Email = email
+                    };
+
+                    var createRes = await _userManager.CreateAsync(user);
+                    if (createRes.Succeeded)
+                    {
+                        await _userManager.AddToRoleAsync(user, "Users");
+                        var loginRes = await _userManager.AddLoginAsync(user, info);
+                        if (loginRes.Succeeded)
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: true);
+                            return RedirectToAction("Index", "Home");
+                        }
+                    }
+                    
+                    return RedirectToAction("Login");
+                }
+
+                    
+            }
+            else
+            {
+                TempData["Message"] = $"Грешка при влизане с {info.LoginProvider}|F";
+                return RedirectToAction("Login");
+            }
+            
+        }
+
+        
+
+
         [HttpPost]
-        public async Task<IActionResult> Login(UserViewModel userVM)
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> Login(UserViewModel userVM)
         {
             var user = await _userManager.FindByEmailAsync(userVM.Email!);
             if (user == null)
             {
-                ModelState.AddModelError("Email", "Невалиден имейл!");
-                return View(userVM);
+                return Json(new
+                {
+                    success = false
+                });
             }
 
 
             var result = await _signInManager.PasswordSignInAsync(
         user, userVM.Password!, isPersistent: false, lockoutOnFailure: false);
 
-
-            if (!result.Succeeded)
+            return Json(new 
             {
-                ModelState.AddModelError("Password", "Грешна парола! Опитай пак.");
-                return View("Login" , userVM);
-            }
-            return RedirectToAction("Index", "Home");
+                success = result.Succeeded
+            });
         }
 
         [HttpGet]
@@ -218,8 +282,6 @@ namespace WorldKartIdentity.Controllers
                     msg = "Потребител с този имейл не съществува"
                 });
             }
-            string appPassword = Environment.GetEnvironmentVariable("EMAIL_APP_PASSWORD");
-            Console.WriteLine("\n \n App Password: " + appPassword + "\n \n");
 
             string pstoken = await _userManager.GeneratePasswordResetTokenAsync(user);
             var tokenBytes = Encoding.UTF8.GetBytes(pstoken);
@@ -230,38 +292,49 @@ namespace WorldKartIdentity.Controllers
             
             try
             {
-                // Credentials
-                var credentials = new NetworkCredential("worldkarting101@gmail.com", appPassword);
+                string key = "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";
+                brevo_csharp.Client.Configuration.Default.ApiKey.Add("api-key", key);
 
-                var mail = new MailMessage()
+                var api = new TransactionalEmailsApi();
+                var emailToSend = new SendSmtpEmail(
+                    sender: new SendSmtpEmailSender("World Karting Arena", "worldkarting101@gmail.com"),
+                    to: [new SendSmtpEmailTo(email)],
+                    subject: "Забравена парола",
+                    htmlContent: $"<p>Здравейте,</p>\r\n\r\n<p>Получихме заявка за смяна на паролата към Вашия акаунт.</p>" +
+                    $"\r\n\r\n<p>За да зададете нова парола, моля натиснете бутона по-долу:</p>\r\n\r\n<p style='text-align:center;margin:30px 0;'>\r\n" +
+                    $"<a href='{resetLink}' \r\n   style='background-color:#DC3545;\r\n          color:#ffffff;\r\n          padding:12px 25px;\r\n          text-decoration:none;\r\n          border-radius:6px;\r\n " +
+                    $"         font-weight:bold;\r\n          display:inline-block;'>\r\n    Смяна на парола\r\n</a>\r\n</p>\r\n\r\n" +
+                    $"<p>Ако бутонът не работи, копирайте и поставете следния линк в браузъра си: {resetLink}</p>\r\n\r\n<p style='word-break:break-all;color:#2563eb;'>\r\n{resetLink}" +
+                    $"\r\n</p>\r\n\r\n<p style='margin-top:25px;'>" +
+                    $"\r\nАко Вие не сте заявили смяна на парола, можете спокойно да игнорирате този имейл.\r\n</p>");
+
+
+                //string key = "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";
+                //var client = new SendGridClient(key);
+                //SendGridMessage msg = new SendGridMessage()
+                //{
+                //    From = new EmailAddress("worldkarting101@gmail.com"),
+                //    Subject = "Забравена парола",
+                //    HtmlContent = $"<p>Здравейте,</p>\r\n\r\n<p>Получихме заявка за смяна на паролата към Вашия акаунт.</p>\r\n\r\n<p>За да зададете нова парола, моля натиснете бутона по-долу:</p>\r\n\r\n<p style='text-align:center;margin:30px 0;'>\r\n<a href='{resetLink}' \r\n   style='background-color:#DC3545;\r\n          color:#ffffff;\r\n          padding:12px 25px;\r\n          text-decoration:none;\r\n          border-radius:6px;\r\n          font-weight:bold;\r\n          display:inline-block;'>\r\n    Смяна на парола\r\n</a>\r\n</p>\r\n\r\n<p>Ако бутонът не работи, копирайте и поставете следния линк в браузъра си:</p>\r\n\r\n<p style='word-break:break-all;color:#2563eb;'>\r\n{resetLink}\r\n</p>\r\n\r\n<p style='margin-top:25px;'>\r\nАко Вие не сте заявили смяна на парола, можете спокойно да игнорирате този имейл.\r\n</p>"
+                //};
+
+                //msg.AddTo(new EmailAddress(email));
+                //var res = await client.SendEmailAsync(msg);
+                var res = await api.SendTransacEmailAsyncWithHttpInfo(emailToSend);
+
+                if (res.StatusCode == 201)
                 {
-                    From = new MailAddress("worldkarting101@gmail.com", "World Karting Track"),
-                    Subject = "Забравена парола",
-                    Body = $"<p>Здравейте,</p>\r\n\r\n<p>Получихме заявка за смяна на паролата към Вашия акаунт.</p>\r\n\r\n<p>За да зададете нова парола, моля натиснете бутона по-долу:</p>\r\n\r\n<p style='text-align:center;margin:30px 0;'>\r\n<a href='{resetLink}' \r\n   style='background-color:#DC3545;\r\n          color:#ffffff;\r\n          padding:12px 25px;\r\n          text-decoration:none;\r\n          border-radius:6px;\r\n          font-weight:bold;\r\n          display:inline-block;'>\r\n    Смяна на парола\r\n</a>\r\n</p>\r\n\r\n<p>Ако бутонът не работи, копирайте и поставете следния линк в браузъра си:</p>\r\n\r\n<p style='word-break:break-all;color:#2563eb;'>\r\n{resetLink}\r\n</p>\r\n\r\n<p style='margin-top:25px;'>\r\nАко Вие не сте заявили смяна на парола, можете спокойно да игнорирате този имейл.\r\n</p>"
-
-                };
-
-                mail.IsBodyHtml = true;
-                mail.To.Add(new MailAddress(email));
-
-
-                var client = new SmtpClient()
-                {
-                    Port = 443,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Host = "smtp.gmail.com",
-                    EnableSsl = true,
-                    Credentials = credentials,
-                    Timeout = 15000,
-                };
-                client.Send(mail);
-
+                    return Json(new
+                    {
+                        type = "success",
+                        msg = "Линк за смяна на парола беше изпратен на вашия имейл."
+                    });
+                }
                 return Json(new
-                {
-                    type = "success",
-                    msg = "Имейл за нулиране на парола бе изпратен на " + email
-                });
+                    {
+                        type = "error",
+                        msg = $"Грешка при изпращане на имейла. Код на грешката: {res.StatusCode}"
+                    });
             }
             catch (Exception ex)
             {
@@ -269,7 +342,7 @@ namespace WorldKartIdentity.Controllers
                 return Json(new
                 {
                     type = "error",
-                    msg = "Имейлът не съществува"
+                    msg = "Грешка при изпращане на имейла."
                 });
             }
 
@@ -284,7 +357,7 @@ namespace WorldKartIdentity.Controllers
 
         [HttpPost("/user/resetpassword")]
         [ValidateAntiForgeryToken]
-        public async Task<JsonResult> ResetPassword(ResetPasswordViewModel model)
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
             string token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(model.Token));
@@ -292,31 +365,39 @@ namespace WorldKartIdentity.Controllers
             var res = await _userManager.ResetPasswordAsync(user, token, model.NewPassword);
             if (res.Succeeded)
             {
-                //TempData["Message"] = "Паролата беше успешно сменена. Можете да влезете с новата си парола-S";
-                return Json(new {
-                  success = true,
-                  message = "Паролата беше успешно сменена. Можете да влезете с новата си парола."
-                });
+                TempData["Message"] = "Паролата беше успешно сменена. Можете да влезете с новата си парола|S";
+                return RedirectToAction("Index", "Home");
 
             }
             else
             {
-                return Json(new
-                {
-                    success = false,
-                    message = "Грешка при смяна на паролата. Възможно е линкът да е изтекъл. Моля, опитайте отново"
-                });
+                TempData["Message"] = "Грешка при смяна на паролата. Възможно е линкът да е изтекъл или да е невалиден|F";
+                return RedirectToAction("Index", "Home");
             }
 
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        [Authorize]
+        public async Task<IActionResult> Notifications()
+        {
+            var userId = _userManager.GetUserId(User);
+            var notifications = await _db.Notifications.Include(n => n.User)
+                .Where(n => n.UserId == userId || string.IsNullOrEmpty(userId)) // user specific or global notifications
+                .OrderByDescending(n => n.CreatedAt)
+                .ToListAsync();
+
+            List<NotificationViewModel> viewmodel = notifications.Select(n => new NotificationViewModel(n)).ToList();
+            return View(viewmodel);
+        }
+
+
 
         private string GetRegistrationErrorMessage(IdentityResult result)
         {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using WorldKartIdentity.ViewModel;
 
 namespace WorldKartIdentity.Controllers
 {
+    [Authorize]
     public class BlogController : Controller
     {
 
@@ -23,13 +25,14 @@ namespace WorldKartIdentity.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Blogs()
+        public async Task<IActionResult> Blogs(int hasToInclude = 0)// adding this parameter so you can view the blog from notifications with type new like or new comment
         {
             var viewModel = new List<BlogViewModel>();
 
             var blogs = await db.Blogs.Take(100).Include(b => b.Author).ToListAsync();
             HashSet<int> likeIds = new HashSet<int>();
 
+            
             if (User.Identity.IsAuthenticated)
             {
                 var user = await _userManager.GetUserAsync(User);
@@ -47,6 +50,25 @@ namespace WorldKartIdentity.Controllers
 
                 bvm.LikedByCurrentUser = likeIds.Contains(b.Id);
                 viewModel.Add(bvm);
+            }
+
+            if (hasToInclude != 0)
+            {
+                var blogToFocus = await db.Blogs.FindAsync(hasToInclude);
+                if (blogToFocus != null)
+                {
+                    var blogInView = viewModel.FirstOrDefault(b => b.Id == blogToFocus.Id);
+                    if (blogInView != null)
+                    {
+                        blogInView.Focus = true;
+                    }
+                    else
+                    {
+                        var blogVM = new BlogViewModel(blogToFocus);
+                        blogVM.Focus = true;
+                        viewModel.Add(blogVM);
+                    }
+                }
             }
 
             return View(viewModel);
@@ -70,9 +92,12 @@ namespace WorldKartIdentity.Controllers
         public async Task<IActionResult> ToggleLike(int bid)
         {
             var userId = _userManager.GetUserId(User);
+            string username = _userManager.GetUserName(User);
+
             var exists = await db.BlogLikes
                 .AnyAsync(x => x.UserId == userId && x.BlogId == bid);
             var blog = await db.Blogs.FindAsync(bid);
+
             if (!exists)
             {
                 db.BlogLikes.Add(new BlogLikes
@@ -86,6 +111,13 @@ namespace WorldKartIdentity.Controllers
                     blog.Likes += 1;
                 }
                 await db.SaveChangesAsync();
+
+                string blogLink = $"<a class=\"text-decoration-none track-link\" href=\"{Url.Action("Blogs", "Blog", new { hasToInclude = blog.Id }, Request.Scheme)}\" >блог</a></li>";
+                await AddNotification(
+                    type: NotificationType.NewLike,
+                    message: $"{username} хареса вашия {blogLink}",
+                    targetUserId: blog.AuthorId
+                );
             }
             else
             {
@@ -102,5 +134,41 @@ namespace WorldKartIdentity.Controllers
                 return Json(new { likes = blog.Likes });
         }
 
+
+        public async Task<int> AddNotification(NotificationType type, string message, string? targetUserId)
+        {
+            string title = "";
+            if (type == NotificationType.NewTrack)
+            {
+                title = "Нова писта добавена";
+            }
+            else if (type == NotificationType.RequestApproved)
+            {
+                title = "Заявката ви за писта бе одобрена!";
+            }
+            else if (type == NotificationType.NewLike)
+            {
+                title = "Ново харесване на блог";
+            }
+            else if (type == NotificationType.NewComment)
+            {
+                title = "Нов коментар на блог";
+            }
+
+            var n = new Notification
+            {
+                Title = title,
+                Message = message,
+                Type = type,
+                CreatedAt = DateTime.Now,
+                UserId = targetUserId
+            };
+            await db.Notifications.AddAsync(n);
+            await db.SaveChangesAsync();
+
+            return n.Id;
+        }
+
+        
     }
 }

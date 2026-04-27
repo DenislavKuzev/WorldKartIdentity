@@ -60,6 +60,8 @@ namespace WorldKartIdentity.Controllers
         public async Task<IActionResult> ToggleLike(int trackId)
         {
             var userId = userManager.GetUserId(User);
+            var username = userManager.GetUserName(User);
+
 
             if (trackId == 0)
                 return BadRequest("trackId is 0 — not passed from form");
@@ -121,6 +123,8 @@ namespace WorldKartIdentity.Controllers
                 GoogleMapsLink = locationUrl
             };
             return View("~/Views/Track/CreateTrack.cshtml", model);
+
+
         }
 
         [HttpPost]
@@ -138,8 +142,17 @@ namespace WorldKartIdentity.Controllers
                 }
             }   //Trqbwa da si suzdam PictureFile vuv TrackViewModel
             Track tracks = TrackViewModel.TrackVMToTrack(trackVM);
-            db.Tracks.Add(tracks);
-            db.SaveChanges();
+            await db.Tracks.AddAsync(tracks);
+            await db.SaveChangesAsync();
+
+            string trackLink = $"<a class=\"text-decoration-none track-link\" asp-action=\"TrackDetails\" asp-controller=\"Track\" asp-route-id=\"{tracks.Id}\">{tracks.Name}</a>";
+
+            await AddNotification(
+               type: NotificationType.NewTrack,
+               message: $"Писта {trackLink} е добавена в галерията. Разгледай я сега!",
+               targetUserId: null
+            );
+
             return RedirectToAction("TrackGallery");
         }
 
@@ -265,6 +278,41 @@ namespace WorldKartIdentity.Controllers
             await db.SaveChangesAsync();
 
             return Ok();
+        }
+
+
+        public async Task<int> AddNotification(NotificationType type, string message, string? targetUserId)
+        {
+            string title = "";
+            if (type == NotificationType.NewTrack)
+            {
+                title = "Нова писта добавена";
+            }
+            else if (type == NotificationType.RequestApproved)
+            {
+                title = "Заявката ви за писта бе одобрена!";
+            }
+            else if (type == NotificationType.NewLike)
+            {
+                title = "Ново харесване на писта!";
+            }
+            else if (type == NotificationType.NewComment)
+            {
+                title = "Ново харесване на писта";
+            }
+
+            var n = new Notification
+            {
+                Title = title,
+                Message = message,
+                Type = type,
+                CreatedAt = DateTime.Now,
+                UserId = targetUserId
+            };
+            await db.Notifications.AddAsync(n);
+            await db.SaveChangesAsync();
+
+            return n.Id;
         }
     }
 }
