@@ -4,10 +4,8 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "EMAIL_API_KEY": "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",
-        "GOOGLE_CLIENT_ID": "1071574998968-l8lf1vsla9lr3353f1jv577453edt3pi.apps.googleusercontent.com",
-        "GOOGLE_CLIENT_SECRET": "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"
+        "ASPNETCORE_ENVIRONMENT": "Development"
+        
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5252"
@@ -17,10 +15,7 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "EMAIL_API_KEY": "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",
-        "GOOGLE_CLIENT_ID": "1071574998968-l8lf1vsla9lr3353f1jv577453edt3pi.apps.googleusercontent.com",
-        "GOOGLE_CLIENT_SECRET": "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"
-        "AI_KEY": " "
+        
 
       },
       "dotnetRunMessages": true,
@@ -31,7 +26,7 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-        //"EMAIL_APP_PASSWORD": "pcjq bqjq ereh loig"
+        
       }
     },
     "WSL": {
@@ -41,7 +36,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_URLS": "https://localhost:7001;http://localhost:5252"
-        //"EMAIL_APP_PASSWORD": "pcjq bqjq ereh loig"
+        
       },
       "distributionName": ""
     }
