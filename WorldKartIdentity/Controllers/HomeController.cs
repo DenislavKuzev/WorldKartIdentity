@@ -1,9 +1,12 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using WorldKartIdentity.ViewModel;
+using Microsoft.Identity.Client;
+using OpenAI.Chat;
+using System.ClientModel;
+using System.Diagnostics;
 using WorldKartIdentity.Database;
+using WorldKartIdentity.ViewModel;
 
 namespace WorldKartIdentity.Controllers
 {
@@ -11,7 +14,6 @@ namespace WorldKartIdentity.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<User> _userManager;
-
         public HomeController(ILogger<HomeController> logger, UserManager<User> userManager)
         {
             _logger = logger;
@@ -26,7 +28,7 @@ namespace WorldKartIdentity.Controllers
             return View(user);
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return View();
         }
@@ -39,6 +41,41 @@ namespace WorldKartIdentity.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public async Task<string> GptResponse(string prompt)
+        {
+            string model = "gpt-4.1-nano"; // Specify the model (e.g., gpt-4)
+            string apiKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
+            ChatClient chatClient = new ChatClient(model, apiKey);
+
+            // Create messages using the specific message types
+            List<ChatMessage> messages = new List<ChatMessage>
+            {
+
+                 ChatMessage.CreateSystemMessage("You are a helpful assistant."),
+                 ChatMessage.CreateUserMessage(prompt)
+            };
+
+            try
+            {
+                // Send chat request (synchronous)
+                ClientResult<ChatCompletion> result = await chatClient.CompleteChatAsync(messages);
+
+                if (result?.Value != null)
+                {
+                    // Access the response content directly through the flattened property
+                    return result.Value.Content[0].Text;
+                }
+                else
+                {
+                    return "Error: The result value is null or the operation was unsuccessful.";
+                }
+            }
+            catch (Exception ex)
+            {
+                return "An error occurred: " + ex.Message;
+            }
         }
     }
 }
