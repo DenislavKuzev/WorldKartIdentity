@@ -45,11 +45,11 @@
                 <div id="loginMessage" class="hidden rounded-lg px-4 py-3 text-sm font-medium"></div>
 
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-widest text-outline mb-2 ml-1"
+                    <label class="block text-xs font-bold uppercase tracking-widest text-red-300 mb-2 ml-1"
                            for="email">Имейл</label>
                     <div class="relative">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant">mail</span>
-                        <input class="w-full bg-surface-container-highest border-none rounded-lg py-4 pl-12 pr-4 text-on-surface placeholder:text-outline-variant focus:ring-0 focus:ring-offset-0 transition-all border-b-2 border-transparent focus:border-primary-container"
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white">mail</span>
+                        <input class="w-full bg-surface-container-highest border-none rounded-lg py-4 pl-12 pr-4 text-on-surface placeholder:text-white focus:ring-0 focus:ring-offset-0 transition-all border-b-2 border-transparent focus:border-primary-container"
                                id="email"
                                name="Email"
                                type="email"
@@ -58,11 +58,11 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-widest text-outline mb-2 ml-1"
+                    <label class="block text-xs font-bold uppercase tracking-widest text-red-300 mb-2 ml-1"
                            for="password">Парола</label>
                     <div class="relative">
-                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant">lock</span>
-                        <input class="w-full bg-surface-container-highest border-none rounded-lg py-4 pl-12 pr-4 text-on-surface placeholder:text-outline-variant focus:ring-0 focus:ring-offset-0 transition-all border-b-2 border-transparent focus:border-primary-container"
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white">lock</span>
+                        <input class="w-full bg-surface-container-highest border-none rounded-lg py-4 pl-12 pr-4 text-on-surface placeholder:text-white focus:ring-0 focus:ring-offset-0 transition-all border-b-2 border-transparent focus:border-primary-container"
                                id="password"
                                name="Password"
                                placeholder="••••••••"
@@ -73,7 +73,7 @@
 
                 <div class="flex items-center justify-between">
 
-                    <a class="text-xs text-outline hover:text-primary-container transition-colors"
+                    <a class="text-sm text-red-300 hover:text-primary-container transition-colors"
                        href="#">Забравена парола?</a>
                 </div>
 
@@ -86,11 +86,11 @@
 
                 <div class="flex items-center gap-4 my-6">
                     <div class="h-px flex-grow bg-outline-variant/20"></div>
-                    <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-outline/50">ИЛИ</span>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-red-300">ИЛИ</span>
                     <div class="h-px flex-grow bg-outline-variant/20"></div>
                 </div>
 
-                <button class="w-full flex items-center justify-center gap-3 bg-surface-container-highest border border-outline-variant/20 py-4 rounded-lg text-sm font-bold tracking-widest uppercase hover:bg-surface-bright transition-all"
+                <button class="w-full flex items-center justify-center gap-3 bg-surface-container-highest border border-outline-variant/20 py-4 rounded-lg text-sm font-bold tracking-widest uppercase hover:bg-surface-bright transition-all google-login"
                         type="button">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -102,11 +102,11 @@
                         <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                               fill="#EA4335"></path>
                     </svg>
-                    <span>Вход с Google</span>
+                    <span class="text-white">Вход с Google</span>
                 </button>
             </form>
             <div class="mt-8 pt-8 border-t border-outline-variant/10 text-center">
-                <p class="text-sm text-outline">
+                <p class="text-mid text-red-300">
                     Нямате акаунт?
                     <a class="text-primary-container font-bold hover:underline underline-offset-4 ml-1"
                        href="@Url.Action("Registration", "User")">Регистрация</a>

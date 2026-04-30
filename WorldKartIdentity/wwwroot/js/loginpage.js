@@ -96,3 +96,7 @@ loginForm.addEventListener('submit', async function (e) {
 
 });
 
+document.querySelector(".google-login").addEventListener("click", async () =>
+{
+    window.location.href = `/User/ExternalLogin?provider=Google`;
+})

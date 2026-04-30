@@ -7,61 +7,97 @@
 }
 
 
-<div class="text-center mt-5">
-    <h1 class="display-4">Галерия с картинг писти</h1>
-</div>
-
 @section Styles {
     <link rel="stylesheet" href="~/css/trackgallery.css" asp-append-version="true" />
 }
 
-@* Search Bar *@
-<div class="d-flex justify-content-center mt-4 mb-4">
-    <form method="get" asp-action="TrackGallery" class="input-group w-50">
-        <input type="text" name="search" class="form-control" placeholder="Търсене на писта..." />
-        <button type="submit" class="btn btn-primary">Търси</button>
-    </form>
-</div>
+@section Scripts {
+    <script src="~/js/trackgallery.js" asp-append-version="true"></script>
+}
 
-@* Track Cards *@
-
-<section class="classes-section spad">
-    <div class="container">
-        <div class="row">
+<main class="min-h-screen bg-background">
+    <!-- Hero Section -->
+    <section class="relative h-[409px] flex items-end px-8 pb-12 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img alt="Cinematic wide shot of a professional karting track at night with neon lights and motion blur"
+                 class="w-full h-full object-cover opacity-40"
+                 data-alt="cinematic wide shot of a professional karting track at night with neon lights reflecting on the dark asphalt and motion blur"
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9AXwyEusNLyIFXCIjvg3n-jq4RFHDXoR4-8l-OPNEA8IR4iI1TUtp0coaJQDg4QZzqvE_wXl8rOGv_JZwOS55NyGFfDUlQQDP626XHFYJDreMz5iQVAdfkgzLdWVR996YFvdageQMHr7eDsOxhKVOEhfknq9-WNug5C5tRg864d1m0Du07kdsLIgFt7ztGpz4PfACZN0W1W6T7XdGvQFOhWqN26lk5dLkh2aaqFB2wIsJnyYTq4-yqJ6_6CG49nV2bz6TIQfWP2YT" />
+            <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+        </div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto">
+            <div class="flex flex-col gap-2">
+                <h1 class="text-6xl md:text-8xl font-headline font-black italic tracking-tighter uppercase leading-none">
+                    Нашите <span class="text-primary-container">Писти</span>
+                </h1>
+            </div>
+        </div>
+    </section>
+    <!-- Filter & Search Bar -->
+    <section class="px-8 -mt-6 relative z-20">
+        <div class="max-w-7xl mx-auto">
+            <div class="bg-surface-container-high rounded-xl p-4 flex flex-col md:flex-row gap-4 items-center shadow-2xl">
+                <div class="relative flex-1 w-full">
+                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant"
+                          data-icon="search">search</span>
+                    <input class="w-full bg-surface-container-highest border-none rounded-lg py-3 pl-12 pr-4 text-on-surface placeholder:text-on-secondary-container focus:ring-2 focus:ring-primary-container transition-all"
+                           id="track-search" placeholder="Търси писта или локация..." type="text" />
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Track Grid -->
+    <section class="px-8 py-16 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="track-grid">
+            <!-- Track Card 1 -->
             @foreach (var track in Model)
             {
-                <div class="col-lg-4 col-md-6">
-                    <div class="class-item">
-                        <a asp-controller="Track" asp-action="TrackDetails" asp-route-id="@track.Id">
-                            <img src="data:image/jpeg;base64,@track.PictureBase64"
-                            class="card-img-top"
-                            style="height:280px; object-fit:cover; border-top-left-radius:20px;" />
-                        </a>
-                        <div class="ci-text">
-                            <span>@track.Name</span>
-                            <h5>@track.Length метра</h5>
-                            <i class="fa fa-angle-right">
-                                @if (User.Identity.IsAuthenticated)
-                                {
-                                    <form method="post" asp-action="ToggleLike" asp-controller="Track" >
-                                        <input type="hidden" name="trackId" value="@track.Id" />  @* koe e po dobre: tova ili asp-route *@
-                                        <button type="submit" class="like-btn">
-                                            @if (track.IsLikedByCurrentUser)
-                                            {
-                                                <i class="fa fa-heart" aria-hidden="true" style="color:red;" ></i>
-                                            }
-                                            else
-                                            {
-                                                <i class="fa fa-heart-o" aria-hidden="true" style="color:red;"></i>
-                                            }
-                                        </button>
-                                    </form>
-                                }
-                            </i>
+
+                <a class="group relative flex flex-col bg-surface-container-low rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-2" asp-controller="Track" asp-action="TrackDetails" asp-route-id="@track.Id">
+
+                        <div class="relative h-64 overflow-hidden">
+                            <img alt="Professional outdoor karting circuit with hairpins and high speed sections"
+                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                 data-alt="professional outdoor karting circuit with multiple hairpins and sharp curves seen from a high angle during daytime"
+                                 src="data:image/jpeg;base64,@track.PictureBase64" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-surface-container-low to-transparent opacity-80">
+                            </div>
+
                         </div>
-                    </div>
-                </div>
+                        <div class="p-8 -mt-12 relative z-10">
+                            <div class="flex justify-between items-end mb-4">
+                                <h3 class="text-3xl font-headline font-black italic tracking-tighter uppercase group-hover:text-primary text-white transition-colors">
+                                    @track.Name
+                                </h3>
+                            </div>
+                            <p class="text-on-surface-variant text-sm mb-6 leading-relaxed">
+                                @track.Description
+                            </p>
+                            <div class="flex flex-wrap gap-4 pt-6 border-t border-outline-variant/10">
+                                <div class="flex flex-col">
+                                    <span class="text-[10px] uppercase tracking-widest text-on-secondary-container font-bold">Дължина</span>
+                                    <span class="font-headline font-medium text-on-surface">850m</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-[10px] uppercase tracking-widest text-on-secondary-container font-bold">Рекорд</span>
+                                    <span class="font-headline font-medium text-tertiary">42.152s</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-[10px] uppercase tracking-widest text-on-secondary-container font-bold">Трудност</span>
+                                    <div class="flex gap-1 mt-1">
+                                        <div class="w-3 h-1 bg-primary-container rounded-full"></div>
+                                        <div class="w-3 h-1 bg-primary-container rounded-full"></div>
+                                        <div class="w-3 h-1 bg-primary-container rounded-full"></div>
+                                        <div class="w-3 h-1 bg-surface-container-highest rounded-full"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </a>
+
             }
+          
         </div>
-    </div>
-</section>
+    </section>
+
+</main>

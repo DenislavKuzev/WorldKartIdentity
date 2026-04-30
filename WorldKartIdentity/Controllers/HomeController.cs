@@ -46,7 +46,7 @@ namespace WorldKartIdentity.Controllers
         public async Task<string> GptResponse(string prompt)
         {
             string model = "gpt-4.1-nano"; // Specify the model (e.g., gpt-4)
-            string apiKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
+            string apiKey = Environment.GetEnvironmentVariable("AI_KEY");
             ChatClient chatClient = new ChatClient(model, apiKey);
 
             // Create messages using the specific message types

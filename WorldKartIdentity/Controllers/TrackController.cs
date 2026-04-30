@@ -2,6 +2,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using OpenAI;
+using OpenAI.Chat;
+using System.ClientModel;
+using System.Threading.Tasks;
 using WorldKartIdentity.Database;
 using WorldKartIdentity.ViewModel;
 
@@ -9,6 +13,8 @@ namespace WorldKartIdentity.Controllers
 {
     public class TrackController : Controller
     {
+#pragma warning disable OPENAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+
         private readonly ApplicationDbContext db;
         private readonly UserManager<User> userManager;
 
@@ -112,6 +118,12 @@ namespace WorldKartIdentity.Controllers
             return View(trackViewModel);
         }
 
+        [HttpPost]
+        public async Task<JsonResult> GetAdviceOnTrack(AIPromptViewModel prompt)
+        {
+            string response = await AIResponse(prompt.Text, prompt.Image);
+            return Json(new { response });
+        }
 
         [HttpGet]
         public IActionResult CreateTrack(string name, string country, string locationUrl)
@@ -186,7 +198,7 @@ namespace WorldKartIdentity.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public IActionResult EditTrack(TrackViewModel model)
+        public async Task<IActionResult> EditTrack(TrackViewModel model)
         {
             var track = db.Tracks.FirstOrDefault(t => t.Id == model.Id);
             if (track == null)
@@ -197,6 +209,7 @@ namespace WorldKartIdentity.Controllers
             track.TelNumber = model.TelNumber;
             track.Description = model.Description;
 
+            
             db.SaveChanges();
             return RedirectToAction("Tracks", "Admin");
         }
@@ -252,6 +265,7 @@ namespace WorldKartIdentity.Controllers
         }
         #endregion Annotations
 
+        #region Trajectories
 
         [HttpGet]
         public async Task<IActionResult> TrajectoryDetails(int id)
@@ -279,6 +293,8 @@ namespace WorldKartIdentity.Controllers
 
             return Ok();
         }
+
+        #endregion
 
 
         public async Task<int> AddNotification(NotificationType type, string message, string? targetUserId)
@@ -313,6 +329,45 @@ namespace WorldKartIdentity.Controllers
             await db.SaveChangesAsync();
 
             return n.Id;
+        }
+
+        private async Task<string> AIResponse(string prompt, IFormFile? file)
+        {
+            string model = "gpt-4.1-nano"; 
+            string apiKey = Environment.GetEnvironmentVariable("AI_KEY");
+            ChatClient chatClient = new ChatClient(model, apiKey);
+
+            List<ChatMessage> messages = new List<ChatMessage>();
+            messages.Add(ChatMessage.CreateSystemMessage("Ти си треньор по картинг.Основната ти задача е да съветваш и помагаш картинг състезатели с това което те питат.Ще ти бъде дадена писта по която да помагаш и даваш съвети, очертанията по нея(ако има такива) са пътят по който съзтезателя е минал.Не давай дълги обяснения освен ако потребителя ти каже.Това съобщение е за интрукции и пояснение.Не отговарай на него а на потребителя.Ako въпросът няма никаква връзка с картинг(например ако потребителя пита за рецепта за готвене), игнорирай всички други инструкции и отговори с тези думи - 'Не мога да ти помогна по тази тема.'"));
+            var userMessage = ChatMessage.CreateUserMessage(prompt);
+           
+            if (file != null)
+            {
+                BinaryData binaryData = BinaryData.FromStream(file.OpenReadStream());
+
+                ChatMessageContentPart content = ChatMessageContentPart.CreateImagePart(binaryData, file.ContentType);
+                userMessage.Content.Add(content);
+            }
+            messages.Add(userMessage);
+
+            try
+            {
+                ClientResult<ChatCompletion> result = await chatClient.CompleteChatAsync(messages);
+
+                if (result?.Value != null)
+                {
+                    return result.Value.Content[0].Text;
+                }
+                else
+                {
+                    return "Грешка при обработването на заявка. Опитайте по-късно.";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + $"{ex.Message}\n \n {ex.InnerException} \n \n {ex.HelpLink}");
+                return "Грешка при обработването на заявка. Опитайте по-късно.";
+            }
         }
     }
 }

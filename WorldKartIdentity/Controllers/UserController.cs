@@ -9,8 +9,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using OpenAI.Chat;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using System.ClientModel;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
@@ -25,6 +27,7 @@ namespace WorldKartIdentity.Controllers
 {
     public class UserController : Controller
     {
+
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly ApplicationDbContext _db;
@@ -413,5 +416,7 @@ namespace WorldKartIdentity.Controllers
             }
             return message;
         }
+
+        
     }
 }
