@@ -23,7 +23,5 @@ namespace WorldKartIdentity.Database
         public User Author { get; set; } = null!;
 
         public List<BlogLikes> BlogLikes { get; set; } = new List<BlogLikes>();
-
-
     }
 }

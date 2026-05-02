@@ -43,7 +43,7 @@ namespace WorldKartIdentity.Controllers
                 var roles = await userManager.GetRolesAsync(user);
                 model.Add(new UserViewModel
                 {
-                     Id = user.Id,
+                    Id = user.Id,
                     UserName = user.UserName,
                     Email = user.Email,
                     Country = user.Country,
@@ -94,7 +94,10 @@ namespace WorldKartIdentity.Controllers
 
             var model = requests.Select(r => new TrackRequestViewModel
             {
-                Id = r.Id, Name = r.Name, Country = r.Country, LocationUrl = r.LocationUrl
+                Id = r.Id,
+                Name = r.Name,
+                Country = r.Country,
+                LocationUrl = r.LocationUrl
             }).ToList();
             return View(model);
         }
@@ -117,5 +120,99 @@ namespace WorldKartIdentity.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> BlogReports()
+        {
+            var reports = await db.BlogReports
+                .Include(r => r.Blog)
+                .ThenInclude(b => b.Author)
+                .Include(r => r.Reporter)
+                .ToListAsync();
+
+            var model = reports.Select(r => new BlogReportViewModel
+            {
+                Id = r.Id.Value,
+                BlogId = r.BlogId,
+                BlogTitle = r.Blog.Title,
+                AuthorName = r.Blog.Author.UserName,
+                ReporterName = r.Reporter.UserName,
+                ReportedOn = r.ReportedOn
+            }).ToList();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteBlog(int id)
+        {
+            var blog = await db.Blogs.FindAsync(id);
+            if (blog != null)
+            {
+                db.Blogs.Remove(blog);
+                await db.SaveChangesAsync();
+            }
+            return RedirectToAction("BlogReports", "Admin");
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteReport(int id)
+        {
+            var report = await db.BlogReports.FindAsync(id);
+            if (report != null)
+            {
+                db.BlogReports.Remove(report);
+                await db.SaveChangesAsync();
+            }
+            return RedirectToAction("BlogReports", "Admin");
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> BlockUser(string userId)
+        {
+            var userExists = await db.BlockedUsers.AnyAsync(x => x.UserId == userId);
+            if (!userExists)
+            {
+                var blocked = new BlockedUser
+                {
+                    UserId = userId,
+                    BlockedOn = DateTime.Now,
+                    
+                };
+
+                await db.BlockedUsers.AddAsync(blocked);
+                await db.SaveChangesAsync();
+            }
+            return RedirectToAction("BlockedUsers", "Admin");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UnblockUser(int id)
+        {
+            var user = await db.BlockedUsers.FindAsync(id);
+            if (user != null)
+            {
+                db.BlockedUsers.Remove(user);
+                await db.SaveChangesAsync();
+            }
+            return RedirectToAction("BlockedUsers", "Admin");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> BlockedUsers()
+        {
+            var users = await db.BlockedUsers
+                .Include(x => x.User)
+                .ToListAsync();
+
+            var model = users.Select(x => new BlockedUserViewModel(
+             x.Id,  
+             x.User.UserName,
+             x.BlockedOn
+            )).ToList();
+
+            return View(model);
+        }
     }
 }

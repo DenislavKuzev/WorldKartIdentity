@@ -81,6 +81,14 @@ namespace WorldKartIdentity.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(UserViewModel userVM)
         {
+            var isBlocked = _db.BlockedUsers.Any(b => b.UserId == userVM.Id);
+            if (isBlocked)
+            {
+                ModelState.AddModelError("Email", "Вашият акаунт е блокиран!");
+                return View();
+            }
+
+
             var user = await _userManager.FindByEmailAsync(userVM.Email!);
             if (user == null)
             {

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/css/adminpanel.css" asp-append-version="true" />
 }
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <div class="container-fluid admin-body">
     <div class="row">
@@ -25,7 +26,13 @@
                     <a class="nav-link" asp-action="CreateTrack" asp-controller="Track">Създаване на писта</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" asp-action="BlogReports" asp-controller="Admin">Докладвани постове</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" asp-action="Users" asp-controller="Admin">Потребители</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-action="BlockedUsers" asp-controller="Admin">Блокирани потребители</a>
                 </li>
             </ul>
         </div>
@@ -65,8 +72,10 @@
                 <div class="col-12">
                     <div class="card shadow">
                         <div class="card-body">
-                            <h5 class="card-title">Графика (предстои)</h5>
-                            <p class="text-muted">Място за графиката.</p>
+                            <h5 class="card-title">Графикa</h5>
+                            <div style="height: 400px; width: 1100px;">
+                                <canvas id="adminChart"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -74,3 +83,36 @@
         </div>
     </div>
 </div>
+
+<script>
+    const ctx = document.getElementById('adminChart').getContext('2d');
+
+    const adminChart = new Chart(ctx, {
+        type: 'bar', // може и 'pie' или 'doughnut'
+        data: {
+            labels: ['Писти', 'Траектории', 'Потребители'],
+            datasets: [{
+                label: 'Статистика',
+                data: [
+    @Model.TracksCount,
+    @Model.TrackTrajectoriesCount,
+    @Model.UsersCreatedTrajectoriesCount
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

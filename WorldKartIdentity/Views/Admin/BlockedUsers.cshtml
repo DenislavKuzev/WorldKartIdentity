@@ -1,0 +1,39 @@
+﻿@model List<BlockedUserViewModel>
+
+@{
+    ViewData["Title"] = "Блокирани потребители";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/adminuserstable.css" asp-append-version="true" />
+}
+
+<div class="container mt-5">
+    <h2 class="page-title text-center mb-4">Блокирани потребители</h2>
+
+    <table class="table admin-users-table">
+        <thead>
+            <tr>
+                <th>Потребител</th>
+                <th>Дата</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var block in Model)
+            {
+                <tr>
+                    <td>@block.UserName</td>
+                    <td>@block.BlockedOn</td>
+                    <td>
+                        <form asp-action="UnblockUser" asp-controller="Admin" method="post">
+                            <input type="hidden" name="Id" value="@block.Id" />
+                            <button class="btn btn-success">Отблокирай</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

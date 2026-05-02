@@ -102,5 +102,20 @@ namespace WorldKartIdentity.Controllers
                 return Json(new { likes = blog.Likes });
         }
 
+
+        [HttpPost]
+        public async Task<IActionResult> ReportBlog(int blogId)
+        {
+            var userId = _userManager.GetUserId(User);
+            var report = new BlogReport
+            {
+                BlogId = blogId,
+                ReporterId = userId
+            };
+            db.BlogReports.Add(report);
+            await db.SaveChangesAsync();
+
+            return RedirectToAction("Blogs");
+        }
     }
 }

@@ -16,6 +16,9 @@ namespace WorldKartIdentity.Database
 
         public DbSet<BlogLikes> BlogLikes { get; set; }
 
+        public DbSet<BlogReport> BlogReports { get; set; }
+        public DbSet<BlockedUser> BlockedUsers { get; set; }
+
         public DbSet<TrackAnnotation> TrackAnnotations { get; set; }
 
         public DbSet<TrackTrajectory> TrackTrajectories { get; set; }
@@ -28,7 +31,9 @@ namespace WorldKartIdentity.Database
             builder.Entity<IdentityRole>().ToTable("Roles");
             builder.Entity<Track>().ToTable("Tracks");
             builder.Entity<BlogPost>().ToTable("BlogPosts");
+            builder.Entity<BlogReport>().ToTable("BlogReports");
             builder.Entity<TrackRequest>().ToTable("TrackRequests");
+            builder.Entity<BlockedUser>().ToTable("BlockedUsers");
             builder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
             builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
             builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");

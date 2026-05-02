@@ -59,7 +59,6 @@ namespace WorldKartIdentity.ViewModel
             {
                 blog.PictureBase64 = string.Empty;
             }
-                
             return blog;
         }
 

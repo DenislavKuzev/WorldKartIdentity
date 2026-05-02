@@ -71,6 +71,15 @@
         background-color: #bb2d3b;
     }
 
+.delete-user-btn-nobcg {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
 /* Badge */
 .role-admin {
     background-color: #dc3545;

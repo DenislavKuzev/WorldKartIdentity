@@ -1,0 +1,62 @@
+﻿@model List<WorldKartIdentity.ViewModel.BlogReportViewModel>
+
+@{
+    ViewData["Title"] = "Доклавани постове";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/adminuserstable.css" asp-append-version="true" />
+}
+
+<div class="container mt-5">
+    <h2 class="page-title text-center mb-4">Докладвани постове</h2>
+
+    <table class="table admin-users-table">
+        <thead>
+            <tr>
+                <th>Докладван от</th>
+                <th>Дата</th>
+                <th>Автор</th>
+                <th>Отиди на пост</th>
+                <th>Изтрий докладване</th>
+              @*<th>Изтрий блог</th> *@
+                <th>Блокирай потребител</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var report in Model)
+            {
+                <tr>
+                    <td>@report.ReporterName</td>
+                    <td>@report.ReportedOn</td>
+                    <td>@report.AuthorName</td>
+                    <td>
+                        <input type="hidden" name="BlogId" value="@report.BlogId" />
+                        <a href="/Blog/Blogs#blog-@report.BlogId" class="delete-user-btn-nobcg">↪️</a>
+                    </td>
+                    <td>
+                        <form asp-action="DeleteReport" asp-controller="Admin" method="post">
+                            <input type="hidden" name="Id" value="@report.Id" />
+                            <button type="submit" class="delete-user-btn-nobcg">🗑️</button>
+                        </form>
+                    </td>
+                    @* <td>
+                        <form asp-action="DeleteBlog" asp-controller="Admin" method="post">
+                            <input type="hidden" name="Id" value="@report.Id" />
+                            <button type="submit" class="delete-user-btn-nobcg">🗑️</button>
+                        </form>
+                    </td> *@
+                    <td>
+                        <form asp-action="BlockUser" asp-controller="Admin" method="post">
+                            <input type="hidden" name="AuthorName" value="@report.AuthorName" />
+                            <button type="submit" class="delete-user-btn-nobcg">🚫</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

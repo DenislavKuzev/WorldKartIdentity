@@ -55,7 +55,7 @@ namespace WorldKartMaster
             {
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-                string[] roleNames = { "Admin", "Users"};
+                string[] roleNames = { "Admin", "Users" };
 
                 foreach (var roleName in roleNames)
                 {
@@ -67,6 +67,25 @@ namespace WorldKartMaster
                 }
             }
 
+
+            //???? ?? ???????????
+            var blockedIps = new List<string>{ "127.0.0.1", "192.168.1.5"};
+            app.Use(async (context, next) =>
+            {
+                var ip = context.Connection.RemoteIpAddress?.ToString();
+
+                if (ip != null && blockedIps.Contains(ip))
+                {
+                    context.Response.StatusCode = 403;
+                    await context.Response.WriteAsync("????????!");
+                    return;
+                }
+
+                await next();
+            });
+
+
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -76,9 +95,9 @@ namespace WorldKartMaster
 
             app.MapGet("users,/me", async (ClaimsPrincipal claims, ApplicationDbContext context) =>
             {
-                    string UserId = claims.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+                string UserId = claims.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
 
-                    return await context.Users.FindAsync(UserId);
+                return await context.Users.FindAsync(UserId);
             })
                 .RequireAuthorization();
 
