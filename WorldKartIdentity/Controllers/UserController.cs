@@ -152,8 +152,10 @@ namespace WorldKartIdentity.Controllers
             var isBlocked = _db.BlockedUsers.Any(b => b.UserId == userVM.Id);
             if (isBlocked)
             {
-                ModelState.AddModelError("Email", "Вашият акаунт е блокиран!");
-                return View();
+                return Json(new
+                {
+                    success = false
+                });
             }
 
 
