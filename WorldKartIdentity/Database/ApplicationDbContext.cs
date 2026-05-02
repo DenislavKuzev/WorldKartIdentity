@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
@@ -23,6 +24,8 @@ namespace WorldKartIdentity.Database
 
         public DbSet<TrackTrajectory> TrackTrajectories { get; set; }
 
+        public DbSet<Notification> Notifications { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -40,6 +43,11 @@ namespace WorldKartIdentity.Database
             builder.Entity<RefreshToken>().ToTable("RefreshTokens");
             builder.Entity<TrackAnnotation>().ToTable("TrackAnnotations");
             builder.Entity<TrackTrajectory>().ToTable("TrackTrajectory");
+            builder.Entity<Notification>().ToTable("Notification");
+
+            builder.Entity<Notification>()
+                .Property(n => n.Type)
+                .HasConversion<string>();
 
             builder.Entity<User>()
 .HasMany(u => u.TrackAnnotations)
@@ -89,6 +97,14 @@ namespace WorldKartIdentity.Database
                 .WithMany(b => b.BlogLikes)
                 .HasForeignKey(x => x.BlogId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Notification>()
+                .HasOne(n => n.User)
+                .WithMany(u => u.Notifications)
+                .HasForeignKey(n => n.UserId)
+                .IsRequired(false); // nullable FK = broadcast
+
+            
         }
     }
 }

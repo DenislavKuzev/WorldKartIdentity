@@ -362,3 +362,6 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 WorldKartingIdentity/Properties
+/WorldKartIdentity/Properties/launchSettings.json
+/WorldKartIdentity/Properties/launchSettings.json
+/WorldKartIdentity/Properties/launchSettings.json

@@ -18,5 +18,7 @@ namespace WorldKartIdentity.Database
 
         public ICollection<TrackTrajectory> TrackTrajectories { get; set; } = new List<TrackTrajectory>();
 
+        public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+
     }
 }

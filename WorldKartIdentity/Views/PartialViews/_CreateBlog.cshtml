@@ -1,53 +1,57 @@
 ﻿@model WorldKartIdentity.ViewModel.BlogViewModel
 
-<div class="modal fade" id="threadModal" tabindex="-1" aria-labelledby="threadModalLabel" aria-hidden="true">
-    <form asp-action="CreateBlog" asp-controller="Blog" method="post" enctype="multipart/form-data">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-dark shadow-lg text-white">
-
-                <div class="modal-header border-0 pb-0 text-white">
-                    <button type="button" class="btn-close ms-0" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <h6 class="modal-title w-100 text-center fw-bold" id="threadModalLabel">Качи пост</h6>
-                    <div style="width: 32px;"></div>
-                </div>
-
-                <div class="modal-body pt-3">
-                    <div class="d-flex gap-3">
-                        <div class="flex-shrink-0">
-                            <div class="thread-line-container">
-                                <img src="~/img/defaultprofilepic.png" class="rounded-circle" width="44" height="44" alt="Avatar">
-                                <div class="thread-line"></div>
-                            </div>
-                        </div>
-
-                        <div class="flex-grow-1">
-                            <div class="user-header-row">
-                                <span class="fw-bold">@User.Identity.Name</span> @* replace with currently logged in user *@
-                                <i class="bi bi-chevron-right text-muted small" style="font-size: 0.7rem;"></i>
-                            </div>
-
-                            <textarea id="post-text" asp-for="Content" class="form-control textarea-plain mb-2" rows="2" placeholder="Напишете нещо..."></textarea>
-
-                            <div id="preview-container"></div>
-
-                            <div class="mt-2 mb-3 ms-n1">
-                                <input type="file" id="file-input" multiple="false" accept="image/*,video/*" name="PictureFile" asp-for="PictureFile" hidden>
-                                <div class="media-plus-btn" onclick="document.getElementById('file-input').click()" title="Add media">
-                                    <i class="bi bi-plus-lg"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal-footer border-0 pt-0">
-                    <div class="d-flex justify-content-between w-100 align-items-center">
-                        @* <span class="text-muted small ps-5"></span> *@
-                        <button id="post-btn" class="btn btn-post rounded-pill opacity-50" disabled type="submit">Постване</button>
-                    </div>
-                </div>  
-                 
-            </div>  
+<div class="modal-overlay fixed inset-0 bg-background/90 backdrop-blur-md z-[70] flex items-center justify-center p-4"
+     id="postModal" onclick="if(event.target === this) togglePostModal()">
+    <div class="modal-content w-full max-w-xl bg-surface-container-high rounded-md shadow-2xl overflow-hidden flex flex-col"
+         id="modalContent">
+        <div class="p-6 border-b border-white/5 flex items-center justify-between">
+            <h2 class="font-headline font-extrabold text-xl tracking-tight text-on-surface uppercase italic">
+                КАЧИ
+                ПОСТ
+            </h2>
+            <button class="p-2 hover:bg-white/5 rounded-full transition-colors" onclick="togglePostModal()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
         </div>
-    </form>
+        <div>
+            <form class="p-6 space-y-6" asp-action="CreateBlog" asp-controller="Blog" method="post" enctype="multipart/form-data">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-md bg-surface-variant flex items-center justify-center text-slate-400 ring-1 ring-white/10">
+                        <img class="w-12 h-12 rounded-md object-cover ring-1 ring-outline/20"
+                             src="/img/defaultprofilepic.png" />
+
+                    </div>
+                    <div>
+                        <h4 class="font-headline font-bold text-lg text-on-surface">@User.Identity.Name</h4>
+                    </div>
+                </div>
+                <div class="relative">
+                    <textarea asp-for="Content" class="w-full bg-surface-container-low border-none rounded-md p-4 text-on-surface placeholder:text-slate-600 focus:ring-1 focus:ring-primary h-40 resize-none font-body"
+                              placeholder="Напишете нещо..."></textarea>
+                </div>
+                <!-- Preview Area -->
+                <div class="hidden relative rounded-md overflow-hidden bg-black/40 border border-white/5"
+                     id="imagePreview">
+                    <img alt="Preview" class="w-full h-auto max-h-64 object-contain" id="previewImg" src="" />
+                    <button class="absolute top-2 right-2 bg-black/60 text-white p-1 rounded-full hover:bg-black/80 transition-colors"
+                            onclick="removeImage()">
+                        <span class="material-symbols-outlined text-sm">close</span>
+                    </button>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex gap-2">
+                        <label class="w-10 h-10 flex items-center justify-center bg-surface-container-highest rounded-md cursor-pointer hover:bg-primary/20 hover:text-primary transition-all duration-200 ">
+                            <span class="material-symbols-outlined">add_a_photo</span>
+                            <input accept="image/*" asp-for="PictureFile" class="hidden" id="imageInput" onchange="handleImagePreview(this)"
+                                   type="file" />
+                        </label>
+                    </div>
+                    <button class="bg-rose-600 text-white px-8 py-2.5 rounded-md font-headline font-bold uppercase italic tracking-tighter hover:bg-rose-700 transition-colors active:scale-95 shadow-lg shadow-primary/20" type="submit">
+                        Постване
+                    </button>
+                </div>
+             </form>
+             
+        </div>
+    </div>
 </div>

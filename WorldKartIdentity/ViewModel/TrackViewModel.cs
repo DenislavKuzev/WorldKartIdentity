@@ -5,7 +5,9 @@ namespace WorldKartIdentity.ViewModel
     public class TrackViewModel
     {
         public int Id { get; set; }
-        public IFormFile? PictureFile { get; set; }
+        public IFormFile? RoutePictureFile { get; set; }
+
+        public IFormFile? PhotographFile { get; set; }
         public string Name { get; set; } = string.Empty;
 
         public string Description { get; set; } 
@@ -20,10 +22,15 @@ namespace WorldKartIdentity.ViewModel
 
         public string Worktime { get; set; } 
 
-        public string PictureBase64 { get; set; } = string.Empty;
+        public string RoutePictureBase64 { get; set; } = string.Empty;
+
+        public string PhotographBase64 { get; set; } = string.Empty;
 
         public int Length { get; set; }
 
+        public int TurnCount { get; set; }
+
+        public int Width { get; set; }
 
         public int LikesCount { get; set; }
         public bool IsLikedByCurrentUser { get; set; }
@@ -32,7 +39,8 @@ namespace WorldKartIdentity.ViewModel
 
         public TrackViewModel()
         {
-            PictureFile = null!;
+            RoutePictureFile = null!;
+            PhotographFile = null!;
             Length = 0;
             Description = null!;
             Location = null!;
@@ -46,12 +54,16 @@ namespace WorldKartIdentity.ViewModel
         {
             Id = track.Id;
             Name = track.Name;
-            PictureBase64 = track.Picture;
+            RoutePictureBase64 = track.RoutePicture;
+            PhotographBase64 = track.Photograph;
             Length = track.Length;
             Description = track.Description;
             Location = track.Location;
             TelNumber = track.TelNumber;
             Email = track.Email;
+            TurnCount = track.TurnCount;
+            LikesCount = track.Likes.Count;
+            Width = track.Width;
             GoogleMapsLink = track.GoogleMapsLink;
             Worktime = track.Worktime;
         }
@@ -61,13 +73,16 @@ namespace WorldKartIdentity.ViewModel
             Track track = new Track();
             track.Id = trackVM.Id;
             track.Name = trackVM.Name;
-            track.Picture = trackVM.PictureBase64;
+            track.RoutePicture = trackVM.RoutePictureBase64;
+            track.Photograph = trackVM.PhotographBase64;
             track.Length = trackVM.Length;
             track.Description = trackVM.Description;
             track.Location = trackVM.Location;
             track.TelNumber = trackVM.TelNumber;
             track.Worktime = trackVM.Worktime;
             track.Email = trackVM.Email;
+            track.TurnCount = trackVM.TurnCount;
+            track.Width = trackVM.Width;
             track.GoogleMapsLink = trackVM.GoogleMapsLink;
             return track;
         }
@@ -77,13 +92,17 @@ namespace WorldKartIdentity.ViewModel
             TrackViewModel trackVM = new TrackViewModel();
             trackVM.Id = track.Id;
             trackVM.Name = track.Name;
-            trackVM.PictureBase64 = track.Picture;
+            trackVM.RoutePictureBase64 = track.RoutePicture;
+            trackVM.PhotographBase64 = track.Photograph;
             trackVM.Length = track.Length;
             trackVM.TelNumber = track.TelNumber;
             trackVM.Worktime = track.Worktime;
             trackVM.Location = track.Location;
             trackVM.Description = track.Description;
             trackVM.Email = track.Email;
+            trackVM.TurnCount = track.TurnCount;
+            trackVM.LikesCount = track.Likes.Count;
+            trackVM.Width = track.Width;
             trackVM.GoogleMapsLink = track.GoogleMapsLink;
             return trackVM;
         }

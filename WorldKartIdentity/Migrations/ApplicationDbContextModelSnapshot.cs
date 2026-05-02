@@ -218,6 +218,39 @@ namespace WorldKartIdentity.Migrations
                     b.ToTable("BlogPosts", (string)null);
                 });
 
+            modelBuilder.Entity("WorldKartIdentity.Database.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notification", (string)null);
+                });
+
             modelBuilder.Entity("WorldKartIdentity.Database.RefreshToken", b =>
                 {
                     b.Property<int>("Id")
@@ -287,13 +320,23 @@ namespace WorldKartIdentity.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Picture")
+                    b.Property<string>("Photograph")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoutePicture")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TelNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TurnCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Width")
+                        .HasColumnType("int");
 
                     b.Property<string>("Worktime")
                         .IsRequired()
@@ -584,6 +627,15 @@ namespace WorldKartIdentity.Migrations
                     b.Navigation("Author");
                 });
 
+            modelBuilder.Entity("WorldKartIdentity.Database.Notification", b =>
+                {
+                    b.HasOne("WorldKartIdentity.Database.User", "User")
+                        .WithMany("Notifications")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("WorldKartIdentity.Database.TrackAnnotation", b =>
                 {
                     b.HasOne("WorldKartIdentity.Database.Track", "Track")
@@ -670,6 +722,8 @@ namespace WorldKartIdentity.Migrations
 
             modelBuilder.Entity("WorldKartIdentity.Database.User", b =>
                 {
+                    b.Navigation("Notifications");
+
                     b.Navigation("TrackAnnotations");
 
                     b.Navigation("TrackTrajectories");

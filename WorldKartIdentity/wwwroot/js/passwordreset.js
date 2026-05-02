@@ -64,32 +64,32 @@
         confirmPw.addEventListener("input", showMatchHint);
     }
 
-    document.getElementById('resetPasswordForm').addEventListener('submit', async function (event) {
-        event.preventDefault();
-        let antiToken = document.querySelector('input[name="__RequestVerificationToken"]');
+    //document.getElementById('resetPasswordForm').addEventListener('submit', async function (event) {
+    //    event.preventDefault();
+    //    let antiToken = document.querySelector('input[name="__RequestVerificationToken"]');
 
-        const formData = {
-            Token: document.getElementById('token').value,
-            Email: document.getElementById('email').value,
-            NewPassword: document.getElementById('newPassword').value,
-        };
-        console.log(formData.Token);
-        try {
-            const response = await fetch('/user/resetpassword', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'RequestVerificationToken': antiToken.value
-                },
-                body: JSON.stringify(formData)
-            });
-            const result = await response.json();
-            if (confirm(result.message)) {
-                window.location.href = "/User/Login";
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Възникна грешка при обработката на заявката.');
-        }
-    });
+    //    const formData = {
+    //        Token: document.getElementById('token').value,
+    //        Email: document.getElementById('email').value,
+    //        NewPassword: document.getElementById('newPassword').value,
+    //    };
+    //    console.log(formData.Token);
+    //    try {
+    //        const response = await fetch('/user/resetpassword', {
+    //            method: 'POST',
+    //            headers: {
+    //                'Content-Type': 'application/json',
+    //                'RequestVerificationToken': antiToken.value
+    //            },
+    //            body: JSON.stringify(formData)
+    //        });
+    //        const result = await response.json();
+    //        if (confirm(result.message)) {
+    //            window.location.href = "/User/Login";
+    //        }
+    //    } catch (error) {
+    //        console.error('Error:', error);
+    //        alert('Възникна грешка при обработката на заявката.');
+    //    }
+    //});
 });

@@ -67,7 +67,7 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/loginregistration.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/createtrack.css" asp-append-version="true" />
 }
 
 @section Scripts {
@@ -142,13 +142,44 @@
                     <input asp-for="Length" type="number" required />
                     <span asp-validation-for="Length" class="text-danger"></span>
                 </div>
+
+                <div class="form-group">
+                    <label asp-for="TurnCount">Завои</label>
+                    <input asp-for="TurnCount" type="number" required />
+                    <span asp-validation-for="TurnCount" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Width">Широчина(метри)</label>
+                    <input asp-for="Width" type="number" required />
+                    <span asp-validation-for="Width" class="text-danger"></span>
+                </div>
             </div>
 
             <div class="form-group">
-                <label asp-for="PictureFile">Снимка на пистата</label>
+                <label asp-for="RoutePictureFile">
+                    Трасе на пистата
+                    <i class="bi bi-info-circle ms-1 text-muted"
+                       data-bs-toggle="tooltip"
+                       title="Схема или карта на трасето, снимана отгоре"></i>
+                </label>
                 <div class="file-input-wrapper">
-                    <input asp-for="PictureFile" type="file" accept="image/*" required />
+                    <input asp-for="RoutePictureFile" type="file" accept="image/*" required />
                 </div>
+                <small class="text-muted">Качете схема/layout на трасето</small>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PhotographFile">
+                    Снимка на пистата
+                    <i class="bi bi-info-circle ms-1 text-muted"
+                       data-bs-toggle="tooltip"
+                       title="Реална снимка на писта (напр. от фотограф)"></i>
+                </label>
+                <div class="file-input-wrapper">
+                    <input asp-for="PhotographFile" type="file" accept="image/*" required />
+                </div>
+                <small class="text-muted">Качете реална снимка на писта</small>
             </div>
         </div>
 

@@ -1,5 +1,5 @@
 ﻿/* USER DETAILS */
-.class-details-section {
+/*.class-details-section {
     background: #151515;
     padding-bottom: 45px;
     padding-top: 80px;
@@ -51,8 +51,8 @@
 
     .class-details-text .cd-trainer .cd-trainer-text .trainer-social {
         position: absolute;
-        right: -320px; /* мести ги вдясно */
-        top: 0;
+        right: -320px;*/ /* мести ги вдясно */
+        /*top: 0;
         width: 300px;
     }
 
@@ -70,9 +70,9 @@
 .trainer-social .trainer-row {
     display: flex;
     align-items: center;
-    gap: 10px; /* разстояние икона ↔ input */
-    margin-bottom: 12px; /* разстояние между редовете */
-}
+    gap: 10px;*/ /* разстояние икона ↔ input */
+    /*margin-bottom: 12px;*/ /* разстояние между редовете */
+/*}
 
 .class-details-text .cd-trainer .cd-trainer-text p {
     color: #c4c4c4;
@@ -108,10 +108,10 @@
 .trainer-social label {
     width: 30px;
     text-align: center;
-}
+}*/
 
 /* buttons */
-.primary-btn {
+/*.primary-btn {
     display: inline-block;
     font-size: 14px;
     padding: 17px 30px 16px;
@@ -132,10 +132,10 @@
         .primary-btn.btn-normal:hover {
             background: #DC3545;
             border-color: #DC3545;
-        }
+        }*/
 
 /* Team Section */
-img {
+/*img {
     max-width: 100%;
 }
 
@@ -277,18 +277,18 @@ img {
             -webkit-transform: skewY(5deg);
             -ms-transform: skewY(5deg);
             transform: skewY(5deg);
-        }
+        }*/
 
 /* EDIT INPUTS */
-.trainer-row {
+/*.trainer-row {
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
     .trainer-row span {
-        min-width: 120px; /* държи текста в една линия */
-        color: #ffffff;
+        min-width: 120px;*/ /* държи текста в една линия */
+        /*color: #ffffff;
         font-weight: 700;
     }
 
@@ -300,4 +300,25 @@ img {
 
 .trainer-row {
     display: flex !important;
+}*/
+
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0d1323;
+    color: #dde2f9;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.tonal-carving {
+    background: linear-gradient(135deg, rgba(21, 27, 44, 1) 0%, rgba(13, 19, 35, 1) 100%);
+}
+
+.glass-panel {
+    background: rgba(51, 57, 74, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 }

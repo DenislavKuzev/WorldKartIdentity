@@ -24,7 +24,7 @@
     </div>
 </section>
 
-<form asp-action="EditTrack" asp-controller="Track" method="post">
+<form asp-action="EditTrack" asp-controller="Track" method="post" class="mt-5">
     <input type="hidden" asp-for="Id" />
     <section class="class-details-section description">
         <div class="container">
@@ -34,7 +34,7 @@
                         <div class="cd-text">
                             <div class="cd-single-item text-danger">
                                 <h2>Описание</h2>
-                                <textarea asp-for="Description" class="form-control" style="height: 200px;"></textarea>
+                                <textarea asp-for="Description" class="form-control mt-2" style="height: 200px;"></textarea>
                             </div>
                         </div>
                     </div>
@@ -43,11 +43,11 @@
         </div>
     </section>
 
-    <section class="contact-section spad">
+    <section class="contact-section spad mt-4">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-sm-6">
-                    <div class="section-title contact-title">
+                    <div class="section-title contact-title my-3">
                         <h2 class="text-danger">Данни на пистата</h2>
                     </div>
                     <div class="cw-text text-danger">

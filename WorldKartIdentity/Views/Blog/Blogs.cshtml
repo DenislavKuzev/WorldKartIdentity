@@ -6,6 +6,10 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/css/blog.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap"
+          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet" />
 }
 
 @section Scripts {
@@ -13,14 +17,17 @@
 
 }
 
-<div class="d-flex flex-column align-items-end w-100 justify-content-end m-5 blog-container overflow-auto">
+@* <div class="container-fluid d-flex h-auto blog-container-wrap flex-column">
 
 
     @if (User.Identity.IsAuthenticated)
     {
-        <button type="button" class="post-btn btn btn-dark rounded-pill px-4 py-2 fw-bold" data-bs-toggle="modal" data-bs-target="#threadModal">
-            <i class="bi bi-plus-lg"></i>
-        </button>
+        <div class="w-100 d-flex align-items-center justify-content-end p-3 post-btn-wrap">
+            <button type="button" class="post-btn btn btn-dark rounded-pill px-4 py-2 fw-bold" data-bs-toggle="modal" data-bs-target="#threadModal">
+                <i class="bi bi-plus-lg"></i>
+            </button>
+        </div>
+
     }
     else
     {
@@ -30,81 +37,231 @@
     }
 
 
-    @* @if(Model.Any())
-        { *@
-    @foreach (var blog in Model)
+    @if (Model.Any())
     {
-        <div id="blog-@blog.Id" class="blog-card p-3 rounded-4 shadow-sm w-100 bg-dark">
-            <div class="d-flex mh-100">
-                <div class="me-3 flex-shrink-0">
-                    <div class="avatar-container">
-                        <img src="@(blog.Author.Picture != string.Empty ? blog.Author.Picture : "/img/defaultprofilepic.png")" class="rounded-circle img-fluid" alt="User">
-                    </div> @* todo: replace placeholder with the author's pfp' *@
+        <div class="d-flex flex-column blog-container">
+            @foreach (var blog in Model)
+            {
+                <div class="blog-card p-3 rounded-4 shadow-sm w-100 bg-dark">
+
+                    <div class="d-flex mh-100 text-white">
+                        <div class="me-3 flex-shrink-0">
+                            <div class="avatar-container">
+                                <img src="@(blog.Author.Picture != string.Empty ? blog.Author.Picture : "/img/defaultprofilepic.png")" class="rounded-circle img-fluid" alt="User">
+                            </div> 
+                        </div>
+
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <div>
+                                    <span class="fw-bold me-1">@blog.Author.UserName</span>
+                                    <span class="text-muted text-small">2d</span>
+                                </div>
+                                <div class="text-muted d-flex gap-3 align-items-center">
+                                    <i class="bi bi-three-dots"></i>
+                                </div>
+                            </div>
+
+                            <div class="mb-2 h-auto mw-100">
+                                <p class="mb-0 fs-6 text-wrap">@blog.Content</p>
+                            </div>
+
+                            <div class="row g-2 my-3">
+
+                                <div class="col-6">
+                                    <img src="data:image/png;base64, @blog.PictureBase64" class="img-fluid rounded-4 thread-image w-100" alt="Image 1 description">
+                                </div>
+
+                            </div>
+
+                            <div class="d-flex align-items-center gap-4 mt-2">
+                                <button class="heart-btn @(blog.LikedByCurrentUser ? "is-liked" : "") action-icon-wrapper text-white d-flex align-items-center justify-content-center" data-bid="@blog.Id" id="heartBtn">
+                                    <svg class="heart-icon text-white d-flex align-items-center justify-content-center">
+                                        <path d="M 12 21.35 l -1.45 -1.32 C 5.4 15.36 2 12.28 2 8.5 C 2 5.42 4.42 3 7 3 c 1.74 0 3.41 0.81 5 3 C 13.09 3.81 14.76 3 16.5 3 C 19.58 3 22 5.42 22 8.5 c 0 3.78 -3.4 6.86 -8.55 11.54 L 12 21.35 z" stroke-linejoin="round" stroke-linecap="round" />
+                                    </svg>
+                                    <span class="likes-count">@blog.Likes</span>
+                                </button>
+                                <div class="action-icon-wrapper text-small text-white">
+                                    <i class="bi bi-chat fs-5 rotate-90 text-white"></i> <span>18</span>
+                                </div>
+                                <div class="action-icon-wrapper text-small text-white">
+                                    <i class="bi-shield-exclamation fs-5 text-white"></i> >
+                                </div>
+                                <div class="action-icon-wrapper text-white">
+                                    <i class="bi bi-send fs-5 rotate-90 text-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="flex-grow-1">
-                    <div class="d-flex justify-content-between align-items-center mb-1">
-                        <div>
-                            <span class="fw-bold me-1">@blog.Author.UserName</span>
-                            <span class="text-muted text-small">2d</span>
-                        </div>
-                        <div class="text-muted d-flex gap-3 align-items-center">
-                            <i class="bi bi-three-dots"></i>
-                        </div>
-                    </div>
 
-                    <div class="mb-2 h-auto mw-100">
-                        <p class="mb-0 fs-6 text-wrap">@blog.Content</p>
-                    </div>
+            }
+        </div>
 
-                    <div class="row g-2 my-3">
 
-                        <div class="col-6">
-                            <img src="data:image/png;base64, @blog.PictureBase64" class="img-fluid rounded-4 thread-image w-100" alt="Image 1 description">
-                        </div>
-
-                    </div>
-
-                    <div class="d-flex align-items-center gap-4 mt-2">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <button class="heart-btn @(blog.LikedByCurrentUser ? "is-liked" : "") action-icon-wrapper text-white d-flex align-items-center justify-content-center" data-bid="@blog.Id" id="heartBtn">
-                                <svg class="heart-icon text-white d-flex align-items-center justify-content-center">
-                                    <path d="M 12 21.35 l -1.45 -1.32 C 5.4 15.36 2 12.28 2 8.5 C 2 5.42 4.42 3 7 3 c 1.74 0 3.41 0.81 5 3 C 13.09 3.81 14.76 3 16.5 3 C 19.58 3 22 5.42 22 8.5 c 0 3.78 -3.4 6.86 -8.55 11.54 L 12 21.35 z" stroke-linejoin="round" stroke-linecap="round" />
-                                </svg>
-                                <span class="likes-count">@blog.Likes</span>
-                            </button>
-
-                            <form asp-action="ReportBlog" asp-controller="Blog" method="post">
-                                <input type="hidden" name="blogId" value="@blog.Id" />
-                                <button type="submit" class="btn text-danger">Докладвай</button>
-                            </form>
-                        }
-
-                        @* <div class="action-icon-wrapper text-small text-white">
-                                <i class="bi bi-chat fs-5 rotate-90 text-white"></i> <span>17</span>
-                            </div>
-                            <div class="action-icon-wrapper text-small text-white">
-                                <i class="bi bi-repeat fs-5 text-white"></i> <span>49</span>
-                            </div>
-                            <div class="action-icon-wrapper text-white">
-                                <i class="bi bi-send fs-5 rotate-90 text-white"></i>
-                            </div> *@
-                    </div>
+        <div class="comment-section w-25">
+            <div class="cs-header">
+                <span class="cs-title">Comments</span>
+                <div class="header-right">
+                    <span class="count-badge" id="count-badge">3 comments</span>
+                    <button class="close-btn">×</button>
                 </div>
             </div>
 
+            <div class="comments-list" id="comments-list"></div>
+
+            <div class="composer">
+                <textarea id="new-comment" rows="3" placeholder="Add a comment…"></textarea>
+                <div class="composer-footer">
+                    <button class="send-btn" id="send-btn" onclick="postComment()" disabled>Post</button>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center w-100">
+            <h5>Няма блогове</h5>
         </div>
     }
 
-    @* }
-        else
-        {
-            <div class="text-center w-100">
-                <h5>No blogs available</h5>
-            </div>
-        } *@
+</div> *@
 
+
+
+<div class="max-w-screen-2xl mx-auto pt-16 flex justify-center">
+    <!-- Main Feed Content - Updated to max-w-6xl -->
+    <main class="w-full max-w-6xl px-4 py-12">
+        @* <div class="mb-12 text-center">
+            <h1 class="font-headline font-extrabold text-4xl tracking-tighter text-on-surface mb-2 uppercase italic">
+                KINETIC FEED
+            </h1>
+            <div class="h-1 w-20 bg-primary-container mx-auto"></div>
+        </div> *@
+        <!-- Feed Items Grid -->
+        <div class="space-y-24">
+            @foreach (var blog in Model)
+            {
+                <article class="group">
+                    <div class="max-w-4xl mx-auto">
+                        <div class="flex items-center gap-4 mb">
+                            <img alt="Denis_Kuzev305" class="w-10 h-10 rounded-md object-cover ring-1 ring-outline/20"
+                                 src="@(blog.Author.Picture != string.Empty ? blog.Author.Picture : "/img/defaultprofilepic.png")" />
+                            <div>
+                                <h4 class="font-headline font-bold text-base text-on-surface group-hover:text-primary transition-colors">
+                                    @blog.Author.UserName
+                                </h4>
+                                @* <p class="text-xs text-slate-500 font-body">2 hours ago • Track: Kyustendil</p> *@
+                            </div>
+                        </div>
+                        @if (!string.IsNullOrEmpty(blog.PictureBase64))
+                        {
+                            <div class="relative overflow-hidden rounded-md bg-surface-container-low shadow-2xl my-3">
+                                <div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent z-10 pointer-events-none">
+                                </div>
+                                <img alt="Karting Action"
+                                     class="w-full object-cover group-hover:scale-105 transition-transform duration-700 aspect-[21/9]"
+                                     src="data:image/png;base64, @blog.PictureBase64" />
+
+                            </div>
+                        }
+                       
+                        <div class="mt-3">
+                            <p class="font-body text-on-surface leading-relaxed mb-4 text-lg">
+                                @blog.Content
+                            </p>
+                            <div class="flex items-center gap-8 text-slate-400">
+                                <button class="flex items-center gap-2 @(blog.LikedByCurrentUser ? "text-rose-600" : "") hover:text-red-600 transition-colors group/btn like-buttons" data-bid="@blog.Id">
+                                    <span class="material-symbols-outlined"
+                                          style="font-variation-settings: 'FILL' 1;">favorite</span>
+                                    <span class="text-xs font-bold font-headline likes">@blog.Likes</span>
+                                </button>
+                                @* <button class="flex items-center gap-2 hover:text-tertiary transition-colors group/btn"
+                                        onclick="toggleComments('Post 1')">
+                                    <span class="material-symbols-outlined">chat_bubble</span>
+                                    <span class="text-xs font-bold font-headline">18</span>
+                                </button>
+                                <button class="flex items-center gap-2 hover:text-primary transition-colors ml-auto">
+                                    <span class="material-symbols-outlined">share</span>
+                                </button> *@
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            }
+            
+        </div>
+    </main>
 </div>
+<!-- Floating Action Button -->
+<button class="fixed bottom-24 right-8 md:bottom-12 md:right-12 w-16 h-16 bg-rose-600 text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-rose-700 transition-all duration-300 scale-100 active:scale-90 z-40 group"
+        onclick="togglePostModal()">
+    <span class="material-symbols-outlined text-3xl group-hover:rotate-90 transition-transform duration-300">add</span>
+</button>
+<!-- Create Post Modal -->
+
+<!-- Comment Drawer Overlay -->
+<div class="drawer-overlay fixed inset-0 bg-background/80 backdrop-blur-sm z-50" id="drawerOverlay"
+     onclick="closeComments()"></div>
+<!-- Comment Drawer -->
+@* <aside class="comment-drawer fixed top-0 right-0 h-full w-full max-w-md bg-surface-container-high z-[60] shadow-2xl border-l border-white/5 flex flex-col"
+       id="commentDrawer">
+    <div class="p-6 border-b border-white/5 flex items-center justify-between">
+        <div>
+            <h2 class="font-headline font-extrabold text-xl tracking-tight text-on-surface uppercase italic"
+                id="drawerTitle">
+                COMMENTS
+            </h2>
+        </div>
+        <button class="p-2 hover:bg-white/5 rounded-full transition-colors" onclick="closeComments()">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    </div>
+    <div class="flex-1 overflow-y-auto p-6 space-y-6">
+        <div class="flex gap-4">
+            <div class="w-8 h-8 rounded bg-primary/20 flex items-center justify-center text-[10px] font-bold font-headline text-primary">
+                JD
+            </div>
+            <div class="flex-1">
+                <div class="flex items-baseline gap-2 mb-1">
+                    <span class="font-headline font-bold text-sm">Turbo_J</span>
+                    <span class="text-[10px] text-slate-500">12m ago</span>
+                </div>
+                <p class="text-sm text-on-surface/80 leading-relaxed">
+                    Those sector times are insane for Kyustendil.
+                    What was the tire pressure?
+                </p>
+            </div>
+        </div>
+        <div class="flex gap-4">
+            <div class="w-8 h-8 rounded bg-tertiary/20 flex items-center justify-center text-[10px] font-bold font-headline text-tertiary text-center">
+                SK
+            </div>
+            <div class="flex-1">
+                <div class="flex items-baseline gap-2 mb-1">
+                    <span class="font-headline font-bold text-sm">Stefan_Kart</span>
+                    <span class="text-[10px] text-slate-500">45m ago</span>
+                </div>
+                <p class="text-sm text-on-surface/80 leading-relaxed">
+                    The engine sounds crisp in the low end. Great
+                    job on the tuning!
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="p-6 bg-surface-container-low border-t border-white/5">
+        <div class="flex items-center gap-3 bg-surface-container-highest rounded-md p-2">
+            <input class="flex-1 bg-transparent border-none focus:ring-0 text-sm placeholder:text-slate-500"
+                   placeholder="Write a comment..." type="text" />
+            <button class="bg-primary text-white p-1.5 rounded-md hover:bg-rose-700 transition-colors">
+                <span class="material-symbols-outlined text-sm">send</span>
+            </button>
+        </div>
+    </div>
+</aside> *@
+
+
+
 
 @await Html.PartialAsync("/Views/PartialViews/_CreateBlog.cshtml", new BlogViewModel())
 

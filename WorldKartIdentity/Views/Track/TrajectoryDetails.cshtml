@@ -10,9 +10,16 @@
 @section Styles {
     <link rel="stylesheet" href="~/css/trajectorydetails.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/annotorious/annotorious.min.css" />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
 }
 
-<section class="breadcrumb-section set-bg"
+@* <section class="breadcrumb-section set-bg"
          style="background-image:url('/img/trackbackground.png'); background-size:cover; background-position:center; background-repeat:no-repeat;">
     <div class="breadcrumb-overlay"></div>
 
@@ -55,27 +62,13 @@
                         })
                         
 
-                        @* <a class="primary-btn btn-normal btn-ghost"
-                           asp-action="Index"
-                           asp-controller="TrackTrajectory"
-                           asp-route-trackId="@Model.TrackId">
-                            Всички траектории
-                        </a> *@
+                       
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-4">
-                @* <div class="panel sticky">
-                    <div class="panel-header">
-                        <h3>Коментари</h3>
-                        <div class="panel-line"></div>
-                    </div>
-
-                    <div id="commentList" class="comment-list">
-                        
-                    </div>
-                </div> *@
+                
 
                 <div class="panel">
                     <div class="panel-header">
@@ -99,8 +92,91 @@
             </div>
         </div>
     </div>
-</section>
+</section> *@
 
+ <div class="flex flex-col h-screen pt-16">
+        <!-- SideNavBar -->
+        <!-- Main Content Canvas -->
+        <main class="flex-1 p-8 overflow-y-auto bg-surface relative px-6">
+            <div class="max-w-6xl mx-auto flex flex-col h-full">
+                <!-- Header Section -->
+                <div class="flex justify-between items-center mb-8">
+                    <div class="flex items-center gap-4">
+                        <button class="text-slate-400 hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">arrow_back</span>
+                        </button>
+                        <h1
+                            class="text-4xl font-black font-display tracking-tighter text-on-surface leading-none uppercase">
+                            Траектория</h1>
+                    </div>
+                </div>
+                <!-- Focused Content Area -->
+                <div class="grid grid-cols-12 gap-8 flex-1 min-h-0">
+                    <!-- Large Interactive Map -->
+                    <div class="col-span-12 lg:col-span-8 xl:col-span-9 flex flex-col h-full">
+                        <div
+                            class="flex-1 bg-surface-container-low rounded-2xl overflow-hidden track-canvas-grid relative">
+                            <!-- Focused Track Map Visualization -->
+                            <div class="w-full h-full inset-0 flex items-center justify-center p-10 traj-container">
+                                <img alt="Suzuka Track Layout"
+                                    class="w-full h-full traj-image h-full object-contain filter rounded-md drop-shadow-[0_0_30px_rgba(225,29,72,0.3)]"
+                                    src="data:image/jpeg;base64,@Model.Base64" />
+                            </div>
+             
+                        </div>
+                    </div>
+                    <!-- Trajectory Details Side Panel -->
+                    <div class="col-span-12 lg:col-span-4 xl:col-span-3">
+                        <div class="bg-surface-container rounded-2xl p-10 h-auto">
+                            <div class="flex items-center gap-3 mb-8">
+                                <div
+                                    class="w-12 h-12 rounded-xl bg-primary-container/20 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-rose-300">info</span>
+                                </div>
+                                <h2 class="font-display font-black text-xl text-on-surface uppercase tracking-tight">
+                                    Trajectory Details</h2>
+                            </div>
+                            <div class="space-y-8">
+                                <div>
+                                    <label
+                                        class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 block mb-2">Track
+                                        Name</label>
+                                    <p class="text-2xl font-display font-bold text-on-surface hover:text-rose-500 tracking-tight cursor-pointer">@Model.Track.Name</p>
+                                </div>
+                                <div class="h-[1px] w-full bg-outline-variant/10"></div>
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div>
+                                        <label
+                                            class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 block mb-2">Created
+                                            By</label>
+                                        <div class="flex items-center gap-3">
+                                            <div
+                                                class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center">
+                                                <span
+                                                    class="material-symbols-outlined text-sm text-on-secondary-container">person</span>
+                                            </div>
+                                            <span class="font-display font-bold text-on-surface">@Model.User.UserName</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 block mb-2">Created
+                                            On</label>
+                                        <div class="flex items-center gap-3 text-on-surface">
+                                            <span
+                                                class="material-symbols-outlined text-slate-500 text-lg">calendar_today</span>
+                                            <span class="font-display font-bold">@Model.CreatedOn.ToShortDateString()</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 @section Scripts {
     @if (User.Identity.IsAuthenticated)
     {  

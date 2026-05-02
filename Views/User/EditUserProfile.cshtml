@@ -1,0 +1,199 @@
+@model WorldKartIdentity.ViewModel.UserViewModel
+
+@{
+    ViewData["Title"] = "UserProfile";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/userprofile.css" asp-append-version="true" />
+}
+
+<main class="pt-24 pb-20 px-2 md:px-0 max-w-6xl mx-auto">
+    <form asp-action="EditUserProfile" asp-controller="User" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+
+        <!-- Header Section: Hero Edit -->
+        <section class="relative mb-12">
+            <div class="flex flex-col md:flex-row items-center gap-8 bg-surface-container-low p-8 rounded-xl">
+                <div class="relative group cursor-pointer" onclick="document.getElementById('profile-upload').click()">
+                    <div class="w-32 h-32 md:w-40 md:h-40 rounded-xl overflow-hidden border-2 border-primary-container shadow-2xl relative">
+                        @if (!string.IsNullOrEmpty(Model.Picture))
+                        {
+                            <img src="@Model.Picture"
+                                 id="profile-preview"
+                                 class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                                 alt="Profile picture" />
+                        }
+                        else
+                        {
+                            <img src="~/img/defaultprofilepic.png"
+                                 id="profile-preview"
+                                 class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                                 alt="Default picture" />
+                        }
+
+                        <div class="absolute inset-0 bg-primary-container/80 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-white mt-1">
+                                ???????
+                                ??????
+                            </span>
+                        </div>
+                    </div>
+
+                    <input type="hidden" asp-for="Picture" />
+                    <input accept="image/*" asp-for="PictureFile" class="hidden" id="profile-upload" type="file" />
+                </div>
+
+                <div class="flex-1 text-center md:text-left">
+                    <div class="flex flex-wrap justify-center md:justify-start gap-4 mt-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-slate-500 text-sm">public</span>
+                                    <span class="text-slate-500 text-[10px] font-bold uppercase tracking-tighter">FB</span>
+                                </span>
+                                <input asp-for="FacebookUrl"
+                                       class="w-full bg-surface-container-highest border-none rounded-lg pl-16 pr-4 py-3 text-base focus:ring-2 focus:ring-primary-container transition-all text-on-surface"
+                                       placeholder="facebook" />
+                            </div>
+
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-slate-500 text-sm">photo_camera</span>
+                                    <span class="text-slate-500 text-[10px] font-bold uppercase tracking-tighter">IG</span>
+                                </span>
+                                <input asp-for="InstagramUrl"
+                                       class="w-full bg-surface-container-highest border-none rounded-lg pl-16 pr-4 py-3 text-base focus:ring-2 focus:ring-primary-container transition-all text-on-surface"
+                                       placeholder="instagram" />
+                            </div>
+
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-slate-500 text-sm">music_note</span>
+                                    <span class="text-slate-500 text-[10px] font-bold uppercase tracking-tighter">TK</span>
+                                </span>
+                                <input asp-for="TikTokUrl"
+                                       class="w-full bg-surface-container-highest border-none rounded-lg pl-16 pr-4 py-3 text-base focus:ring-2 focus:ring-primary-container transition-all text-on-surface"
+                                       placeholder="tiktok" />
+                            </div>
+
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-slate-500 text-sm">close</span>
+                                    <span class="text-slate-500 text-[10px] font-bold uppercase tracking-tighter">YT</span>
+                                </span>
+                                <input asp-for="YoutubeUrl"
+                                       class="w-full bg-surface-container-highest border-none rounded-lg pl-16 pr-4 py-3 text-base focus:ring-2 focus:ring-primary-container transition-all text-on-surface"
+                                       placeholder="youtube" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bento Grid Form Content -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Biography Section -->
+            <div class="md:col-span-2 space-y-6">
+                <div class="bg-surface-container p-8 rounded-xl relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10">
+                        <span class="material-symbols-outlined text-8xl">edit_note</span>
+                    </div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="w-2 h-8 bg-primary-container"></span>
+                            <h2 class="text-2xl font-bold font-headline uppercase tracking-tight">
+                                ????????? ?? ??????
+                            </h2>
+                        </div>
+
+                        <textarea asp-for="Bio"
+                                  class="w-full bg-surface-container-low rounded-xl p-6 text-base text-on-surface-variant font-body leading-relaxed focus:ring-2 focus:ring-primary-container focus:bg-surface-container-highest transition-all resize-none"
+                                  rows="8"
+                                  placeholder="???????? ?????? ???????????? ???????, ?????? ???????????? ? ???? ?? ???????..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal Data & Actions -->
+            <div class="md:col-span-1 space-y-6">
+                <div class="bg-surface-container-high p-8 rounded-xl">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="w-2 h-6 bg-tertiary"></span>
+                        <h2 class="text-2xl font-bold font-headline uppercase tracking-widest text-on-surface">?????</h2>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="text-[13px] font-bold text-slate-500 uppercase tracking-widest block mb-1">
+                                ?????
+                                ???
+                            </label>
+                            <input asp-for="UserName"
+                                   class="w-full bg-surface-container-lowest border-none rounded-lg px-4 py-2 text-s focus:ring-1 focus:ring-primary-container"
+                                   type="text" />
+                        </div>
+
+                        <div>
+                            <label class="text-[13px] font-bold text-slate-500 uppercase tracking-widest block mb-1">?????</label>
+                            <input asp-for="Email"
+                                   class="w-full bg-surface-container-lowest border-none rounded-lg px-4 py-2 text-l focus:ring-1 focus:ring-primary-container"
+                                   type="email" readonly />
+                        </div>
+
+                        <div>
+                            <label class="text-[13px] font-bold text-slate-500 uppercase tracking-widest block mb-1">
+                                ??????????????
+                                ?????
+                            </label>
+                            <input asp-for="PhoneNumber"
+                                   class="w-full bg-surface-container-lowest border-none rounded-lg px-4 py-2 text-s focus:ring-1 focus:ring-primary-container"
+                                   type="tel" />
+                        </div>
+
+                        <div>
+                            <label class="text-[13px] font-bold text-slate-500 uppercase tracking-widest block mb-1">???????</label>
+                            <div class="relative">
+                                <input asp-for="Country"
+                                       class="w-full bg-surface-container-lowest border-none rounded-lg px-4 py-2 text-s focus:ring-1 focus:ring-primary-container"
+                                       type="text" />
+                                <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-slate-600 text-sm">public</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-[13px] font-bold text-slate-500 uppercase tracking-widest block mb-1">???? ? ????????</label>
+                            <select asp-for="RoleInKarting" class="w-full bg-surface-container-lowest border-none rounded-lg px-4 py-2 text-s focus:ring-1 focus:ring-primary-container">
+                                <option value="">-- ???????? --</option>
+                                <option>?????</option>
+                                <option>???????</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Final Actions -->
+                <div class="flex flex-col gap-3">
+                    <button type="submit" class="w-full bg-primary-container text-on-primary-container font-headline font-bold uppercase tracking-widest py-4 rounded-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all group shadow-lg shadow-primary-container/20">
+                        <span class="material-symbols-outlined group-hover:rotate-12 transition-transform">save</span>
+                        ?????? ?????????
+                    </button>
+
+                    <a asp-action="UserProfile" asp-controller="User" class="w-full inline-flex items-center justify-center bg-transparent border bg-surface-container-highest border-white/10 text-slate-400 font-headline font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-white/5 hover:text-white transition-all">
+                        ?????? ?????????????
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <input asp-for="Id" type="hidden" />
+        <input asp-for="IsAdmin" type="hidden" />
+    </form>
+</main>
+
+@section Scripts{
+    <script src="~/js/edituserprofile.js" ></script>
+}

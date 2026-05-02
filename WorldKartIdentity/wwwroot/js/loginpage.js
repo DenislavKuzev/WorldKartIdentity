@@ -1,29 +1,29 @@
-﻿const a = document.querySelector(".forgot-link");
-a.addEventListener("click", async (event) =>
-{
-    event.preventDefault();
-    const email = document.querySelector(".email-field");
-    console.log(email.value);
-    if (email.value == "" || !(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value))) {
-        setMessage("Моля попълнете полето за имейл", "error");
-        email.focus();
-    } else {
-        setMessage("Изпращане на имейл...", "info");
-        a.style.pointerEvents = "none"; // disable link
+﻿//const a = document.querySelector(".forgot-link");
+//a.addEventListener("click", async (event) =>
+//{
+//    event.preventDefault();
+//    const email = document.querySelector(".email-field");
+//    console.log(email.value);
+//    if (email.value == "" || !(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value))) {
+//        setMessage("Моля попълнете полето за имейл", "error");
+//        email.focus();
+//    } else {
+//        setMessage("Изпращане на имейл...", "info");
+//        a.style.pointerEvents = "none"; // disable link
 
-        const res = await fetch("/User/ForgotPassword", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(email.value)
-        });
+//        const res = await fetch("/User/ForgotPassword", {
+//            method: "POST",
+//            headers: {
+//                "Content-Type": "application/json"
+//            },
+//            body: JSON.stringify(email.value)
+//        });
 
-        const resBody = await res.json();
-        setMessage(resBody.msg, resBody.type);
-    }
+//        const resBody = await res.json();
+//        setMessage(resBody.msg, resBody.type);
+//    }
 
-});
+//});
 
 function setMessage(msg, type) {
     const formGroup = document.querySelector('.em');
@@ -44,3 +44,91 @@ function setMessage(msg, type) {
         span.classList.remove("text-success");
     }
 }
+
+//document.querySelector(".btn-google").addEventListener("click", async () =>
+//{
+//    const res = await fetch(`/User/ExternalLogin&provider=Google`, { method: "GET" });
+//})
+
+const errorContainer = document.getElementById('login-error-container');
+const errorMessage = document.getElementById('login-error-message');
+
+const a = document.querySelector(".forgot-link");
+a.addEventListener("click", async (event) =>
+{
+    event.preventDefault();
+    const email = document.getElementById("email");
+    console.log(email.value);
+    if (email.value == "" || !(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value))) {
+        errorMessage.innerText = 'Моля попълнете полето за имейл!';
+        errorContainer.classList.remove('hidden');
+        email.focus();
+    } else {
+        errorMessage.innerText = 'Пращане на имейл...';
+        errorContainer.classList.remove('hidden');
+        a.style.pointerEvents = "none"; // disable link
+
+        const res = await fetch("/User/ForgotPassword", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(email.value)
+        });
+
+        const resBody = await res.json();
+        errorMessage.innerText = resBody.msg;
+        errorContainer.classList.remove('hidden');
+    }
+
+});
+
+const loginForm = document.querySelector('form');
+loginForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    const btnText = btn.querySelector('span');
+    
+
+    // Loading state
+    const originalText = btnText.innerText;
+    btnText.innerText = 'ОБРАБОТКА...';
+    btn.disabled = true;
+    errorContainer.classList.add('hidden');
+
+    const formData = new FormData(loginForm);
+
+
+    const res = await fetch('/User/Login', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'RequestVerificationToken':
+                document.querySelector('input[name="__RequestVerificationToken"]').value
+        }
+    });
+
+    const data = await res.json();
+    if (!data.success) {
+        errorMessage.innerText = 'Невалиден имейл или парола. Моля, опитайте отново.';
+        errorContainer.classList.remove('hidden');
+
+        // Reset button
+        btnText.innerText = originalText;
+        btn.disabled = false;
+
+        // Subtle shake effect
+        btn.closest('.glass-panel').classList.add('animate-shake');
+        setTimeout(() => btn.closest('.glass-panel').classList.remove('animate-shake'), 500);
+
+    } else {
+        window.location.href = "/";
+    }
+
+
+});
+
+document.querySelector(".google-login").addEventListener("click", async () =>
+{
+    window.location.href = `/User/ExternalLogin?provider=Google`;
+})
