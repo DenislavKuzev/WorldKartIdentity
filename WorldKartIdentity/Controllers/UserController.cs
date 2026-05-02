@@ -172,13 +172,25 @@ namespace WorldKartIdentity.Controllers
         public async Task<IActionResult> UserProfile()
         {
             UserViewModel loggedUserVM = new UserViewModel();
+            var likedBlogs = new List<BlogViewModel>();
+            var likedTracks = new List<TrackViewModel>();
+
             if (User.Identity.IsAuthenticated)
             {
                 var userId = _userManager.GetUserId(User);
                 User? loggedUser = await _db.Users.Include(t => t.TrackTrajectories).FirstOrDefaultAsync(bl => bl.Id == userId);
+                
+                List<BlogPost> blogs = await _db.BlogLikes.Where(bl => bl.UserId == userId).Include(b => b.Blog).ThenInclude(b => b.Author).Select(bl => bl.Blog).ToListAsync();
+                likedBlogs = blogs.Select(b => new BlogViewModel(b)).ToList();
+
+                List<Track> tracks = await _db.TrackLikes.Where(tl => tl.UserId == userId).Select(tl => tl.Track).ToListAsync();
+                likedTracks = tracks.Select(t => new TrackViewModel(t)).ToList();
+
                 if (loggedUser != null)
                 {
                     loggedUserVM = new UserViewModel(loggedUser);
+                    loggedUserVM.LikedBlogs = likedBlogs;
+                    loggedUserVM.LikedTracks = likedTracks;
                 }
             }
 
@@ -295,7 +307,7 @@ namespace WorldKartIdentity.Controllers
             
             try
             {
-                string key = "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";
+                string key = Environment.GetEnvironmentVariable("EMAIL_API_KEY");
                 brevo_csharp.Client.Configuration.Default.ApiKey.Add("api-key", key);
 
                 var api = new TransactionalEmailsApi();
@@ -380,7 +392,6 @@ namespace WorldKartIdentity.Controllers
 
         }
 
-        [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

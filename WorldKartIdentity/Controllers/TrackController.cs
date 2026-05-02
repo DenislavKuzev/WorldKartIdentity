@@ -67,17 +67,14 @@ namespace WorldKartIdentity.Controllers
         {
             var userId = userManager.GetUserId(User);
             var username = userManager.GetUserName(User);
-
-
-            if (trackId == 0)
-                return BadRequest("trackId is 0 — not passed from form");
+            var track = await db.Tracks.Include(t => t.Likes).FirstOrDefaultAsync(t => t.Id == trackId);
 
             var like = await db.TrackLikes
                 .FirstOrDefaultAsync(x => x.UserId == userId && x.TrackId == trackId);
 
             if (like == null)
             {
-                var track = await db.Tracks.FindAsync(trackId);
+                
                 db.TrackLikes.Add(new TrackLike
                 {
                     UserId = userId,
@@ -90,7 +87,12 @@ namespace WorldKartIdentity.Controllers
             }
 
             await db.SaveChangesAsync();
-            return RedirectToAction("TrackGallery");
+
+
+            return Json(new
+            {
+                likes = track.Likes.Count
+            }); 
         }
 
 
@@ -102,18 +104,19 @@ namespace WorldKartIdentity.Controllers
         [HttpGet]
         public IActionResult TrackDetails(int id)
         {
-            var track = db.Tracks.Include(t => t.Trajectories)
+            var track = db.Tracks.Include(t => t.Trajectories).ThenInclude(tj => tj.User).Include(t => t.Likes)
                 .ThenInclude(t => t.User).FirstOrDefault(t => t.Id == id);
 
             if (track == null)
                 return NotFound();
 
             TrackViewModel trackViewModel = TrackViewModel.TrackToTrackVM(track);
-            trackViewModel.Trajectories = trackViewModel.Trajectories = track.Trajectories
+            trackViewModel.Trajectories = track.Trajectories
                 .Take(6)
                 .OrderBy(t => t.CreatedOn)
         .Select(TrackTrajectoryViewModel.TrajectoryToTrajectoryVM)
         .ToList();
+            trackViewModel.IsLikedByCurrentUser = track.Likes.Any(x => x.UserId == userManager.GetUserId(User));
 
             return View(trackViewModel);
         }
@@ -142,17 +145,13 @@ namespace WorldKartIdentity.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateTrack(TrackViewModel trackVM)
         {
-            if (trackVM.PictureFile != null && trackVM.PictureFile.Length > 0)
+            if (trackVM.RoutePictureFile != null && trackVM.PhotographFile != null)
             {
-                using (var memoryStream = new MemoryStream())
-                {
-                    await trackVM.PictureFile.CopyToAsync(memoryStream);
-                    byte[] imageBytes = memoryStream.ToArray();
 
-                    string base64String = Convert.ToBase64String(imageBytes);
-                    trackVM.PictureBase64 = base64String;
-                }
-            }   //Trqbwa da si suzdam PictureFile vuv TrackViewModel
+                trackVM.RoutePictureBase64 = ToBase64(trackVM.RoutePictureFile);
+                trackVM.PhotographBase64 = ToBase64(trackVM.PhotographFile);
+            }  
+            //Trqbwa da si suzdam PictureFile vuv TrackViewModel
             Track tracks = TrackViewModel.TrackVMToTrack(trackVM);
             await db.Tracks.AddAsync(tracks);
             await db.SaveChangesAsync();
@@ -209,7 +208,7 @@ namespace WorldKartIdentity.Controllers
             track.TelNumber = model.TelNumber;
             track.Description = model.Description;
 
-            
+
             db.SaveChanges();
             return RedirectToAction("Tracks", "Admin");
         }
@@ -333,14 +332,14 @@ namespace WorldKartIdentity.Controllers
 
         private async Task<string> AIResponse(string prompt, IFormFile? file)
         {
-            string model = "gpt-4.1-nano"; 
+            string model = "gpt-4.1-nano";
             string apiKey = Environment.GetEnvironmentVariable("AI_KEY");
             ChatClient chatClient = new ChatClient(model, apiKey);
 
             List<ChatMessage> messages = new List<ChatMessage>();
             messages.Add(ChatMessage.CreateSystemMessage("Ти си треньор по картинг.Основната ти задача е да съветваш и помагаш картинг състезатели с това което те питат.Ще ти бъде дадена писта по която да помагаш и даваш съвети, очертанията по нея(ако има такива) са пътят по който съзтезателя е минал.Не давай дълги обяснения освен ако потребителя ти каже.Това съобщение е за интрукции и пояснение.Не отговарай на него а на потребителя.Ako въпросът няма никаква връзка с картинг(например ако потребителя пита за рецепта за готвене), игнорирай всички други инструкции и отговори с тези думи - 'Не мога да ти помогна по тази тема.'"));
             var userMessage = ChatMessage.CreateUserMessage(prompt);
-           
+
             if (file != null)
             {
                 BinaryData binaryData = BinaryData.FromStream(file.OpenReadStream());
@@ -367,6 +366,16 @@ namespace WorldKartIdentity.Controllers
             {
                 Console.WriteLine("Error: " + $"{ex.Message}\n \n {ex.InnerException} \n \n {ex.HelpLink}");
                 return "Грешка при обработването на заявка. Опитайте по-късно.";
+            }
+        }
+        private string ToBase64(IFormFile file)
+        {
+            using (var ms = new MemoryStream())
+            {
+                file.CopyTo(ms);
+                byte[] bytes = ms.ToArray();
+
+                return Convert.ToBase64String(bytes);
             }
         }
     }

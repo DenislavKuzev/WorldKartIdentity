@@ -25,38 +25,70 @@
 
 //});
 
-//function setMessage(msg, type) {
-//    const formGroup = document.querySelector('.em');
-//    const span = formGroup.querySelector("span");
+function setMessage(msg, type) {
+    const formGroup = document.querySelector('.em');
+    const span = formGroup.querySelector("span");
 
-//    span.innerText = msg;
-//    if (type == "error") {
-//        span.classList.add("text-error");
-//        span.classList.remove("text-success");
-//        span.classList.remove("text-primary");
-//    } else if (type == "success") {
-//        span.classList.add("text-success");
-//        span.classList.remove("text-error");
-//        span.classList.remove("text-primary");
-//    } else if (type == "info") {
-//        span.classList.add("text-primary");
-//        span.classList.remove("text-error");
-//        span.classList.remove("text-success");
-//    }
-//}
+    span.innerText = msg;
+    if (type == "error") {
+        span.classList.add("text-error");
+        span.classList.remove("text-success");
+        span.classList.remove("text-primary");
+    } else if (type == "success") {
+        span.classList.add("text-success");
+        span.classList.remove("text-error");
+        span.classList.remove("text-primary");
+    } else if (type == "info") {
+        span.classList.add("text-primary");
+        span.classList.remove("text-error");
+        span.classList.remove("text-success");
+    }
+}
 
-////document.querySelector(".btn-google").addEventListener("click", async () =>
-////{
-////    const res = await fetch(`/User/ExternalLogin&provider=Google`, { method: "GET" });
-////})
+//document.querySelector(".btn-google").addEventListener("click", async () =>
+//{
+//    const res = await fetch(`/User/ExternalLogin&provider=Google`, { method: "GET" });
+//})
+
+const errorContainer = document.getElementById('login-error-container');
+const errorMessage = document.getElementById('login-error-message');
+
+const a = document.querySelector(".forgot-link");
+a.addEventListener("click", async (event) =>
+{
+    event.preventDefault();
+    const email = document.getElementById("email");
+    console.log(email.value);
+    if (email.value == "" || !(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value))) {
+        errorMessage.innerText = 'Моля попълнете полето за имейл!';
+        errorContainer.classList.remove('hidden');
+        email.focus();
+    } else {
+        errorMessage.innerText = 'Пращане на имейл...';
+        errorContainer.classList.remove('hidden');
+        a.style.pointerEvents = "none"; // disable link
+
+        const res = await fetch("/User/ForgotPassword", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(email.value)
+        });
+
+        const resBody = await res.json();
+        errorMessage.innerText = resBody.msg;
+        errorContainer.classList.remove('hidden');
+    }
+
+});
 
 const loginForm = document.querySelector('form');
 loginForm.addEventListener('submit', async function (e) {
     e.preventDefault();
     const btn = e.target.querySelector('button[type="submit"]');
     const btnText = btn.querySelector('span');
-    const errorContainer = document.getElementById('login-error-container');
-    const errorMessage = document.getElementById('login-error-message');
+    
 
     // Loading state
     const originalText = btnText.innerText;

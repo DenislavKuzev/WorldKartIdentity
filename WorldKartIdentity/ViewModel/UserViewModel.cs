@@ -31,7 +31,9 @@ namespace WorldKartIdentity.ViewModel
         public bool IsAdmin { get; set; }
 
         public List<TrackTrajectoryViewModel> TrackTrajectories { get; set; } = new List<TrackTrajectoryViewModel>();
+        public List<BlogViewModel> LikedBlogs { get; set; } = new List<BlogViewModel>();
 
+        public List<TrackViewModel> LikedTracks { get; set; } = new List<TrackViewModel>();
 
         public UserViewModel()
         {

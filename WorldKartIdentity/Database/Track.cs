@@ -21,9 +21,16 @@ public class Track
 
     public string Worktime { get; set; } = null!;
 
-    public string Picture { get; set; } = null!;
+    public string RoutePicture { get; set; } = null!;
+
+    public string Photograph { get; set; } = null!;
 
     public int Length { get; set; }
+
+    public int TurnCount { get; set; }
+
+    public int Width { get; set; }
+
 
     public ICollection<TrackLike> Likes { get; set; } = new List<TrackLike>();
 

@@ -10,34 +10,78 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/loginregistration.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/reqtrack.css" asp-append-version="true" />
 }
 
-@section Scripts {
+@* @section Scripts {
     <script src="~/js/maps.js"></script>
-}
+} *@
 
-<div class="register-container">
-    <h2>Заявка за писта</h2>
-    <form asp-action="TrackRequest" asp-controller="Track" method="post">
-        <div class="form-group">
-            <label>Име на писта </label>
-            <input asp-for="Name" type="text" name="Name" required />
-            <span class="text-danger"></span>
+<main class="min-h-screen pt-20 pb-12 relative overflow-hidden bg-background flex items-center justify-center">
+    <!-- Ambient Background Element -->
+    <div class="absolute top-1/4 -right-20 w-96 h-96 bg-rose-600/10 blur-[120px] rounded-full pointer-events-none">
+    </div>
+    <div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-surface-container-lowest to-transparent pointer-events-none">
+    </div>
+    <!-- Large Background Image Overlay -->
+    <div class="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none">
+        <img alt="Race Track Background" class="w-full h-full object-cover"
+             data-alt="A sprawling professional race track seen from an aerial perspective during the golden hour. The asphalt curves elegantly through vibrant green landscape, with long shadows stretching across the surface. The atmosphere is hazy and cinematic, with warm orange sunlight contrasting against deep blue shadows, creating a high-performance editorial aesthetic typical of luxury motorsport photography."
+             src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6XcWw0Cdoz4RJ7tBoZrD0NTq14vmBH-SVCsbufqmfxZwQN0KQ1imW86of3jKP5MIVdbJQTgkBNYrycHDrA7rfgonvvEOj__pneaRA5LjTcvHL-pfS4RLq8LofKoNOGzjttpyCZPmloQGHNcimJZy8YuPQNyUKWeH_fsiLCwdPNLfVmGs7m9_g5TalFaVy8bzd6RX_ydtyzVtjTN2XbZK5Awtgiy-ovjb9uuP919cEWMc_VBo3viz388_9zzlOT-h6wLO5AvhlZHLe" />
+    </div>
+    <div class="container mx-auto px-6 relative z-10">
+        <div class="flex flex-col items-center justify-center">
+            <section class="max-w-2xl w-full">
+                <!-- Header Group -->
+                <div class="mb-10 text-center">
+                    <h1 class="text-5xl md:text-7xl font-black font-space tracking-tighter leading-none mb-4 uppercase text-rose-600">
+                        ЗАЯВИ ПИСТА
+                    </h1>
+                    <p class="text-slate-400 font-body text-lg mx-auto max-w-md text-white">
+                        Помогнете ни да разширим архива. Изпратете подробности за липсваща писта по-долу. Нашият екип ще провери техническите спецификации.
+                    </p>
+                </div>
+                <!-- Sleek Form Card -->
+                <div class="bg-surface-container-low/80 glass-panel rounded-2xl p-8 md:p-12 shadow-2xl relative">
+                    <div class="absolute top-0 right-0 p-4 opacity-10">
+                        <span class="text-8xl font-black font-space text-stroke">01</span>
+                    </div>
+                    <form class="space-y-8 relative z-10" asp-action="TrackRequest" asp-controller="Track" enctype="multipart/form-data">
+                        <!-- Input Field: Track Name -->
+                        <div class="space-y-4">
+                            <label class="block text-[10px] font-space tracking-[0.2em] text-white font-bold uppercase">
+                                Име
+                            </label>
+                            <input asp-for="Name" class="bg-transparent rounded-3 p-4 w-full border-outline-variant/20 focus:border-rose-600 focus:ring-0 text-on-surface font-body placeholder:text-slate-600 transition-all"
+                                   placeholder="Картинг писта Пауталия" type="text" />
+                        </div>
+                            <div class="space-y-4">
+                                <label class="block text-[10px] text-white font-space tracking-[0.2em] text-slate-500 font-bold uppercase">Държава</label>
+                                <div class="relative">
+                                <input asp-for="Country" class="bg-transparent rounded-3 p-4 w-full border-outline-variant/20 focus:border-rose-600 focus:ring-0 text-on-surface font-body placeholder:text-slate-600 transition-all" placeholder="България" />
+                                </div>
+                            </div>
+                        <div class="space-y-4">
+                            <label class="block text-[10px] text-white font-space tracking-[0.2em] text-slate-500 font-bold uppercase">
+                                Локация (google maps линк)
+                            </label>
+                            <input asp-for="LocationUrl" class="bg-transparent rounded-3 p-4 w-full border-outline-variant/20 focus:border-rose-600 focus:ring-0 text-on-surface font-body placeholder:text-slate-600 transition-all"
+                                   placeholder="https://goo.gl/maps/..." />
+                        </div>
+                        <!-- Submit Action -->
+                        <div class="pt-4">
+                            <button class="group relative w-full overflow-hidden rounded-lg bg-rose-600 py-4 text-center transition-all hover:scale-[1.01] active:scale-95 shadow-[0_20px_40px_rgba(225,29,72,0.2)]"
+                                    type="submit">
+                                <span class="relative z-10 font-space font-black tracking-[0.3em] text-white text-sm">
+                                    ПОДАЙ ЗАЯВКА
+                                </span>
+                                <div class="absolute inset-0 bg-gradient-to-r from-rose-500 to-rose-700 opacity-0 group-hover:opacity-100 transition-opacity">
+                                </div>
+                            </button>
+                        </div>
+                    </form>
+                <!-- Footer Stats -->
+            </section>
         </div>
-        <div class="form-group">
-            <label>Държава</label>
-            <input asp-for="Country" type="text" name="Country" required />
-            <span class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label>Локация</label>
-            <input asp-for="LocationUrl" type="text" name="LocationUrl" required />
-            <span class="text-danger"></span>
-        </div>
-        <div id="mapPreviewContainer" style="display:none; margin-top:15px;"></div> @* ново *@
-
-        <button type="submit" class="btn-register">Заяви писта</button>
-
-    </form>
-</div>
+    </div>
+</main>

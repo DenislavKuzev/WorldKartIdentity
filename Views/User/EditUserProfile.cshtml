@@ -1,4 +1,4 @@
-﻿@model WorldKartIdentity.ViewModel.UserViewModel
+@model WorldKartIdentity.ViewModel.UserViewModel
 
 @{
     ViewData["Title"] = "UserProfile";
@@ -36,8 +36,8 @@
                         <div class="absolute inset-0 bg-primary-container/80 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
                             <span class="text-[10px] font-bold uppercase tracking-widest text-white mt-1">
-                                Промени
-                                снимка
+                                ???????
+                                ??????
                             </span>
                         </div>
                     </div>
@@ -106,14 +106,14 @@
                         <div class="flex items-center gap-3 mb-6">
                             <span class="w-2 h-8 bg-primary-container"></span>
                             <h2 class="text-2xl font-bold font-headline uppercase tracking-tight">
-                                Биография на пилота
+                                ????????? ?? ??????
                             </h2>
                         </div>
 
                         <textarea asp-for="Bio"
                                   class="w-full bg-surface-container-low rounded-xl p-6 text-base text-on-surface-variant font-body leading-relaxed focus:ring-2 focus:ring-primary-container focus:bg-surface-container-highest transition-all resize-none"
                                   rows="8"
-                                  placeholder="Въведете вашата състезателна история, текущи спецификации и цели на пистата..."></textarea>
+                                  placeholder="???????? ?????? ???????????? ???????, ?????? ???????????? ? ???? ?? ???????..."></textarea>
                     </div>
                 </div>
             </div>
@@ -123,13 +123,14 @@
                 <div class="bg-surface-container-high p-8 rounded-xl">
                     <div class="flex items-center gap-3 mb-6">
                         <span class="w-2 h-6 bg-tertiary"></span>
-                        <h2 class="text-2xl font-bold font-headline uppercase tracking-widest text-on-surface">Данни</h2>
+                        <h2 class="text-2xl font-bold font-headline uppercase tracking-widest text-on-surface">?????</h2>
                     </div>
 
                     <div class="space-y-4">
                         <div>
                             <label class="text-[13px] font-bold text-slate-500 uppercase tracking-widest block mb-1">
-                                Име
+                                ?????
+                                ???
                             </label>
                             <input asp-for="UserName"
                                    class="w-full bg-surface-container-lowest border-none rounded-lg px-4 py-2 text-s focus:ring-1 focus:ring-primary-container"
@@ -137,7 +138,7 @@
                         </div>
 
                         <div>
-                            <label class="text-[13px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Имейл</label>
+                            <label class="text-[13px] font-bold text-slate-500 uppercase tracking-widest block mb-1">?????</label>
                             <input asp-for="Email"
                                    class="w-full bg-surface-container-lowest border-none rounded-lg px-4 py-2 text-l focus:ring-1 focus:ring-primary-container"
                                    type="email" readonly />
@@ -145,7 +146,8 @@
 
                         <div>
                             <label class="text-[13px] font-bold text-slate-500 uppercase tracking-widest block mb-1">
-                                Телефон
+                                ??????????????
+                                ?????
                             </label>
                             <input asp-for="PhoneNumber"
                                    class="w-full bg-surface-container-lowest border-none rounded-lg px-4 py-2 text-s focus:ring-1 focus:ring-primary-container"
@@ -153,7 +155,7 @@
                         </div>
 
                         <div>
-                            <label class="text-[13px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Държава</label>
+                            <label class="text-[13px] font-bold text-slate-500 uppercase tracking-widest block mb-1">???????</label>
                             <div class="relative">
                                 <input asp-for="Country"
                                        class="w-full bg-surface-container-lowest border-none rounded-lg px-4 py-2 text-s focus:ring-1 focus:ring-primary-container"
@@ -163,11 +165,11 @@
                         </div>
 
                         <div>
-                            <label class="text-[13px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Роля в картинга</label>
+                            <label class="text-[13px] font-bold text-slate-500 uppercase tracking-widest block mb-1">???? ? ????????</label>
                             <select asp-for="RoleInKarting" class="w-full bg-surface-container-lowest border-none rounded-lg px-4 py-2 text-s focus:ring-1 focus:ring-primary-container">
-                                <option value="" disabled>-- Изберете --</option>
-                                <option>Пилот</option>
-                                <option>Механик</option>
+                                <option value="">-- ???????? --</option>
+                                <option>?????</option>
+                                <option>???????</option>
                             </select>
                         </div>
                     </div>
@@ -177,11 +179,11 @@
                 <div class="flex flex-col gap-3">
                     <button type="submit" class="w-full bg-primary-container text-on-primary-container font-headline font-bold uppercase tracking-widest py-4 rounded-xl flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] transition-all group shadow-lg shadow-primary-container/20">
                         <span class="material-symbols-outlined group-hover:rotate-12 transition-transform">save</span>
-                        Запази промените
+                        ?????? ?????????
                     </button>
 
                     <a asp-action="UserProfile" asp-controller="User" class="w-full inline-flex items-center justify-center bg-transparent border bg-surface-container-highest border-white/10 text-slate-400 font-headline font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-white/5 hover:text-white transition-all">
-                        Откажи редактирането
+                        ?????? ?????????????
                     </a>
                 </div>
             </div>
@@ -192,6 +194,6 @@
     </form>
 </main>
 
-@section Scripts {
-    <script src="~/js/edituserprofile.js"></script>
+@section Scripts{
+    <script src="~/js/edituserprofile.js" ></script>
 }

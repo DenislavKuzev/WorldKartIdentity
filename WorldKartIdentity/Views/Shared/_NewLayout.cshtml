@@ -113,7 +113,7 @@
                     @if (User?.IsInRole("Users") == true)
                     {
                         <a asp-action="UserProfile" asp-controller="User" class="text-white fa fa-user" aria-hidden="true" title="Профил"></a>
-                        <a asp-action="Notifications" asp-controller="User" class="text-white fa fa-bell" aria-hidden="true" title="Известия"></a>
+                        @* <a asp-action="Notifications" asp-controller="User" class="text-white fa fa-bell" aria-hidden="true" title="Известия"></a> *@
                     }
                 </div>
             </div>

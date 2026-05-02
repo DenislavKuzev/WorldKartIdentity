@@ -107,7 +107,8 @@ namespace WorldKartIdentity.Controllers
             {
                 Id = t.Id,
                 Name = t.Name,
-                PictureBase64 = t.Picture,
+                RoutePictureBase64 = t.RoutePicture,
+                PhotographBase64 = t.Photograph,
                 Location = t.Location,
                 Email = t.Email,
                 TelNumber = t.TelNumber,
