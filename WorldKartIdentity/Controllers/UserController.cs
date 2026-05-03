@@ -153,7 +153,10 @@ namespace WorldKartIdentity.Controllers
             if (isBlocked)
             {
                 ModelState.AddModelError("Email", "Вашият акаунт е блокиран!");
-                return View();
+                return Json(new
+                {
+                    success = false
+                });
             }
 
 

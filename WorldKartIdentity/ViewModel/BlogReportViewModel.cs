@@ -9,7 +9,7 @@ namespace WorldKartIdentity.ViewModel
 
         public int BlogId { get; set; }
         public string? BlogTitle { get; set; }
-
+        public int? AuthorId { get; set; }
         public string? AuthorName { get; set; }
 
         public string? ReporterName { get; set; }

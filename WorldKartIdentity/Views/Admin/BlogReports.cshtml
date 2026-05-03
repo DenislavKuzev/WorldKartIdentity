@@ -10,7 +10,7 @@
 }
 
 <div class="container mt-5">
-    <h2 class="page-title text-center mb-4">Докладвани постове</h2>
+    <h2 class="page-header page-title text-center mb-4" style="font-size:30px;">Докладвани постове</h2>
 
     <table class="table admin-users-table">
         <thead>
@@ -50,7 +50,7 @@
                     </td> *@
                     <td>
                         <form asp-action="BlockUser" asp-controller="Admin" method="post">
-                            <input type="hidden" name="AuthorName" value="@report.AuthorName" />
+                            <input type="hidden" name="BlogId" value="@report.BlogId" />
                             <button type="submit" class="delete-user-btn-nobcg">🚫</button>
                         </form>
                     </td>

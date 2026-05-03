@@ -47,3 +47,12 @@
 .shadow {
     box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.3);
 }
+
+.page-header {
+    font-size: 30px;
+    margin-top: 20px;
+}
+
+.admin-menu {
+    margin-top: 80px;
+}
