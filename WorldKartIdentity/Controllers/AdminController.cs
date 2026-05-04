@@ -143,17 +143,7 @@ namespace WorldKartIdentity.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteBlog(int id)
-        {
-            var blog = await db.Blogs.FindAsync(id);
-            if (blog != null)
-            {
-                db.Blogs.Remove(blog);
-                await db.SaveChangesAsync();
-            }
-            return RedirectToAction("BlogReports", "Admin");
-        }
+       
 
 
         [HttpPost]
