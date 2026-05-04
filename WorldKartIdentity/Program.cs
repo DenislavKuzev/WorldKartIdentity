@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -62,6 +63,7 @@ namespace WorldKartMaster
             .AddSignInManager()
             .AddDefaultTokenProviders();
 
+
             //builder.Services.AddIdentity<User, IdentityRole>(options =>       //novo, no dava greshka
             //{
             //    options.SignIn.RequireConfirmedAccount = false;
@@ -88,7 +90,10 @@ namespace WorldKartMaster
                     }
                 }
             }
-
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedProto
+            });
 
             //???? ?? ???????????
             var blockedIps = new List<string>{ "127.0.0.1", "192.168.1.5"};
