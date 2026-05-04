@@ -9,10 +9,7 @@
     <link rel="stylesheet" href="~/css/trackdetails.css" asp-append-version="true" />
 }
 
-<section class="breadcrumb-section set-bg" style="background-image:url('/img/trackbackground.png');
-                background-size:cover;
-                background-position:center;
-                background-repeat:no-repeat;">
+<section class="breadcrumb-section set-bg" style="margin-top:90px; font-size:35px;">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
@@ -62,6 +59,14 @@
                         <span>Работно време</span>
                         <input asp-for="Worktime" class="form-control" />
                     </div>
+                    
+                    
+                    <div class="cw-text text-danger">
+                        <span>Снимката</span>
+                        <input asp-for="PhotographFile" type="file" accept="image/*" required />
+                    </div>
+
+
                     <br />
                     <button type="submit" class="btn btn-danger">Запази</button>
                     <a asp-action="Tracks" asp-controller="Admin" class="btn btn-secondary">Отказ</a>

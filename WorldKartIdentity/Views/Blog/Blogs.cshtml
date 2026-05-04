@@ -7,9 +7,9 @@
 @section Styles {
     <link rel="stylesheet" href="~/css/blog.css" asp-append-version="true" />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap"
-          rel="stylesheet" />
+    rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-          rel="stylesheet" />
+    rel="stylesheet" />
 }
 
 @section Scripts {
@@ -146,7 +146,7 @@
                     <div class="max-w-4xl mx-auto">
                         <div class="flex items-center gap-4 mb">
                             <img alt="Denis_Kuzev305" class="w-10 h-10 rounded-md object-cover ring-1 ring-outline/20"
-                                 src="@(!string.IsNullOrEmpty(blog.Author.Picture) ? blog.Author.Picture : "/img/defaultprofilepic.png")" />
+                            src="@(blog.Author.Picture != string.Empty ? blog.Author.Picture : "/img/defaultprofilepic.png")" />
                             <div>
                                 <h4 class="font-headline font-bold text-base text-on-surface group-hover:text-primary transition-colors">
                                     @blog.Author.UserName
@@ -160,12 +160,12 @@
                                 <div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent z-10 pointer-events-none">
                                 </div>
                                 <img alt="Karting Action"
-                                     class="w-full object-cover group-hover:scale-105 transition-transform duration-700 aspect-[21/9]"
-                                     src="data:image/png;base64, @blog.PictureBase64" />
+                                class="w-full object-cover group-hover:scale-105 transition-transform duration-700 aspect-[21/9]"
+                                src="data:image/png;base64, @blog.PictureBase64" />
 
                             </div>
                         }
-                        
+
                         <div class="mt-3">
                             <p class="font-body text-on-surface leading-relaxed mb-4 text-lg">
                                 @blog.Content
@@ -173,9 +173,16 @@
                             <div class="flex items-center gap-8 text-slate-400">
                                 <button class="flex items-center gap-2 @(blog.LikedByCurrentUser ? "text-rose-600" : "") hover:text-red-600 transition-colors group/btn like-buttons" data-bid="@blog.Id">
                                     <span class="material-symbols-outlined"
-                                          style="font-variation-settings: 'FILL' 1;">favorite</span>
+                                    style="font-variation-settings: 'FILL' 1;">favorite</span>
                                     <span class="text-xs font-bold font-headline likes">@blog.Likes</span>
                                 </button>
+                                @if (User?.IsInRole("Admin") == true)
+                                {
+                                    <form asp-action="DeleteBlog" asp-controller="Blog" method="post">
+                                        <input type="hidden" name="Id" value="@blog.Id" />
+                                        <button type="submit" class="delete-user-btn-nobcg">🗑️</button>
+                                    </form>
+                                }
                                 @* <button class="flex items-center gap-2 hover:text-tertiary transition-colors group/btn"
                                         onclick="toggleComments('Post 1')">
                                     <span class="material-symbols-outlined">chat_bubble</span>

@@ -135,6 +135,19 @@ namespace WorldKartIdentity.Controllers
                 return Json(new { likes = blog.Likes });
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> DeleteBlog(int id)
+        {
+            var blog = await db.Blogs.FindAsync(id);
+            if (blog != null)
+            {
+                db.Blogs.Remove(blog);
+                await db.SaveChangesAsync();
+            }
+            return RedirectToAction("Blogs", "Blog");
+        }
+
 
         public async Task<int> AddNotification(NotificationType type, string message, string? targetUserId)
         {
