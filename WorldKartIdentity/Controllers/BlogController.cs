@@ -25,7 +25,7 @@ namespace WorldKartIdentity.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Blogs(int hasToInclude = 0)// adding this parameter so you can view the blog from notifications with type new like or new comment
+        public async Task<IActionResult> Blogs(int hasToInclude = 0)// adding this parameter so you can view the blog from notifications with type new like 
         {
             var viewModel = new List<BlogViewModel>();
 
@@ -114,11 +114,11 @@ namespace WorldKartIdentity.Controllers
                 await db.SaveChangesAsync();
 
                 string blogLink = $"<a class=\"text-decoration-none track-link\" href=\"{Url.Action("Blogs", "Blog", new { hasToInclude = blog.Id }, Request.Scheme)}\" >блог</a></li>";
-                await AddNotification(
-                    type: NotificationType.NewLike,
-                    message: $"{username} хареса вашия {blogLink}",
-                    targetUserId: blog.AuthorId
-                );
+                //await AddNotification(
+                //    type: NotificationType.NewLike,
+                //    message: $"{username} хареса вашия {blogLink}",
+                //    targetUserId: blog.AuthorId
+                //);
             }
             else
             {

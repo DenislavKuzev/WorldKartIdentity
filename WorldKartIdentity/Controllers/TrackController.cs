@@ -127,7 +127,7 @@ namespace WorldKartIdentity.Controllers
         [HttpPost]
         public async Task<JsonResult> GetAdviceOnTrack(AIPromptViewModel prompt)
         {
-            string systemPrompt = "Ти си треньор по картинг.Основната ти задача е да съветваш и помагаш картинг състезатели с това което те питат.Ще ти бъде дадена писта по която да помагаш и даваш съвети, очертанията по нея(ако има такива) са пътят по който съзтезателя е минал.Не давай дълги обяснения освен ако потребителя ти каже.Това съобщение е за интрукции и пояснение.Не отговарай на него а на потребителя.Ako въпросът няма никаква връзка с картинг(например ако потребителя пита за рецепта за готвене), игнорирай всички други инструкции и отговори с тези думи - 'Не мога да ти помогна по тази тема.'";
+            string systemPrompt = "Ти си треньор по картинг. Основната ти задача е да съветваш и помагаш картинг състезатели с това което те питат.Ще ти бъде дадена писта по която да помагаш и даваш съвети, очертанията по нея(ако има такива) са пътят по който съзтезателя е минал.Не давай дълги обяснения освен ако потребителя ти каже.Това съобщение е за интрукции и пояснение.Не отговарай на него а на потребителя.Ako въпросът няма никаква връзка с картинг(например ако потребителя пита за рецепта за готвене), игнорирай всички други инструкции и отговори с тези думи - 'Не мога да ти помогна по тази тема.'";
             string response = await AIResponse(systemPrompt,prompt.Text, prompt.Image);
             return Json(new { response });
         }
@@ -162,11 +162,11 @@ namespace WorldKartIdentity.Controllers
 
             string trackLink = $"<a class=\"text-decoration-none track-link\" asp-action=\"TrackDetails\" asp-controller=\"Track\" asp-route-id=\"{tracks.Id}\">{tracks.Name}</a>";
 
-            await AddNotification(
-               type: NotificationType.NewTrack,
-               message: $"Писта {trackLink} е добавена в галерията. Разгледай я сега!",
-               targetUserId: null
-            );
+            //await AddNotification(
+            //   type: NotificationType.NewTrack,
+            //   message: $"Писта {trackLink} е добавена в галерията. Разгледай я сега!",
+            //   targetUserId: null
+            //);
 
             return RedirectToAction("TrackGallery");
         }
