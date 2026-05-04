@@ -200,11 +200,15 @@
             <div class="flex items-center justify-between mb-8">
                 <div>
                     <h3 class="font-headline font-black text-2xl uppercase tracking-tighter italic">
-                        КАРТИРАНЕ НА ТРАЕКТОРИЯ
+                        LAYOUT НА ПИСТА
                     </h3>
-                    <p class="text-[10px] font-bold text-outline uppercase tracking-widest">
+                    @if(User.Identity.IsAuthenticated)
+                    {
+                       <p class="text-[10px] font-bold text-outline uppercase tracking-widest">
                         ПЛЪЗНЕТЕ, ЗА ДА НАЧЕРТАЕТЕ ВАШАТА ИДЕАЛНА ЛИНИЯ
-                    </p>
+                       </p> 
+                    }
+                    
                 </div>
             </div>
 
