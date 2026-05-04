@@ -320,12 +320,12 @@ namespace WorldKartIdentity.Controllers
                     t.Id != challengerTrajId)
                 .ToListAsync();
 
-            if(challengedTrajs.Count < 1)
+            if (challengedTrajs.Count < 1)
             {
                 TempData["Message"] = "Няма достатъчно траектории за предизвикване. Моля, изчакайте други състезатели да качат своите траектории на тази писта.";
                 return RedirectToAction("TrajectoryDetails", new { id = challengerTrajId });
             }
-                
+
 
             var rnd = new Random();
             var challengedTraj = challengedTrajs[rnd.Next(challengedTrajs.Count)];
