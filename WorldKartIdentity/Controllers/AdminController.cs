@@ -170,20 +170,24 @@ namespace WorldKartIdentity.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> BlockUser(string userId)
+        public async Task<IActionResult> BlockUser(int blogId)
         {
-            var userExists = await db.BlockedUsers.AnyAsync(x => x.UserId == userId);
-            if (!userExists)
+            if (blogId > 0)
             {
-                var blocked = new BlockedUser
+                string userId = db.Blogs.FirstOrDefault(u => u.Id == blogId).AuthorId;
+                var userExists = await db.BlockedUsers.AnyAsync(x => x.UserId == userId);
+                if (!userExists)
                 {
-                    UserId = userId,
-                    BlockedOn = DateTime.Now,
-                    
-                };
+                    var blocked = new BlockedUser
+                    {
+                        UserId = userId,
+                        BlockedOn = DateTime.Now,
 
-                await db.BlockedUsers.AddAsync(blocked);
-                await db.SaveChangesAsync();
+                    };
+
+                    await db.BlockedUsers.AddAsync(blocked);
+                    await db.SaveChangesAsync();
+                }
             }
             return RedirectToAction("BlockedUsers", "Admin");
         }
@@ -208,7 +212,7 @@ namespace WorldKartIdentity.Controllers
                 .ToListAsync();
 
             var model = users.Select(x => new BlockedUserViewModel(
-             x.Id,  
+             x.Id,
              x.User.UserName,
              x.BlockedOn
             )).ToList();
