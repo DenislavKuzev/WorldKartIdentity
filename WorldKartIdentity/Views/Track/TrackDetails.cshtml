@@ -158,11 +158,11 @@
 
                     <div class="flex flex-col items-center">
                         <div class="flex items-center gap-1.5 text-primary-container">
-                            <span class="material-symbols-outlined text-2xl"
+                            <span class="material-symbols-outlined text-4xl"
                                   style="font-variation-settings: 'FILL' 1;">favorite</span>
-                            <span class="font-headline text-2xl font-black likes">@Model.LikesCount</span>
+                            <span class="font-headline text-4xl font-black likes">@Model.LikesCount</span>
                         </div>
-                        <span class="text-[8px] font-bold text-outline uppercase tracking-widest">
+                        <span class="text-[13px] font-bold text-outline uppercase tracking-widest">
                             Общо харесвания
                         </span>
                     </div>
@@ -216,13 +216,17 @@
         <div class="lg:col-span-4 flex flex-col gap-6">
             <div class="bg-surface-container-high rounded-xl overflow-hidden flex flex-col h-full">
                 <div class="p-6 bg-primary-container flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <span
+                    <div class="flex flex-column gap-2">
+                        <div class="flex items-center gap-3">
+                            <span
                             class="material-symbols-outlined text-on-primary-container animate-bounce">rocket_launch</span>
                         <h3
                             class="font-headline font-black text-on-primary-container uppercase tracking-tighter italic">
                             AI <b class="ml-1">треньор</b>
                         </h3>
+                        </div>
+                        
+                        <span class="text-xs">AI треньорът ще ти помогне да изградиш най-добрата състезателна стратегия</span>
                     </div>
                 </div>
 
@@ -269,7 +273,7 @@
                     class="flex-none w-72 bg-surface-container-low rounded-xl overflow-hidden"
                     href="@Url.Action("TrajectoryDetails", "Track", new {id = traj.Id})">
                     <div class="h-36 bg-surface-container-highest relative flex items-center justify-center">
-                        <img class="w-full" src="data:image/png;base64,@traj.Base64" />
+                        <img class="w-full h-full" src="data:image/png;base64,@traj.Base64" />
                     </div>
 
                     <div class="p-4 flex items-center justify-between bg-surface-container-high/50">

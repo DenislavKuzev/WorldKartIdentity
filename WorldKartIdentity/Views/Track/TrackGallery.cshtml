@@ -41,7 +41,7 @@
                     <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant"
                           data-icon="search">search</span>
                     <input class="w-full bg-surface-container-highest border-none rounded-lg py-3 pl-12 pr-4 text-on-surface placeholder:text-on-secondary-container focus:ring-2 focus:ring-primary-container transition-all"
-                           id="track-search" placeholder="Търси писта или локация..." type="text" />
+                           id="track-search" placeholder="Търси писта..." type="text" />
                 </div>
             </div>
         </div>
@@ -78,7 +78,14 @@
                                     <span class="text-[10px] uppercase tracking-widest text-on-secondary-container font-bold">Дължина</span>
                                     <span class="font-headline font-medium text-on-surface">@(track.Length)m</span>
                                 </div>
-                                
+                            <div class="flex flex-col">
+                                <span class="text-[10px] uppercase tracking-widest text-on-secondary-container font-bold">Ширина</span>
+                                <span class="font-headline font-medium text-on-surface text-tertiary">@(track.Width)m</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-[10px] uppercase tracking-widest text-on-secondary-container font-bold">Завои</span>
+                                <span class="font-headline font-medium text-rose-600">@(track.TurnCount)</span>
+                            </div>
                             </div>
                         </div>
                 </a>

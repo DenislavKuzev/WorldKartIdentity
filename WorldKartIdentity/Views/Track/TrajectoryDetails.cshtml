@@ -1,10 +1,12 @@
 ﻿@using System.Text.Json
+@using System.Security.Claims
 
 @model WorldKartIdentity.ViewModel.TrackTrajectoryViewModel
 
 @{
     ViewData["Title"] = "Trajectory Details";
     Layout = "~/Views/Shared/_NewLayout.cshtml";
+   
 }
 
 @section Styles {
@@ -102,9 +104,9 @@
                 <!-- Header Section -->
                 <div class="flex justify-between items-center mb-8">
                     <div class="flex items-center gap-4">
-                        <button class="text-slate-400 hover:text-white transition-colors">
+                        <a class="text-slate-400 hover:text-white transition-colors" href="@Url.Action("TrackDetails","Track", new {id = Model.TrackId})">
                             <span class="material-symbols-outlined">arrow_back</span>
-                        </button>
+                        </a>
                         <h1
                             class="text-4xl font-black font-display tracking-tighter text-on-surface leading-none uppercase">
                             Траектория</h1>
@@ -113,11 +115,11 @@
                 <!-- Focused Content Area -->
                 <div class="grid grid-cols-12 gap-8 flex-1 min-h-0">
                     <!-- Large Interactive Map -->
-                    <div class="col-span-12 lg:col-span-8 xl:col-span-9 flex flex-col h-full">
+                    <div class="col-span-12 lg:col-span-6 xl:col-span-8 flex flex-col h-full">
                         <div
                             class="flex-1 bg-surface-container-low rounded-2xl overflow-hidden track-canvas-grid relative">
                             <!-- Focused Track Map Visualization -->
-                            <div class="w-full h-full inset-0 flex items-center justify-center p-10 traj-container">
+                            <div class="w-full h-full inset-0 flex items-center justify-center p-3 traj-container">
                                 <img alt="Suzuka Track Layout"
                                     class="w-full h-full traj-image h-full object-contain filter rounded-md drop-shadow-[0_0_30px_rgba(225,29,72,0.3)]"
                                     src="data:image/jpeg;base64,@Model.Base64" />
@@ -126,7 +128,7 @@
                         </div>
                     </div>
                     <!-- Trajectory Details Side Panel -->
-                    <div class="col-span-12 lg:col-span-4 xl:col-span-3">
+                    <div class="col-span-12 lg:col-span-6 xl:col-span-4">
                         <div class="bg-surface-container rounded-2xl p-10 h-auto">
                             <div class="flex items-center gap-3 mb-8">
                                 <div
@@ -134,21 +136,20 @@
                                     <span class="material-symbols-outlined text-rose-300">info</span>
                                 </div>
                                 <h2 class="font-display font-black text-xl text-on-surface uppercase tracking-tight">
-                                    Trajectory Details</h2>
+                                    Данни за траектория</h2>
                             </div>
-                            <div class="space-y-8">
+                            <div class="space-y-6">
                                 <div>
                                     <label
-                                        class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 block mb-2">Track
-                                        Name</label>
-                                    <p class="text-2xl font-display font-bold text-on-surface hover:text-rose-500 tracking-tight cursor-pointer">@Model.Track.Name</p>
+                                        class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 block mb-2">Име</label>
+                                        <a href="@Url.Action("TrackDetails", "Track", new {id = Model.TrackId})" class="text-2xl font-display font-bold text-on-surface hover:text-rose-500 tracking-tight cursor-pointer">@Model.Track.Name</a>
+                                    @* <а  class="text-2xl font-display font-bold text-on-surface hover:text-rose-500 tracking-tight cursor-pointer"></а> *@
                                 </div>
                                 <div class="h-[1px] w-full bg-outline-variant/10"></div>
                                 <div class="grid grid-cols-1 gap-6">
                                     <div>
                                         <label
-                                            class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 block mb-2">Created
-                                            By</label>
+                                            class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 block mb-2">Добавена от</label>
                                         <div class="flex items-center gap-3">
                                             <div
                                                 class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center">
@@ -160,8 +161,7 @@
                                     </div>
                                     <div>
                                         <label
-                                            class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 block mb-2">Created
-                                            On</label>
+                                            class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 block mb-2">Добавена на</label>
                                         <div class="flex items-center gap-3 text-on-surface">
                                             <span
                                                 class="material-symbols-outlined text-slate-500 text-lg">calendar_today</span>
@@ -169,8 +169,28 @@
                                         </div>
                                     </div>
                                 </div>
+                            @if (User.Identity.IsAuthenticated && User.FindFirstValue(ClaimTypes.NameIdentifier) == Model.UserId)
+                            {
                                 
+                                <div>
+                          <a asp-action="ChallengeTrajectory"
+                           asp-controller="Track"
+                           asp-route-challengerTrajId="@Model.Id"
+                           class="w-full my-8 font-['Space_Grotesk'] uppercase tracking-wider text-sm font-black bg-rose-600 text-white px-6 py-3 rounded-xl hover:bg-rose-700 transition-all duration-200 active:scale-95 flex items-center justify-center gap-3 shadow-lg shadow-rose-600/20">
+                            <span class="material-symbols-outlined">trophy</span>
+                            Предизвикай
+                          </a>
+                                @if(TempData["Message"] != null)
+                                {
+                                    <span class="text-rose-700 pt-5">@TempData["Message"]</span>
+                                }
+                                
+                            
+                           
                             </div>
+                              
+                            }
+                             
                         </div>
                     </div>
                 </div>

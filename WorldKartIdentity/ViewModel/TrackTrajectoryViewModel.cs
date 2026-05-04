@@ -18,7 +18,7 @@ namespace WorldKartIdentity.ViewModel
 
         public Track? Track { get; set; }
 
-        public List<string>? AnnotationBodies { get; set; }
+        public List<string> AnnotationBodies { get; set; } = new List<string>();
 
         public static TrackTrajectoryViewModel TrajectoryToTrajectoryVM(TrackTrajectory trajectory)
         {

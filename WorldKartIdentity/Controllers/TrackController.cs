@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using OpenAI;
 using OpenAI.Chat;
 using System.ClientModel;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using WorldKartIdentity.Database;
 using WorldKartIdentity.ViewModel;
@@ -74,7 +77,7 @@ namespace WorldKartIdentity.Controllers
 
             if (like == null)
             {
-                
+
                 db.TrackLikes.Add(new TrackLike
                 {
                     UserId = userId,
@@ -92,7 +95,7 @@ namespace WorldKartIdentity.Controllers
             return Json(new
             {
                 likes = track.Likes.Count
-            }); 
+            });
         }
 
 
@@ -124,7 +127,8 @@ namespace WorldKartIdentity.Controllers
         [HttpPost]
         public async Task<JsonResult> GetAdviceOnTrack(AIPromptViewModel prompt)
         {
-            string response = await AIResponse(prompt.Text, prompt.Image);
+            string systemPrompt = "Ти си треньор по картинг.Основната ти задача е да съветваш и помагаш картинг състезатели с това което те питат.Ще ти бъде дадена писта по която да помагаш и даваш съвети, очертанията по нея(ако има такива) са пътят по който съзтезателя е минал.Не давай дълги обяснения освен ако потребителя ти каже.Това съобщение е за интрукции и пояснение.Не отговарай на него а на потребителя.Ako въпросът няма никаква връзка с картинг(например ако потребителя пита за рецепта за готвене), игнорирай всички други инструкции и отговори с тези думи - 'Не мога да ти помогна по тази тема.'";
+            string response = await AIResponse(systemPrompt,prompt.Text, prompt.Image);
             return Json(new { response });
         }
 
@@ -150,7 +154,7 @@ namespace WorldKartIdentity.Controllers
 
                 trackVM.RoutePictureBase64 = ToBase64(trackVM.RoutePictureFile);
                 trackVM.PhotographBase64 = ToBase64(trackVM.PhotographFile);
-            }  
+            }
             //Trqbwa da si suzdam PictureFile vuv TrackViewModel
             Track tracks = TrackViewModel.TrackVMToTrack(trackVM);
             await db.Tracks.AddAsync(tracks);
@@ -293,6 +297,83 @@ namespace WorldKartIdentity.Controllers
             return Ok();
         }
 
+        public async Task<IActionResult> ChallengeTrajectory(int challengerTrajId)
+        {
+            string userId = userManager.GetUserId(User);
+
+            var challengerTraj = await db.TrackTrajectories
+                .AsNoTracking()
+                .Include(t => t.Track)
+                .Include(t => t.User)
+                .Include(t => t.Annotations)
+                .FirstOrDefaultAsync(t => t.Id == challengerTrajId);
+
+
+            var challengedTrajs = await db.TrackTrajectories
+                .AsNoTracking()
+                .Include(t => t.Track)
+                .Include(t => t.User)
+                .Include(t => t.Annotations)
+                .Where(t =>
+                    t.TrackId == challengerTraj.TrackId &&
+                    t.UserId != userId &&
+                    t.Id != challengerTrajId)
+                .ToListAsync();
+
+            
+                TempData["Message"] = "Няма достатъчно траектории за предизвикване. Моля, изчакайте други състезатели да качат своите траектории на тази писта.";
+                return RedirectToAction("TrajectoryDetails", new { id = challengerTrajId });
+            
+            //var rnd = new Random();
+            //var challengedTraj = challengedTrajs[rnd.Next(challengedTrajs.Count)];
+
+            //var challenge = new ChallengeViewModel
+            //{
+            //    ChallengerTrajectory = TrackTrajectoryViewModel.TrajectoryToTrajectoryVM(challengerTraj),
+            //    ChallengedTrajectory = TrackTrajectoryViewModel.TrajectoryToTrajectoryVM(challengedTraj)
+            //};
+
+            //return View(challenge);
+        }
+
+        [HttpPost("/tracks/challenge-result")]
+        public async Task<JsonResult> GetChallengeResult(ChallengeViewModel challenge)
+        {
+            var challengerTraj = await db.TrackTrajectories
+                .AsNoTracking()
+                .Include(t => t.Track)
+                .Include(t => t.User)
+                .Include(t => t.Annotations)
+                .FirstOrDefaultAsync(t => t.Id == challenge.challengerTrajId);
+
+            var opponentTraj = await db.TrackTrajectories
+                .AsNoTracking()
+                .Include(t => t.Track)
+                .Include(t => t.User)
+                .Include(t => t.Annotations)
+                .FirstOrDefaultAsync(t => t.Id == challenge.challengedTrajId);
+
+            JsonSerializerOptions options = new JsonSerializerOptions() { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
+
+
+            string challengerNotes = JsonSerializer.Serialize(challengerTraj.Annotations
+                    .Select(a => RemoveBase64FromAnnotation(a.AnnotationJson))
+                    .ToList(),options);
+
+              string opponentNotes = JsonSerializer.Serialize(opponentTraj.Annotations
+                    .Select(a => RemoveBase64FromAnnotation(a.AnnotationJson))
+                    .ToList(),options);
+
+            IFormFile trajectory1 = FromBase64(challengerTraj.TrajectoryBase64, "suztezatel_1_trajectory");
+            IFormFile trajectory2 = FromBase64(opponentTraj.TrajectoryBase64, "suztezatel_2_trajectory");
+
+            string systemPrompt = "Твоята задача е да сравниш две траектории на една и съща картинг писта и да прецениш коя би била по-бърза в състезателна ситуация.\r\n\r\nЩе получиш:\r\n1. Изображение на траекторията на състезател 1.\r\n2. JSON с анотации/коментари на състезател 1.\r\n3. Изображение на траекторията на състезател 2.\r\n4. JSON с анотации/коментари на състезател 2.\r\n\r\nАнотациите съдържат коментари върху конкретни зони от пистата. Ако има selector.value във формат xywh=pixel:x,y,width,height, използвай тези координати като зона, към която се отнася коментарът.\r\n\r\nОцени траекториите според:\r\n- ефективност на състезателната линия\r\n- вход в завой\r\n- избор на апекс\r\n- изход от завой\r\n- използване на ширината на пистата\r\n- логика на спиране\r\n- възможност за ранно подаване на газ\r\n- постоянство\r\n- ниво на риск\r\n- коментарите в анотациите\r\n\r\nВажни ограничения:\r\n- Нямаш реални данни за скорост, газ, спирачка, телеметрия, тегло на пилота, настройки на карта, гуми, сцепление, време, трафик или реална обиколка.\r\n- Не твърди точна разлика във време.\r\n- Не казвай, че резултатът е сигурен.\r\nВърни САМО валиден JSON.\r\nНе добавяй markdown.\r\nНе добавяй обяснения извън JSON.";
+            string userPrompt = $"Сравни тези две картинг траектории и определи кой състезател вероятно би бил по-бърз.\r\n\r\nПиста:\r\n{{\r\n  \"name\": \"{challengerTraj.Track.Name}\"\r\n}}\r\n\r\nСъстезател 1:\r\n{{\r\n  \"name\": \"{challengerTraj.User.UserName}\",\r\n  \"annotations\": {challengerNotes}\r\n}}\r\n\r\nСъстезател 2:\r\n{{\r\n  \"name\": \"{opponentTraj.User.UserName}\",\r\n  \"annotations\": {opponentNotes}\r\n}}\r\n\r\nИзображение 1 е траекторията на състезател 1.\r\nИзображение 2 е траекторията на състезател 2.\r\nВърни резултата в ТОЧНО този JSON формат:\r\n{{\r\n   \"explanation\":\"the anaysis\",\r\n   \"winner\":\"winner name\"\r\n}}\r\n нека анализът да е около 120 думи и НЕ споменавай имената на снимките или на json свойствата в анализа.";
+
+            string analysis = await AIResponse(systemPrompt, userPrompt, trajectory1, trajectory2);
+            return Json(new { analysis });
+        }
+
         #endregion
 
 
@@ -330,23 +411,29 @@ namespace WorldKartIdentity.Controllers
             return n.Id;
         }
 
-        private async Task<string> AIResponse(string prompt, IFormFile? file)
+
+
+        private async Task<string> AIResponse(string systemPrompt, string userPrompt, params IFormFile[] images)
         {
             string model = "gpt-4.1-nano";
             string apiKey = Environment.GetEnvironmentVariable("AI_KEY");
             ChatClient chatClient = new ChatClient(model, apiKey);
 
             List<ChatMessage> messages = new List<ChatMessage>();
-            messages.Add(ChatMessage.CreateSystemMessage("Ти си треньор по картинг.Основната ти задача е да съветваш и помагаш картинг състезатели с това което те питат.Ще ти бъде дадена писта по която да помагаш и даваш съвети, очертанията по нея(ако има такива) са пътят по който съзтезателя е минал.Не давай дълги обяснения освен ако потребителя ти каже.Това съобщение е за интрукции и пояснение.Не отговарай на него а на потребителя.Ako въпросът няма никаква връзка с картинг(например ако потребителя пита за рецепта за готвене), игнорирай всички други инструкции и отговори с тези думи - 'Не мога да ти помогна по тази тема.'"));
-            var userMessage = ChatMessage.CreateUserMessage(prompt);
+            messages.Add(ChatMessage.CreateSystemMessage(systemPrompt));
+            var userMessage = ChatMessage.CreateUserMessage(userPrompt);
 
-            if (file != null)
+            if (images.Length > 0)
             {
-                BinaryData binaryData = BinaryData.FromStream(file.OpenReadStream());
+                foreach (var img in images)
+                {
+                    BinaryData binaryData = BinaryData.FromStream(img.OpenReadStream());
 
-                ChatMessageContentPart content = ChatMessageContentPart.CreateImagePart(binaryData, file.ContentType);
-                userMessage.Content.Add(content);
+                    ChatMessageContentPart content = ChatMessageContentPart.CreateImagePart(binaryData, img.ContentType);
+                    userMessage.Content.Add(content);
+                }
             }
+               
             messages.Add(userMessage);
 
             try
@@ -377,6 +464,42 @@ namespace WorldKartIdentity.Controllers
 
                 return Convert.ToBase64String(bytes);
             }
+        }
+
+        private IFormFile FromBase64(string base64,string name)
+        {
+            if (base64.Contains(","))
+            {
+                base64 = base64.Split(',')[1];
+            }
+
+            byte[] bytes = Convert.FromBase64String(base64);
+
+            var ms = new MemoryStream(bytes);
+            ms.Position = 0;
+
+            var file = new FormFile(ms, 0, ms.Length, name, $"{name}.png")
+            {
+                Headers = new HeaderDictionary(),
+                ContentType = "image/png"
+            };
+            return file;
+
+        }
+
+        public static JsonNode RemoveBase64FromAnnotation(string annotation)
+        {
+            JsonNode? root = JsonNode.Parse(annotation);
+
+            if (root == null)
+                return new JsonObject();
+
+            if (root["target"] is JsonObject targetObject)
+            {
+                targetObject.Remove("source"); // removes base64
+            }
+
+            return root;
         }
     }
 }

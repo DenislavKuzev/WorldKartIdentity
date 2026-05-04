@@ -29,7 +29,8 @@ namespace WorldKartIdentity.Controllers
         {
             var viewModel = new List<BlogViewModel>();
 
-            var blogs = await db.Blogs.Take(100).Include(b => b.Author).ToListAsync();
+            var blogs = await db.Blogs.Take(100).Include(b => b.Author).OrderByDescending(b=> b.PublishedDate).ToListAsync();
+            
             HashSet<int> likeIds = new HashSet<int>();
 
             

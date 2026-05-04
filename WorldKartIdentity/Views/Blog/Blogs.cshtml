@@ -146,7 +146,7 @@
                     <div class="max-w-4xl mx-auto">
                         <div class="flex items-center gap-4 mb">
                             <img alt="Denis_Kuzev305" class="w-10 h-10 rounded-md object-cover ring-1 ring-outline/20"
-                                 src="@(blog.Author.Picture != string.Empty ? blog.Author.Picture : "/img/defaultprofilepic.png")" />
+                                 src="@(!string.IsNullOrEmpty(blog.Author.Picture) ? blog.Author.Picture : "/img/defaultprofilepic.png")" />
                             <div>
                                 <h4 class="font-headline font-bold text-base text-on-surface group-hover:text-primary transition-colors">
                                     @blog.Author.UserName
@@ -165,7 +165,7 @@
 
                             </div>
                         }
-                       
+                        
                         <div class="mt-3">
                             <p class="font-body text-on-surface leading-relaxed mb-4 text-lg">
                                 @blog.Content

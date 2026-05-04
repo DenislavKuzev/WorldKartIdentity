@@ -157,7 +157,7 @@ namespace WorldKartIdentity.Controllers
                     success = false
                 });
             }
-
+            
 
             var user = await _userManager.FindByEmailAsync(userVM.Email!);
             if (user == null)
@@ -388,17 +388,7 @@ namespace WorldKartIdentity.Controllers
             string token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(model.Token));
 
             var res = await _userManager.ResetPasswordAsync(user, token, model.NewPassword);
-            if (res.Succeeded)
-            {
-                TempData["Message"] = "Паролата беше успешно сменена. Можете да влезете с новата си парола|S";
-                return RedirectToAction("Index", "Home");
-
-            }
-            else
-            {
-                TempData["Message"] = "Грешка при смяна на паролата. Възможно е линкът да е изтекъл или да е невалиден|F";
-                return RedirectToAction("Index", "Home");
-            }
+            return Json(new { success = res.Succeeded });
 
         }
 

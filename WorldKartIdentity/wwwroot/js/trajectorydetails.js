@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 function attachEvents() {
     anno.on('createAnnotation', async (a) => {
+        console.log(a);
         await sendAnnotationRequest('/Track/CreateTrackAnnotation', a);
     });
 
