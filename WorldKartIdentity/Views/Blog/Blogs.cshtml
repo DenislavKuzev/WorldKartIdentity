@@ -176,6 +176,10 @@
                                     style="font-variation-settings: 'FILL' 1;">favorite</span>
                                     <span class="text-xs font-bold font-headline likes">@blog.Likes</span>
                                 </button>
+                                <form asp-action="ReportBlog" asp-controller="Blog" method="post">
+                                    <input type="hidden" name="blogId" value="@blog.Id" />
+                                    <button type="submit" class="delete-user-btn-nobcg">Докладване</button>
+                                </form>
                                 @if (User?.IsInRole("Admin") == true)
                                 {
                                     <form asp-action="DeleteBlog" asp-controller="Blog" method="post">
