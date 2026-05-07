@@ -115,7 +115,7 @@ namespace WorldKartIdentity.Controllers
 
             TrackViewModel trackViewModel = TrackViewModel.TrackToTrackVM(track);
             trackViewModel.Trajectories = track.Trajectories
-                .Take(6)
+                 .TakeLast(4)
                 .OrderBy(t => t.CreatedOn)
         .Select(TrackTrajectoryViewModel.TrajectoryToTrajectoryVM)
         .ToList();
