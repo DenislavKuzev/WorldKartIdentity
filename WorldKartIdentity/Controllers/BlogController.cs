@@ -149,6 +149,29 @@ namespace WorldKartIdentity.Controllers
         }
 
 
+        [HttpPost]
+        public async Task<IActionResult> ReportBlog(int blogId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var alreadyReported = await db.BlogReports.AnyAsync(r => r.BlogId == blogId && r.ReporterId == user.Id);
+
+            if (!alreadyReported)
+            {
+                var report = new BlogReport
+                {
+                    BlogId = blogId,
+                    ReporterId = user.Id,
+                    ReportedOn = DateTime.Now
+                };
+
+                await db.BlogReports.AddAsync(report);
+                await db.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Blogs", "Blog");
+        }
+
+
         public async Task<int> AddNotification(NotificationType type, string message, string? targetUserId)
         {
             string title = "";
